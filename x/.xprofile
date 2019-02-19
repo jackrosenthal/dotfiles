@@ -48,7 +48,7 @@ if [[ -e ~/.xmodmap ]]; then
     fi
 fi
 
-if [[ -n "$SSH_AUTH_SOCK" ]]; then
+if [[ -z "$SSH_AUTH_SOCK" ]]; then
     if command -v gnome-keyring-daemon >/dev/null; then
         eval $(gnome-keyring-daemon --start)
         export SSH_AUTH_SOCK
