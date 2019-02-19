@@ -1,0 +1,23 @@
+! Fonts {{{
+Xft.antialias:  true
+Xft.hinting:    true
+Xft.rgba:       rgb
+Xft.hintstyle:  hintmedium
+Xft.dpi:        96
+Xft.lcdfilter: lcddefault
+! }}}
+Xcursor.theme: hackneyed
+Xcursor.size: 24
+
+#include "tlh_mod"
+
+URxvt*scrollBar:                        false
+URxvt*font:                             xft:Iosevka Term:size=12,xft:Noto Color Emoji:size=12,xft:DejaVu Sans Mono:size=12
+URxvt*title:                            Terminal
+URxvt*perl-ext-common:                  default,matcher,font-size
+URxvt*matcher.button:                   1
+URxvt*url-launcher:                     /usr/bin/xdg-open
+URxvt.keysym.C-Up:     font-size:increase
+URxvt.keysym.C-Down:   font-size:decrease
+URxvt.keysym.C-S-Up:   font-size:incglobal
+URxvt.keysym.C-S-Down: font-size:decglobal

@@ -1,0 +1,66 @@
+#!/bin/bash
+if command -v xrdb >/dev/null; then
+    xrdb -merge ~/dotfiles/x/Xresources
+    [[ -e ~/.Xresources.local ]] && xrdb -merge ~/.Xresources.local
+fi
+
+function pref_order () {
+    for c in $@; do
+        if command -v "$c" >/dev/null; then
+            echo "$c"
+            return
+        fi
+    done
+    return 1
+}
+
+# sane defaults, probably to be overwritten by .xprofile.local
+: ${BROWSER:=$(pref_order palemoon google-chrome google-chrome-stable firefox epiphany uzbl-browser netsurf)}
+export BROWSER
+: ${XTERM:=$(pref_order urxvt rxvt xterm gnome-terminal konsole)}
+export XTERM
+
+conditional_start () {
+    if command -v "$1" >/dev/null; then
+        pgrep -u $EUID -x "$1" >/dev/null || $@ &
+    fi
+}
+
+conditional_start nm-applet
+conditional_start unclutter
+
+# hopefully, I am eventually able to remove this one day...
+if [[ -e ~/.dropbox ]]; then
+    conditional_start dropbox
+fi
+
+if command -v feh >/dev/null; then
+    feh --bg-tile ~/dotfiles/x/g/os8-candy-bar-azul.png
+else
+    i3-nagbar -m "Install feh!" &
+fi
+
+if [[ -e ~/.xmodmap ]]; then
+    if command -v xmodmap >/dev/null; then
+        xmodmap ~/.xmodmap
+    else
+        i3-nagbar -m ".xmodmap exists, but xmodmap is not installed!" &
+    fi
+fi
+
+if [[ -n "$SSH_AUTH_SOCK" ]]; then
+    if command -v gnome-keyring-daemon >/dev/null; then
+        eval $(gnome-keyring-daemon --start)
+        export SSH_AUTH_SOCK
+    else
+        i3-nagbar -m "No ssh agent is running" &
+    fi
+fi
+
+if command -v xss-lock >/dev/null; then
+    #      timeout      dim time after that
+    xset s 300          5
+    xss-lock -n /usr/lib/xsecurelock/dimmer -l -- ~/dotfiles/x/locker.sh &
+fi
+
+[[ -e ~/.xprofile.local ]] && source ~/.xprofile.local
