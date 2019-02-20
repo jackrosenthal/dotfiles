@@ -17,7 +17,7 @@ done
 
 ln -Tsf ~/dotfiles/zsh/.zshenv ~/.zshenv
 ln -Tsf ~/dotfiles/x/.xprofile ~/.xprofile
-ln -Tsf ~/dotfiles/x/.xprofile ~/.xprofilerc
+ln -Tsf ~/dotfiles/x/.xprofile ~/.xsessionrc
 ln -Tsf ~/dotfiles/emacs ~/.emacs.d
 ln -Tsf ~/dotfiles/i3 ~/.i3
 ln -Tsf ~/dotfiles/.vimrc ~/.vimrc
