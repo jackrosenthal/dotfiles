@@ -49,18 +49,21 @@ if [[ -e ~/.xmodmap ]]; then
 fi
 
 if [[ -z "$SSH_AUTH_SOCK" ]]; then
-    if command -v gnome-keyring-daemon >/dev/null; then
+    if [[ "$(hostname -f)" == *.corp.google.com ]]; then
+        eval $(ssh-agent -s)
+    elif command -v gnome-keyring-daemon >/dev/null; then
         eval $(gnome-keyring-daemon --start)
-        export SSH_AUTH_SOCK
     else
         i3-nagbar -m "No ssh agent is running" &
     fi
+    export SSH_AUTH_SOCK
 fi
 
 if command -v xss-lock >/dev/null; then
     #      timeout      dim time after that
     xset s 300          5
-    xss-lock -n /usr/lib/xsecurelock/dimmer -l -- ~/dotfiles/x/locker.sh &
+    xss-lock -n $(pref_order /usr/lib/xsecurelock/dimmer /usr/lib/x86_64-linux-gnu/xsecurelock/dimmer) \
+             -l -- ~/dotfiles/x/locker.sh &
 fi
 
 [[ -e ~/.xprofile.local ]] && source ~/.xprofile.local
