@@ -68,7 +68,7 @@
          do (make-directory dir t))
 
 ;; load on corp machines only
-(require 'google nil t)
+;; (require 'google nil t)
 
 (use-package undo-tree
   :config (global-undo-tree-mode))
