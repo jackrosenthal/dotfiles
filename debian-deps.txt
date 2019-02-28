@@ -17,3 +17,9 @@ xsel
 x11-xkb-utils
 unclutter
 emacs
+pulseaudio
+pulseaudio-module-bluetooth
+pavucontrol
+paprefs
+pasystray
+blueman

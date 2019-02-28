@@ -22,3 +22,9 @@ rxvt-unicode
 feh
 unclutter
 emacs
+pulseaudio
+pulseaudio-bluetooth
+pavucontrol
+paprefs
+pasystray
+blueman
