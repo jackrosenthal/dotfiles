@@ -168,3 +168,11 @@
 
 (use-package pollen-mode
   :load-path "~/Dropbox/fun/pollen-mode")
+
+(define-derived-mode ebuild-mode shell-script-mode "Ebuild"
+  "Simple extension on top of shell-script-mode"
+  (sh-set-shell "bash")
+  (setq tab-width 4)
+  (setq indent-tabs-mode t))
+
+(add-to-list 'auto-mode-alist '("\\.\\(ebuild\\|eclass\\)\\'" . ebuild-mode))
