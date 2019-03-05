@@ -47,6 +47,12 @@
             (set-frame-parameter frame 'buffer-predicate
                                  #'default-buffer-predicate)))
 
+(defmacro togglef (param)
+  `(lambda ()
+     (interactive)
+     (setq ,param (not ,param))
+     (message "%s: %s" (quote ,param) ,param)))
+
 (setq c-default-style "k&r"
       c-basic-offset 4)
 
@@ -82,7 +88,9 @@
   :config (progn
             (evil-mode 1)
             (evil-define-key nil evil-insert-state-map
-              (kbd "C-t") 'complete-symbol)))
+              (kbd "C-t") 'complete-symbol)
+            (evil-define-key nil evil-normal-state-map
+              (kbd "C-d") (togglef indent-tabs-mode))))
 
 (use-package evil-collection
   :after evil
