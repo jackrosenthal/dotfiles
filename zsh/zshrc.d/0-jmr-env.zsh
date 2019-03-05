@@ -1,4 +1,7 @@
 # Jack's preferred environment variables
+
+export PATH="$HOME/.local/bin:$HOME/dotfiles/bin:$PATH"
+
 function pref-order () {
     for c in $@; do
         if command -v "$c" >/dev/null; then
