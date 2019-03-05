@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: cros-copyright
+# key: cros-copy
+# --
+/* Copyright `(format-time-string "%Y")` The Chromium OS Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+ $0

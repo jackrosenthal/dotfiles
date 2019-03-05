@@ -16,7 +16,7 @@
  '(hl-paren-colors (quote ("dark cyan")))
  '(package-selected-packages
    (quote
-    (company-pollen pollen-mode pdf-tools scribble-mode ## noflet sublime-themes load-theme-buffer-local emacs-color-themes php-mode evil-collection aggressive-indent evil-surround highlight-parentheses paren-face highlight-parenthesis use-package rainbow-delimiters racket-mode lispyville lisp-extra-font-lock blackboard-theme auctex)))
+    (yasnippet company-pollen pollen-mode pdf-tools scribble-mode ## noflet sublime-themes load-theme-buffer-local emacs-color-themes php-mode evil-collection aggressive-indent evil-surround highlight-parentheses paren-face highlight-parenthesis use-package rainbow-delimiters racket-mode lispyville lisp-extra-font-lock blackboard-theme auctex)))
  '(paren-face-modes
    (quote
     (lisp-mode emacs-lisp-mode lisp-interaction-mode ielm-mode scheme-mode inferior-scheme-mode clojure-mode cider-repl-mode nrepl-mode arc-mode inferior-arc-mode racket-mode)))

@@ -169,6 +169,9 @@
 (use-package pollen-mode
   :load-path "~/Dropbox/fun/pollen-mode")
 
+(use-package yasnippet
+  :config (yas-global-mode 1))
+
 (define-derived-mode ebuild-mode shell-script-mode "Ebuild"
   "Simple extension on top of shell-script-mode"
   (sh-set-shell "bash")
