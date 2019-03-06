@@ -14,6 +14,10 @@
         ("gnu" . 0)))
 (package-initialize)
 
+;; don't save selected packages as a custom variable
+(defun package--save-selected-packages (&rest args)
+  nil)
+
 (defmacro thunk (&rest body)
   `(lambda () ,@body))
 
@@ -171,6 +175,10 @@
 
 (use-package yasnippet
   :config (yas-global-mode 1))
+
+(use-package yasnippet-snippets
+  :after yasnippet
+  :config (yasnippet-snippets-initialize))
 
 (define-derived-mode ebuild-mode shell-script-mode "Ebuild"
   "Simple extension on top of shell-script-mode"
