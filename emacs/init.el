@@ -106,6 +106,13 @@
 (use-package evil-surround
   :config (global-evil-surround-mode 1))
 
+(use-package ivy
+  :config (progn
+            (ivy-mode 1)
+            (counsel-mode 1)
+            (setq ivy-use-virtual-buffers t
+                  ivy-count-format "(%d/%d) ")))
+
 (use-package racket-mode
   :after evil
   :config (progn
