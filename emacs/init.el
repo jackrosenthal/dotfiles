@@ -108,8 +108,12 @@
 
 (use-package racket-mode
   :after evil
-  :config (evil-define-key 'normal racket-mode-map
-            "gz" 'racket-run-and-switch-to-repl))
+  :config (progn
+            (evil-define-key 'normal racket-mode-map
+              "gz" #'racket-run-and-switch-to-repl
+              "gs" #'racket-cycle-paren-shapes)
+            (evil-define-key 'normal racket-repl-mode-map
+              "gs" #'racket-cycle-paren-shapes)))
 
 (use-package scribble-mode)
 
