@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: EC Console Command
+# key: ec-cmd
+# --
+static int command_${1:cmdname}(int argc, char **argv)
+{
+	$0
+	return EC_SUCCESS;
+}
+
+DECLARE_CONSOLE_COMMAND($1, command_$1, "", "");
