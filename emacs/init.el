@@ -8,9 +8,9 @@
         ("melpa-stable" . "http://stable.melpa.org/packages/")
         ("melpa" . "http://melpa.org/packages/"))
       package-archive-priorities
-      '(("melpa" . 10)
+      '(("org" . 15)
+        ("melpa" . 10)
         ("melpa-stable" . 5)
-        ("org" . 3)
         ("gnu" . 0)))
 (package-initialize)
 
@@ -77,8 +77,9 @@
 (cl-loop for (pat . dir) in backup-directory-alist
          do (make-directory dir t))
 
-;; load on corp machines only
-;; (require 'google nil t)
+(add-hook 'lisp-mode-hook
+          (thunk (set (make-local-variable 'lisp-indent-function))
+                 'common-lisp-indent-function))
 
 (use-package undo-tree
   :config (global-undo-tree-mode))
@@ -109,9 +110,11 @@
 (use-package ivy
   :config (progn
             (ivy-mode 1)
-            (counsel-mode 1)
             (setq ivy-use-virtual-buffers t
                   ivy-count-format "(%d/%d) ")))
+
+(use-package counsel
+  :config (counsel-mode 1))
 
 (use-package racket-mode
   :after evil
@@ -132,12 +135,12 @@
                             racket-repl-mode-hook))
               (add-hook hook (thunk (lispy-mode 1))))
             (evil-define-key 'insert lispy-mode-map
-              (kbd "(")   #'lispy-parens
-              (kbd "[")   #'lispy-brackets
-              (kbd "\"")  #'lispy-quotes
-              (kbd ";")   #'lispy-comment
-              (kbd ")")   #'lispy-right-nostring
-              (kbd "]")   #'lispy-right-nostring
+              (kbd "(") #'lispy-parens
+              (kbd "[") #'lispy-brackets
+              (kbd "\"") #'lispy-quotes
+              (kbd ";") #'lispy-comment
+              (kbd ")") #'lispy-right-nostring
+              (kbd "]") #'lispy-right-nostring
               (kbd "DEL") #'lispy-delete-backward)
             (setq lispy-left "[([]"
                   lispy-right "[])]")))
@@ -181,8 +184,7 @@
 (use-package pdf-tools
   :config (pdf-tools-install))
 
-(use-package pollen-mode
-  :load-path "~/Dropbox/fun/pollen-mode")
+(use-package pollen-mode)
 
 (use-package yasnippet
   :config (yas-global-mode 1))
@@ -190,6 +192,8 @@
 (use-package yasnippet-snippets
   :after yasnippet
   :config (yasnippet-snippets-initialize))
+
+(use-package org)
 
 (define-derived-mode ebuild-mode shell-script-mode "Ebuild"
   "Simple extension on top of shell-script-mode"
