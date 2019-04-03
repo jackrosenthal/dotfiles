@@ -1,7 +1,7 @@
 # Thrown together from xsecurelock-git on AUR
 _pkgname=xsecurelock
 pkgname=xsecurelock-jmr
-pkgver=1.2.r38.gbaf8754
+pkgver=1.2.r50.ga893838
 pkgrel=1
 pkgdesc="X11 screen lock utility with security in mind"
 arch=('any')

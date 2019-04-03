@@ -28,3 +28,4 @@ pavucontrol
 paprefs
 pasystray
 blueman
+aspell-en
