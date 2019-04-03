@@ -195,6 +195,19 @@
 
 (use-package org)
 
+(use-package magit
+  :after evil yasnippet
+  :config
+  (evil-set-initial-state 'git-commit-mode 'insert)
+  (add-hook 'git-commit-mode
+            (thunk
+             (yas-activate-extra-mode 'git-commit-mode)
+             (when (string-prefix-p (expand-file-name "~/chromiumos")
+                                    default-directory)
+               (save-excursion
+                 (unless (re-search-forward "Signed-off-by: " nil t)
+                   (apply #'git-commit-signoff (git-commit-self-ident))))))))
+
 (define-derived-mode ebuild-mode shell-script-mode "Ebuild"
   "Simple extension on top of shell-script-mode"
   (sh-set-shell "bash")

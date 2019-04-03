@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: cros-commit
+# key: cros
+# --
+${1:common}: ${2:message}
+
+${6:This commit $2}
+
+BUG=${3:none}
+BRANCH=${4:none}
+TEST=${5:none}
