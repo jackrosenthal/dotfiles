@@ -78,8 +78,8 @@
          do (make-directory dir t))
 
 (add-hook 'lisp-mode-hook
-          (thunk (set (make-local-variable 'lisp-indent-function))
-                 'common-lisp-indent-function))
+          (thunk (set (make-local-variable 'lisp-indent-function)
+                      'common-lisp-indent-function)))
 
 (use-package undo-tree
   :config (global-undo-tree-mode))
