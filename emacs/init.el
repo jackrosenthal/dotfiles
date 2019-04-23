@@ -40,10 +40,13 @@
 (set-default-font "Iosevka-12")
 
 (defun default-buffer-predicate (buffer)
-  (not (cl-member (buffer-name buffer)
-                  '("*Completions*" "*Messages*" "*scratch*" "*Help*"
-                    "*Buffer List*")
-                  :test #'string-equal)))
+  (let ((name (buffer-name buffer)))
+    (not
+     (or (string-match-p "^magit-" name)
+         (cl-member name
+                    '("*Completions*" "*Messages*" "*scratch*" "*Help*"
+                      "*Buffer List*")
+                    :test #'string-equal)))))
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
