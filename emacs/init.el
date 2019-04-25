@@ -207,6 +207,7 @@
 (use-package magit
   :after evil yasnippet
   :config
+  (global-set-key (kbd "C-,") #'magit-status)
   (evil-set-initial-state 'git-commit-mode 'insert)
   (add-hook 'git-commit-mode
             (thunk
