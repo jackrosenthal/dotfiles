@@ -12,6 +12,7 @@
  '(evil-collection-setup-minibuffer t)
  '(global-undo-tree-mode t)
  '(global-whitespace-mode t)
+ '(google-use-coding-style nil)
  '(hl-paren-background-colors (quote ("gainsboro")))
  '(hl-paren-colors (quote ("dark cyan")))
  '(paren-face-modes

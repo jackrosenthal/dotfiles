@@ -27,6 +27,9 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; Use the google package, if available
+(require 'google nil t)
+
 (add-hook 'prog-mode-hook
           (thunk (display-line-numbers-mode 1)))
 (tool-bar-mode -1)
