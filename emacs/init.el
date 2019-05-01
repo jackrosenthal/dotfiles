@@ -138,7 +138,9 @@
             (lispy-set-key-theme '())
             (dolist (hook '(emacs-lisp-mode-hook
                             racket-mode-hook
-                            racket-repl-mode-hook))
+                            racket-repl-mode-hook
+                            lisp-mode-hook
+                            ielm-mode-hook))
               (add-hook hook (thunk (lispy-mode 1))))
             (evil-define-key 'insert lispy-mode-map
               (kbd "(") #'lispy-parens
