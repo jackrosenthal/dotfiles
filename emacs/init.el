@@ -29,6 +29,7 @@
 
 ;; Use the google package, if available
 (require 'google nil t)
+(require 'google-logo nil t)
 
 (add-hook 'prog-mode-hook
           (thunk (display-line-numbers-mode 1)))
