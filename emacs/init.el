@@ -90,8 +90,8 @@
 (use-package undo-tree
   :config (global-undo-tree-mode))
 
-(use-package blackboard-theme
-  :config (load-theme 'blackboard t))
+(use-package afternoon-theme
+  :config (load-theme 'afternoon t))
 
 (use-package evil
   :init (setq evil-want-integration t
