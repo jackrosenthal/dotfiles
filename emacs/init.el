@@ -33,6 +33,15 @@
 
 (add-hook 'prog-mode-hook
           (thunk (display-line-numbers-mode 1)))
+
+(defun maybe-activate-whitespace-mode ()
+  "Activates `whitespace-mode' only if the buffer is from a file."
+  (when (buffer-file-name)
+    (whitespace-mode 1)))
+
+(cl-loop for hook in '(text-mode-hook prog-mode-hook)
+         do (add-hook hook #'maybe-activate-whitespace-mode))
+
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (column-number-mode 1)
