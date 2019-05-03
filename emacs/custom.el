@@ -4,14 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-safe-themes
-   (quote
-    ("3cd28471e80be3bd2657ca3f03fbb2884ab669662271794360866ab60b6cb6e6" default)))
  '(debug-on-error nil)
- '(evil-collection-company-use-tng nil t)
- '(evil-collection-setup-minibuffer t)
- '(global-undo-tree-mode t)
- '(google-use-coding-style nil)
  '(hl-paren-background-colors (quote ("gainsboro")))
  '(hl-paren-colors (quote ("dark cyan")))
  '(paren-face-modes

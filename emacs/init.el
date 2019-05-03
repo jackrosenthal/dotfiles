@@ -15,25 +15,26 @@
 (package-initialize)
 
 ;; don't save selected packages as a custom variable
+;; (keep the file clean!)
 (defun package--save-selected-packages (&rest args)
   nil)
 
-(defmacro thunk (&rest body)
-  `(lambda () ,@body))
-
+;; Bootstrap use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-;; Use the google package, if available
+;; Use the Google package, if available
 (require 'google nil t)
 (require 'google-logo nil t)
+(setq google-use-coding-style nil)
 
-(add-hook 'prog-mode-hook
-          (thunk (display-line-numbers-mode 1)))
+;; Display line numbers
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
+;; Whitespace mode
 (defun maybe-activate-whitespace-mode ()
   "Activates `whitespace-mode' only if the buffer is from a file."
   (when (buffer-file-name)
@@ -42,6 +43,7 @@
 (cl-loop for hook in '(text-mode-hook prog-mode-hook)
          do (add-hook hook #'maybe-activate-whitespace-mode))
 
+;; Default interface setup
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (column-number-mode 1)
@@ -67,22 +69,15 @@
             (set-frame-parameter frame 'buffer-predicate
                                  #'default-buffer-predicate)))
 
-(defmacro togglef (param)
-  `(lambda ()
-     (interactive)
-     (setq ,param (not ,param))
-     (message "%s: %s" (quote ,param) ,param)))
-
+;; Default C style configuration
 (setq c-default-style "k&r"
       c-basic-offset 4)
 
+;; Place customize variables in a different file
 (setq custom-file "~/.emacs.d/custom.el")
-
-(unless (file-exists-p custom-file)
-  (write-region "" nil custom-file))
-
 (load custom-file)
 
+;; Automatic backup
 (setq backup-directory-alist '(("." . "~/.local/emacs/backups"))
       backup-by-copying t
       version-control t
@@ -93,10 +88,14 @@
 (cl-loop for (pat . dir) in backup-directory-alist
          do (make-directory dir t))
 
+;; Use Common Lisp standard indentation (rather than Emacs-style
+;; indentation) in when editing Common Lisp
 (add-hook 'lisp-mode-hook
-          (thunk (set (make-local-variable 'lisp-indent-function)
-                      'common-lisp-indent-function)))
+          (lambda ()
+            (set (make-local-variable 'lisp-indent-function)
+                 'common-lisp-indent-function)))
 
+;; My package choices
 (use-package undo-tree
   :config (global-undo-tree-mode))
 
@@ -106,12 +105,10 @@
 (use-package evil
   :init (setq evil-want-integration t
               evil-want-keybinding nil)
-  :config (progn
-            (evil-mode 1)
-            (evil-define-key nil evil-insert-state-map
-              (kbd "C-t") 'complete-symbol)
-            (evil-define-key nil evil-normal-state-map
-              (kbd "C-d") (togglef indent-tabs-mode))))
+  :config
+  (evil-mode 1)
+  (evil-define-key nil evil-insert-state-map
+    (kbd "C-t") 'complete-symbol))
 
 (use-package evil-collection
   :after evil
@@ -124,61 +121,59 @@
   :config (global-evil-surround-mode 1))
 
 (use-package ivy
-  :config (progn
-            (ivy-mode 1)
-            (setq ivy-use-virtual-buffers t
-                  ivy-count-format "(%d/%d) ")))
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t
+        ivy-count-format "(%d/%d) "))
 
 (use-package counsel
   :config (counsel-mode 1))
 
 (use-package racket-mode
   :after evil
-  :config (progn
-            (evil-define-key 'normal racket-mode-map
-              "gz" #'racket-run-and-switch-to-repl
-              "gs" #'racket-cycle-paren-shapes)
-            (evil-define-key 'normal racket-repl-mode-map
-              "gs" #'racket-cycle-paren-shapes)))
+  :config
+  (evil-define-key 'normal racket-mode-map
+    "gz" #'racket-run-and-switch-to-repl
+    "gs" #'racket-cycle-paren-shapes)
+  (evil-define-key 'normal racket-repl-mode-map
+    "gs" #'racket-cycle-paren-shapes))
 
 (use-package scribble-mode)
 
 (use-package lispy
-  :config (progn
-            (lispy-set-key-theme '())
-            (dolist (hook '(emacs-lisp-mode-hook
-                            racket-mode-hook
-                            racket-repl-mode-hook
-                            lisp-mode-hook
-                            ielm-mode-hook))
-              (add-hook hook (thunk (lispy-mode 1))))
-            (evil-define-key 'insert lispy-mode-map
-              (kbd "(") #'lispy-parens
-              (kbd "[") #'lispy-brackets
-              (kbd "\"") #'lispy-quotes
-              (kbd ";") #'lispy-comment
-              (kbd ")") #'lispy-right-nostring
-              (kbd "]") #'lispy-right-nostring
-              (kbd "DEL") #'lispy-delete-backward)
-            (setq lispy-left "[([]"
-                  lispy-right "[])]")))
+  :config
+  (lispy-set-key-theme '())
+  (dolist (hook '(emacs-lisp-mode-hook
+                  racket-mode-hook
+                  racket-repl-mode-hook
+                  lisp-mode-hook
+                  ielm-mode-hook))
+    (add-hook hook #'lispy-mode))
+  (evil-define-key 'insert lispy-mode-map
+    (kbd "(") #'lispy-parens
+    (kbd "[") #'lispy-brackets
+    (kbd "\"") #'lispy-quotes
+    (kbd ";") #'lispy-comment
+    (kbd ")") #'lispy-right-nostring
+    (kbd "]") #'lispy-right-nostring
+    (kbd "DEL") #'lispy-delete-backward)
+  (setq lispy-left "[([]"
+        lispy-right "[])]"))
 
 (use-package lispyville
-  :config (progn
-            (lispyville-set-key-theme
-             '(operators
-               c-w
-               prettify
-               text-objects
-               atom-movement
-               slurp/barf-cp
-               commentary))
-            (add-hook 'lispy-mode-hook #'lispyville-mode)
-            (evil-define-key 'insert lispyville-mode-map
-              (kbd "C-t") 'complete-symbol)
-            (evil-define-key 'normal lispyville-mode-map
-              (kbd "(") #'lispyville-insert-at-beginning-of-list
-              (kbd ")") #'lispyville-insert-at-end-of-list)))
+  :config
+  (lispyville-set-key-theme
+   '(operators
+     c-w
+     prettify
+     text-objects
+     atom-movement
+     slurp/barf-cp
+     commentary))
+  (add-hook 'lispy-mode-hook #'lispyville-mode)
+  (evil-define-key 'normal lispyville-mode-map
+    (kbd "(") #'lispyville-insert-at-beginning-of-list
+    (kbd ")") #'lispyville-insert-at-end-of-list))
 
 (use-package lisp-extra-font-lock
   :config (lisp-extra-font-lock-global-mode 1))
@@ -188,9 +183,9 @@
 
 (use-package tex
   :ensure auctex
-  :config (progn
-            (setq TeX-auto-save t)
-            (setq TeX-parse-self t)))
+  :config
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t))
 
 (use-package aggressive-indent
   :config (global-aggressive-indent-mode 1))
@@ -222,16 +217,16 @@
   (global-set-key (kbd "C-,") #'magit-status)
   (evil-set-initial-state 'git-commit-mode 'insert)
   (add-hook 'git-commit-mode
-            (thunk
-             (yas-activate-extra-mode 'git-commit-mode)
-             (when (string-prefix-p (expand-file-name "~/chromiumos")
-                                    default-directory)
-               (save-excursion
-                 (unless (re-search-forward "Signed-off-by: " nil t)
-                   (apply #'git-commit-signoff (git-commit-self-ident))))))))
+            (lambda ()
+              (yas-activate-extra-mode 'git-commit-mode)
+              (when (string-prefix-p (expand-file-name "~/chromiumos")
+                                     default-directory)
+                (save-excursion
+                  (unless (re-search-forward "Signed-off-by: " nil t)
+                    (apply #'git-commit-signoff (git-commit-self-ident))))))))
 
 (define-derived-mode ebuild-mode shell-script-mode "Ebuild"
-  "Simple extension on top of shell-script-mode"
+  "Simple extension on top of `shell-script-mode'."
   (sh-set-shell "bash")
   (setq tab-width 4)
   (setq indent-tabs-mode t))
