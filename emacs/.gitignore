@@ -3,3 +3,4 @@ elpa
 transient
 eshell
 .yas-compiled-snippets.el
+/request/
