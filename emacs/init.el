@@ -192,8 +192,6 @@
 
 (use-package php-mode)
 
-(use-package sublime-themes)
-
 (use-package pdf-tools
   :config (pdf-tools-install))
 
