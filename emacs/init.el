@@ -202,6 +202,8 @@
 (use-package kotlin-mode
   :config (setq kotlin-tab-width 4))
 
+(use-package lua-mode)
+
 (use-package yasnippet
   :config (yas-global-mode 1))
 
