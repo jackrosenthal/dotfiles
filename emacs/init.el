@@ -225,6 +225,12 @@
                   (unless (re-search-forward "Signed-off-by: " nil t)
                     (apply #'git-commit-signoff (git-commit-self-ident))))))))
 
+(use-package diff-hl
+  :after magit
+  :config
+  (global-diff-hl-mode)
+  (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
+
 (define-derived-mode ebuild-mode shell-script-mode "Ebuild"
   "Simple extension on top of `shell-script-mode'."
   (sh-set-shell "bash")
