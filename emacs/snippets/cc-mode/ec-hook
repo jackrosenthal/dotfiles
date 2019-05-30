@@ -1,0 +1,8 @@
+# name: EC Hook Declaration
+# key: ec-hook
+# --
+static void $1(void)
+{
+	$0
+}
+DECLARE_HOOK(${2:$$(yas-choose-value (ec-hooktypes "hook_type"))}, $1, ${3:$$(yas-choose-value (ec-hooktypes "hook_priority"))})

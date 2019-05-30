@@ -31,6 +31,21 @@
 (require 'google-logo nil t)
 (setq google-use-coding-style nil)
 
+;; EC hook information
+(defun ec-hooktypes (enum-name)
+  (with-temp-buffer
+    (insert-file-contents
+     (expand-file-name "~/chromiumos/src/platform/ec/include/hooks.h"))
+    (search-forward (format "enum %s {" enum-name) nil nil)
+    (delete-region (point-min) (point))
+    (search-forward "};" nil nil)
+    (delete-region (point) (point-max))
+    (goto-char (point-min))
+    (cl-loop while (re-search-forward "HOOK_[A-Z_]+" nil t)
+             unless (cl-member (match-string 0) result :test #'string=)
+             collect (match-string 0) into result
+             finally (return result))))
+
 ;; Display line numbers
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
