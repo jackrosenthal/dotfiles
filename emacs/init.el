@@ -222,7 +222,9 @@
 
 (use-package yasnippet-snippets
   :after yasnippet
-  :config (yasnippet-snippets-initialize))
+  :config
+  (yasnippet-snippets-initialize)
+  (setq yas-wrap-around-region t))
 
 (use-package org)
 
