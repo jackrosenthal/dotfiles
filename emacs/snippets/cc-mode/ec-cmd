@@ -2,10 +2,9 @@
 # name: EC Console Command
 # key: ec-cmd
 # --
-static int command_${1:cmdname}(int argc, char **argv)
+static int $2(int argc, char **argv)
 {
 	$0
 	return EC_SUCCESS;
 }
-
-DECLARE_CONSOLE_COMMAND($1, command_$1, "", "");
+DECLARE_CONSOLE_COMMAND(${1:cmdname}, ${2:command_$1}, "${3:args}", "${4:help}");
