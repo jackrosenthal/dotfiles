@@ -31,11 +31,21 @@
 (require 'google-logo nil t)
 (setq google-use-coding-style nil)
 
+(defvar cros-chroot-trunk "~/chromiumos")
+
+(defun chroot-file-path (relative-path)
+  (expand-file-name
+   (concat (file-name-as-directory (expand-file-name cros-chroot-trunk))
+           relative-path)))
+
+(defun chroot-file-p (path)
+  (string-prefix-p (chroot-file-path ".")
+                   (expand-file-name path)))
+
 ;; EC hook information
 (defun ec-hooktypes (enum-name)
   (with-temp-buffer
-    (insert-file-contents
-     (expand-file-name "~/chromiumos/src/platform/ec/include/hooks.h"))
+    (insert-file-contents (chroot-file-path "src/platform/ec/include/hooks.h"))
     (search-forward (format "enum %s {" enum-name) nil nil)
     (delete-region (point-min) (point))
     (search-forward "};" nil nil)
@@ -236,8 +246,7 @@
   (add-hook 'git-commit-mode
             (lambda ()
               (yas-activate-extra-mode 'git-commit-mode)
-              (when (string-prefix-p (expand-file-name "~/chromiumos")
-                                     default-directory)
+              (when (chroot-file-p default-directory)
                 (save-excursion
                   (unless (re-search-forward "Signed-off-by: " nil t)
                     (apply #'git-commit-signoff (git-commit-self-ident))))))))
@@ -255,3 +264,17 @@
   (setq indent-tabs-mode t))
 
 (add-to-list 'auto-mode-alist '("\\.\\(ebuild\\|eclass\\)\\'" . ebuild-mode))
+
+;; Experimental Eshell hacks
+(defun new-eshell ()
+  "Make a new eshell"
+  (interactive)
+  (eshell t))
+
+(defun cros-sdk-eshell-wrapper (fcn command args)
+  (cond
+   ((chroot-file-p default-directory)
+    (funcall fcn (chroot-file-path "chromium/tools/depot_tools/cros_sdk")
+             `("--no-ns-pid" "--working-dir" "." "--" ,command ,@args)))
+   (t (funcall fcn command args))))
+(advice-add #'eshell-external-command :around #'cros-sdk-eshell-wrapper)
