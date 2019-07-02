@@ -257,6 +257,11 @@
   (global-diff-hl-mode)
   (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
 
+(use-package with-editor
+  :config
+  (cl-loop for mode in '(shell-mode-hook term-exec-hook eshell-mode-hook)
+           do (add-hook mode #'with-editor-export-editor)))
+
 (define-derived-mode ebuild-mode shell-script-mode "Ebuild"
   "Simple extension on top of `shell-script-mode'."
   (sh-set-shell "bash")
