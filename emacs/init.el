@@ -276,10 +276,22 @@
   (interactive)
   (eshell t))
 
+;; regular expression of commands which will run in chroot if
+;; default-directory is in chroot
+(setq in-chroot-default-directory-commands
+      "^\\(.*/\\)?\\(make|gcc|g\\+\\+|repo|python\\(?:[23]\\(?:\\.[0-9]\\)?\\)?\\)$")
+(fmakunbound 'eshell/make)
+
 (defun cros-sdk-eshell-wrapper (fcn command args)
-  (cond
-   ((chroot-file-p default-directory)
-    (funcall fcn (chroot-file-path "chromium/tools/depot_tools/cros_sdk")
-             `("--no-ns-pid" "--working-dir" "." "--" ,command ,@args)))
-   (t (funcall fcn command args))))
+  (cl-labels
+      ((in-sdk (command)
+               (funcall fcn (chroot-file-path "chromium/tools/depot_tools/cros_sdk")
+                        `("--no-ns-pid" "--working-dir" "." "--" ,command ,@args))))
+    (cond
+     ((chroot-file-p command)
+      (in-sdk command))
+     ((and (chroot-file-p default-directory)
+           (string-match in-chroot-default-directory-commands command))
+      (in-sdk (match-string 0 command)))
+     (t (funcall fcn command args)))))
 (advice-add #'eshell-external-command :around #'cros-sdk-eshell-wrapper)
