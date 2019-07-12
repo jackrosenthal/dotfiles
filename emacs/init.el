@@ -119,6 +119,7 @@
           (lambda ()
             (set (make-local-variable 'lisp-indent-function)
                  'common-lisp-indent-function)))
+(setq inferior-lisp-program "sbcl")
 
 ;; My package choices
 (use-package undo-tree
