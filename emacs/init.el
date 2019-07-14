@@ -98,6 +98,9 @@
 (setq c-default-style "k&r"
       c-basic-offset 4)
 
+;; Default Python configuration
+(setq-default python-shell-interpreter "python3")
+
 ;; Place customize variables in a different file
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
