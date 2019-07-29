@@ -61,7 +61,7 @@ if [[ -z "$SSH_AUTH_SOCK" ]]; then
     export SSH_AUTH_SOCK
 fi
 
-if command -v xss-lock >/dev/null; then
+if ! [[ -e ~/.nolock ]] && command -v xss-lock >/dev/null; then
     #      timeout      dim time after that
     xset s 300          5
     xss-lock -n $(pref_order /usr/lib/xsecurelock/dimmer /usr/lib/x86_64-linux-gnu/xsecurelock/dimmer) \
