@@ -7,6 +7,7 @@
  '(debug-on-error nil)
  '(hl-paren-background-colors (quote ("gainsboro")))
  '(hl-paren-colors (quote ("dark cyan")))
+ '(magit-bury-buffer-function (quote magit-mode-quit-window))
  '(paren-face-modes
    (quote
     (lisp-mode emacs-lisp-mode lisp-interaction-mode ielm-mode scheme-mode inferior-scheme-mode clojure-mode cider-repl-mode nrepl-mode arc-mode inferior-arc-mode racket-mode)))
