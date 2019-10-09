@@ -231,6 +231,8 @@
 
 (use-package lua-mode)
 
+(use-package rust-mode)
+
 (use-package yasnippet
   :config (yas-global-mode 1))
 
