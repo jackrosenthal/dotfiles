@@ -294,7 +294,7 @@
 (defun cros-sdk-eshell-wrapper (fcn command args)
   (cl-labels
       ((in-sdk (command)
-               (funcall fcn (chroot-file-path "chromium/tools/depot_tools/cros_sdk")
+               (funcall fcn (chroot-file-path "src/chromium/depot_tools/cros_sdk")
                         `("--no-ns-pid" "--working-dir" "." "--" ,command ,@args))))
     (cond
      ((chroot-file-p command)
