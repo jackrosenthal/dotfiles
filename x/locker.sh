@@ -1,6 +1,10 @@
 #!/bin/bash
 
+# For older versions of xsecurelock
 export XSECURELOCK_PARANOID_PASSWORD=0
+
+# For newer versions of xsecurelock
+export XSECURELOCK_PASSWORD_PROMPT=asterisks
 
 if command -v /usr/lib/xscreensaver/flyingtoasters >/dev/null; then
     export XSECURELOCK_SAVER=/usr/lib/xscreensaver/flyingtoasters
