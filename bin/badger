@@ -52,7 +52,7 @@ def read_message(f):
 def read_badgeshadow():
     with open(badgeshadow_file_path, 'rb') as f:
         if f.read(2) != b'V0':
-            return None
+            raise ValueError('Incorrect magic number in ~/.badgeshadow')
         salt = f.read(hashlib.blake2b.SALT_SIZE)
         digest = f.read()
     return salt, digest
@@ -74,13 +74,15 @@ def run_authproto():
     # First check that the badgeshadow exists
     try:
         salt, digest = read_badgeshadow()
+    except ValueError as e:
+        m['ErrorMessage'](str(e).encode('utf-8')).write(sys.stdout.buffer)
+        os.execl('./authproto_pam', './authproto_pam')
     except FileNotFoundError:
         os.execl('./authproto_pam', './authproto_pam')
 
-
     pam_proc = None
     while True:
-        m['PasswordPrompt'](b'Password or badge: ').write(sys.stdout.buffer)
+        m['PasswordPrompt'](b'Password or badge:').write(sys.stdout.buffer)
         msg = read_message(sys.stdin.buffer)
         if isinstance(msg, m['ExitMessage']):
             return False
