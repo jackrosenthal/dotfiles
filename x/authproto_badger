@@ -1,2 +1,3 @@
 #!/bin/bash
-exec badger authproto
+SCRIPT_PATH="$(realpath "$(dirname "$BASH_SOURCE")")"
+exec "$SCRIPT_PATH/../bin/badger" authproto
