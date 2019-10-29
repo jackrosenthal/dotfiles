@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(realpath "$(dirname "$BASH_SOURCE")")"
+
 # For older versions of xsecurelock
 export XSECURELOCK_PARANOID_PASSWORD=0
 
@@ -11,7 +13,9 @@ if command -v /usr/lib/xscreensaver/flyingtoasters >/dev/null; then
 fi
 
 export XSECURELOCK_FONT="Iosevka-21"
-export XSECURELOCK_DISCARD_FIRST_KEYPRESS=1
+export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
+
+export XSECURELOCK_AUTHPROTO="$SCRIPT_DIR/authproto_badger"
 
 for cmd in /usr/share/goobuntu-desktop-files/xsecurelock.sh xsecurelock i3lock; do
     if command -v $cmd >/dev/null; then
