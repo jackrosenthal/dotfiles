@@ -95,8 +95,12 @@
                                  #'default-buffer-predicate)))
 
 ;; Default C style configuration
-(setq c-default-style "k&r"
-      c-basic-offset 4)
+(setq c-default-style "linux"
+      c-basic-offset 8)
+
+(add-hook 'c-mode-hook (lambda ()
+                         (setq tab-width 8)
+                         (setq indent-tabs-mode t)))
 
 ;; Default Python configuration
 (setq-default python-shell-interpreter "python3")
