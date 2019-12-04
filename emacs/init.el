@@ -102,6 +102,9 @@
                          (setq tab-width 8)
                          (setq indent-tabs-mode t)))
 
+(when (fboundp #'google-set-c-style)
+  (add-hook 'c++-mode-hook #'google-set-c-style))
+
 ;; Default Python configuration
 (setq-default python-shell-interpreter "python3")
 
