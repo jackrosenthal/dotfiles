@@ -217,6 +217,10 @@
 (use-package paren-face
   :config (global-paren-face-mode 1))
 
+(use-package smartparens
+  :config
+  (add-hook 'c-mode-common-hook #'smartparens-mode))
+
 (use-package tex
   :ensure auctex
   :config
