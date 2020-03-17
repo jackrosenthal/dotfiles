@@ -1,0 +1,169 @@
+#!/usr/bin/env python3
+# Copyright 2019 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import os
+import pathlib
+import sched
+import site
+import time
+
+site.addsitedir(pathlib.Path(os.getenv('HOME')) / 'chromiumos')
+
+from chromite.lib.patch import PatchQuery, GerritPatch
+from chromite.lib.gerrit import GerritHelper
+
+scheduler = sched.scheduler(time.time, time.sleep)
+
+
+class GerritInstance(GerritHelper):
+  def Query(self, *args, **kwargs):
+    results = super().Query(*args, bypass_cache=False, **kwargs)
+    for r in results:
+      r.instance = self
+    return results
+
+
+instances = {
+    'chromium': GerritInstance.FromGob('chromium'),
+    'chrome-internal': GerritInstance.FromGob('chrome-internal'),
+}
+_instances = {i.remote: i for i in instances.values()}
+
+
+def instance_from_remote(remote):
+  if remote not in _instances.keys():
+    _instances[remote] = GerritInstance.FromRemote(remote)
+  return _instances[remote]
+
+
+class PatchError(Exception):
+  pass
+
+
+mark_ready_banned = set()
+
+
+def ban_mark_ready(patch, seconds):
+  mark_ready_banned.add(patch.url)
+
+  def make_available():
+    print(patch.url, "is available to be marked CQ+2 again!")
+    mark_ready_banned.remove(patch.url)
+
+  scheduler.enter(seconds, 0, make_available)
+
+def patch_mark_ready_error(patch):
+  if patch.IsDraft():
+    return 'is a draft.'
+  if patch.IsPrivate():
+    return 'is private.'
+  if patch.status == 'ABANDONED':
+    return 'was abandoned.'
+  if patch.HasApproval('VRIF', '-1'):
+    return 'is marked Verified=-1.'
+  if patch.HasApproval('CRVW', '-2'):
+    return 'is marked Code-Review=-2.'
+  if not patch.HasApproval('CRVW', '2'):
+    return 'is not marked Code-Review=+2.'
+  if not patch.HasApproval('VRIF', '1'):
+    return 'is not marked Verified=+1.'
+  if not patch.HasApproval('COMR', '2') and patch.url in mark_ready_banned:
+    return 'was marked ready too recently and is not currently CQ+2'
+  return None
+
+
+def mark_ready(patch):
+  err = patch_mark_ready_error(patch)
+  if err:
+    raise PatchError('{} {}'.format(patch.url, err))
+  if patch.status != 'NEW':
+    raise PatchError('{} is already submitted or merged.'.format(patch.url))
+  if patch.HasApproval('COMR', '2'):
+    print('{} is already marked CQ+2.'.format(patch.url))
+    return
+  print('Marking {} CQ+2...'.format(patch.url))
+  patch.instance.SetReview(patch, labels={'Commit-Queue': '+2'}, notify='OWNER')
+  ban_mark_ready(patch, 60 * 30)
+
+
+def _needed_deps(patch, visited):
+  if not isinstance(patch, GerritPatch):
+    instance = instance_from_remote(patch.remote)
+    for patch in instance.Query(patch.ToGerritQueryText()):
+      yield from _needed_deps(patch, visited)
+    return
+  if patch.status in ('MERGED', 'SUBMITTED'):
+    return
+  if patch.url in visited:
+    return
+  err = patch_mark_ready_error(patch)
+  if err:
+    raise PatchError('{} {}'.format(patch.url, err))
+  visited.add(patch.url)
+  yield patch
+  for child in patch.GerritDependencies():
+    yield from _needed_deps(child, visited)
+  for child in patch.PaladinDependencies(None):
+    yield from _needed_deps(child, visited)
+
+
+def needed_deps(patch):
+  visited = set()
+  yield from _needed_deps(patch, visited)
+
+
+def query_and_mark_ready(instance, qs):
+  cls = list(instance.Query(qs))
+  if cls:
+    print(' {} CLs to process'.format(len(cls)))
+  else:
+    print(' nothing to do!')
+  for cl in cls:
+    try:
+      deps = list(needed_deps(cl))
+    except PatchError as e:
+      print('Either {} or its dependencies are not ready yet. '
+            '({})'.format(cl.url, e))
+    else:
+      for dep in deps:
+        mark_ready(dep)
+
+
+def sticky_cq_task():
+  for name, instance in instances.items():
+    print("Querying {}...".format(name), end='')
+    query_and_mark_ready(instance, 'hashtag:stickycq status:open')
+  scheduler.enter(90, 10, sticky_cq_task)
+
+
+auto_cc_searches = [
+    'mosys after:2020-03-09',
+    'CrosConfig after:2020-03-09',
+]
+
+
+def auto_cc_task():
+  base_query = ('-status:abandoned -owner:jrosenth -author:jrosenth '
+                '-owner:chromeos-ci-prod -reviewer:jrosenth -cc:jrosenth '
+                '-star:ignore')
+  for name, instance in instances.items():
+    for search in auto_cc_searches:
+      search_query = '{} {}'.format(search, base_query)
+      print("Querying AutoCC for '{}' on {}...".format(name, search_query))
+      cls = list(instance.Query(search_query))
+      for cl in cls:
+        print("AutoCC added to {}:{}!".format(name, cl))
+        cl.instance.SetReview(cl, msg="Automated CC", notify='NONE')
+  scheduler.enter(120, 15, auto_cc_task)
+
+
+def main():
+  scheduler.enter(0, 10, sticky_cq_task)
+  scheduler.enter(5, 15, auto_cc_task)
+  scheduler.run()
+
+
+if __name__ == '__main__':
+  main()
