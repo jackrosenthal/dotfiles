@@ -6,7 +6,7 @@ i3-wm
 i3status
 dmenu
 xsecurelock
-xscreensaver
+xscreensaver-gl-extra
 xss-lock
 x11-xserver-utils
 xinput
