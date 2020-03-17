@@ -3,5 +3,6 @@ elpa
 transient
 eshell
 .yas-compiled-snippets.el
+/image-dired/
 /request/
 /url/
