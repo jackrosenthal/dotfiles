@@ -26,6 +26,21 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; Setup environment
+(defun add-to-path (dir)
+  (let ((path (expand-file-name dir)))
+    (unless (member path exec-path)
+      (push path exec-path))
+    (unless (member path (split-string (getenv "PATH") ":"))
+      (setenv "PATH" (format "%s:%s" path (getenv "PATH"))))))
+
+(add-to-path "~/dotfiles/bin")
+(add-to-path "~/.local/bin")
+(add-to-path "~/depot_tools")
+(add-to-path "~/chromiumos/chromite/bin")
+
+(setenv "PAGER" "cat")
+
 ;; Use the Google package, if available
 (require 'google nil t)
 (require 'google-logo nil t)
@@ -290,28 +305,86 @@
 
 (add-to-list 'auto-mode-alist '("\\.\\(ebuild\\|eclass\\)\\'" . ebuild-mode))
 
-;; Experimental Eshell hacks
+;; Eshell Setup
+(require 'eshell)
+(require 'em-smart)
+
+(setq eshell-where-to-jump 'begin)
+(setq eshell-review-quick-commands nil)
+(setq eshell-smart-space-goes-to-end t)
+
+(defun git-split-args (args options-one)
+  (cl-labels ((rec (args-to-process partial-options)
+                   (cond
+                    ((not args-to-process) (cl-values (reverse partial-options)
+                                                      nil))
+                    ((string-equal "--" (car args-to-process))
+                     (cl-values (reverse partial-options)
+                                (cdr args-to-process)))
+                    ((member (car args-to-process) options-one)
+                     (rec (cddr args-to-process)
+                          (list* (cadr args-to-process)
+                                 (car args-to-process)
+                                 partial-options)))
+                    ((string-prefix-p "-" (car args-to-process))
+                     (rec (cdr args-to-process)
+                          (cons (car args-to-process) partial-options)))
+                    (t (cl-values (reverse partial-options) args-to-process)))))
+    (rec args '())))
+
 (defun new-eshell ()
   "Make a new eshell"
   (interactive)
   (eshell t))
 
-;; regular expression of commands which will run in chroot if
-;; default-directory is in chroot
-(setq in-chroot-default-directory-commands
-      "^\\(.*/\\)?\\(make|gcc|g\\+\\+|repo|python\\(?:[23]\\(?:\\.[0-9]\\)?\\)?\\)$")
-(fmakunbound 'eshell/make)
+(defun eshell/git (&rest args)
+  (cl-labels ((defer-external ()
+                (eshell/wait
+                 (eshell-external-command "git" `("--no-pager" ,@args)))))
+    (cl-multiple-value-bind (git-args subcommand-and-args)
+        (git-split-args args '("-C"))
+      (let* ((chdir-arg (member "-C" git-args))
+             (subcommand (car subcommand-and-args))
+             (subcommand-args (cdr subcommand-and-args))
+             (subcommand-fcn-symbol (intern (format "eshell/git-%s" subcommand))))
+        (cond ((or (member "--version" git-args)
+                   (member "--help" git-args)
+                   (member "--html-path" git-args)
+                   (member "--man-path" git-args)
+                   (member "--info-path" git-args))
+               (defer-external))
+              (chdir-arg
+               (let ((default-directory (expand-file-name (cadr chdir-arg))))
+                 (apply #'eshell/git
+                        `(,@(seq-take-while (lambda (arg)
+                                              (not (eq arg (car chdir-arg))))
+                                            git-args)
+                          ,@(cddr git-args)
+                          ,@subcommand-and-args))))
+              ((not subcommand) (magit-status))
+              ((and subcommand (fboundp subcommand-fcn-symbol))
+               (apply subcommand-fcn-symbol subcommand-args))
+              (t (defer-external)))))))
 
-(defun cros-sdk-eshell-wrapper (fcn command args)
+(defun eshell/git-status (&rest args)
+  (magit-status))
+
+(defun eshell/git-log (&rest args)
+  (cl-multiple-value-bind (options rest)
+      (git-split-args args '("-L" "-n" "-l" "-O"))
+    (magit-log-setup-buffer (if rest
+                                (car rest)
+                              '("HEAD"))
+                            options
+                            (cdr rest))))
+
+(defun cros-sdk-eshell-hook (command args)
   (cl-labels
       ((in-sdk (command)
-               (funcall fcn (chroot-file-path "src/chromium/depot_tools/cros_sdk")
-                        `("--no-ns-pid" "--working-dir" "." "--" ,command ,@args))))
-    (cond
-     ((chroot-file-p command)
-      (in-sdk command))
-     ((and (chroot-file-p default-directory)
-           (string-match in-chroot-default-directory-commands command))
-      (in-sdk (match-string 0 command)))
-     (t (funcall fcn command args)))))
-(advice-add #'eshell-external-command :around #'cros-sdk-eshell-wrapper)
+               (throw 'eshell-replace-command
+                      (eshell-parse-command
+                       "cros_sdk"
+                       `("--no-ns-pid" "--working-dir" "." "--" ,command ,@args)))))
+    (when (string-prefix-p "@" command)
+      (in-sdk (substring command 1)))))
+(add-hook 'eshell-named-command-hook #'cros-sdk-eshell-hook)
