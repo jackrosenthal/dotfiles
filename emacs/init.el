@@ -378,6 +378,11 @@
                             options
                             (cdr rest))))
 
+(defun eshell/take (directory)
+  (let ((dir (expand-file-name directory)))
+    (make-directory dir t)
+    (setq default-directory dir)))
+
 (defun cros-sdk-eshell-hook (command args)
   (cl-labels
       ((in-sdk (command)
