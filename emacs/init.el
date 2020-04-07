@@ -393,3 +393,12 @@
     (when (string-prefix-p "@" command)
       (in-sdk (substring command 1)))))
 (add-hook 'eshell-named-command-hook #'cros-sdk-eshell-hook)
+
+;; Local Packages
+(push "~/.emacs.d/site-lisp" load-path)
+(require 'upstart-mode)
+(require 'monorail)
+(setq monorail-user "jrosenth@chromium.org")
+
+(evil-define-key nil evil-insert-state-map
+  (kbd "C-b") #'monorail-insert-recent-ivy)
