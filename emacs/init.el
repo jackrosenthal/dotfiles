@@ -147,6 +147,8 @@
 (setq inferior-lisp-program "sbcl")
 
 ;; My package choices
+(use-package clang-format)
+
 (use-package undo-tree
   :config (global-undo-tree-mode))
 
