@@ -25,7 +25,7 @@ bindkey -M viins '^R' history-incremental-search-backward
 bindkey -M viins '^S' history-incremental-search-forward
 
 # Magic dot key
-# Autoreprace ... with ../.. and so forth
+# Autoreplace ... with ../.. and so forth
 function __zkey_dot_handler {
     [[ $LBUFFER == *.. ]] && LBUFFER+="/.." || LBUFFER+="."
 }
