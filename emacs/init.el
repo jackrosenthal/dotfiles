@@ -276,6 +276,7 @@
   :after evil yasnippet
   :config
   (global-set-key (kbd "C-,") #'magit-status)
+  (define-key magit-mode-map (kbd "R") #'repo-main-menu)
   (evil-set-initial-state 'git-commit-mode 'insert)
   (add-hook 'git-commit-mode
             (lambda ()
@@ -284,6 +285,8 @@
                 (save-excursion
                   (unless (re-search-forward "Signed-off-by: " nil t)
                     (apply #'git-commit-signoff (git-commit-self-ident))))))))
+
+(use-package ag)
 
 (use-package diff-hl
   :after magit
@@ -298,6 +301,8 @@
 
 (use-package page-break-lines
   :config (global-page-break-lines-mode))
+
+(use-package gn-mode)
 
 (define-derived-mode ebuild-mode shell-script-mode "Ebuild"
   "Simple extension on top of `shell-script-mode'."
@@ -404,3 +409,6 @@
 
 (evil-define-key nil evil-insert-state-map
   (kbd "C-b") #'monorail-insert-recent-ivy)
+
+(push "~/chromiumos/platform/dev/contrib/emacs" load-path)
+(require 'repo-transient nil t)
