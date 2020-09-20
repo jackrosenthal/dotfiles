@@ -92,7 +92,7 @@
 (setq ring-bell-function 'ignore)
 (setq-default indent-tabs-mode nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
-(set-default-font "Iosevka-12")
+(set-frame-font "Iosevka-12")
 
 (defun default-buffer-predicate (buffer)
   (let ((name (buffer-name buffer)))
