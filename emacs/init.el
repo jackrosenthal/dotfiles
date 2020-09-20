@@ -304,6 +304,13 @@
 
 (use-package gn-mode)
 
+(use-package kconfig-mode
+  :config
+  (add-hook 'kconfig-mode-hook
+            (lambda ()
+              (setq tab-width 8)
+              (setq indent-tabs-mode t))))
+
 (define-derived-mode ebuild-mode shell-script-mode "Ebuild"
   "Simple extension on top of `shell-script-mode'."
   (sh-set-shell "bash")
