@@ -7,6 +7,7 @@ zsh-syntax-highlighting
 i3-wm
 i3status
 dmenu
+rofi
 xscreensaver
 xss-lock
 xorg-xrdb

@@ -5,6 +5,7 @@ zsh-syntax-highlighting
 i3-wm
 i3status
 dmenu
+rofi
 xsecurelock
 xscreensaver-gl-extra
 xss-lock
