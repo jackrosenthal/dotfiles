@@ -304,6 +304,8 @@
 
 (use-package gn-mode)
 
+(use-package yaml-mode)
+
 (use-package kconfig-mode
   :config
   (add-hook 'kconfig-mode-hook
