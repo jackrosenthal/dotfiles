@@ -1,0 +1,51 @@
+#!/bin/sh
+# Copyright 2020 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+set -e
+
+do_flashrom() {
+    local outfile="$(mktemp)"
+    if sudo flashrom -p "raiden_debug_spi:target=AP" "$@" 2>&1 >"${outfile}"
+    then
+        echo >&2 "Flashrom failed!"
+        cat >&2 "${outfile}"
+        rm "${outfile}"
+        return 1
+    fi
+
+    rm "${outfile}"
+}
+
+read_gbb() {
+    local output="$(mktemp)"
+    do_flashrom -r -i "GBB:${output}"
+    echo "${output}"
+}
+
+write_gbb() {
+    do_flashrom -w -i "GBB:${1}" --noverify
+}
+
+case "$1" in
+    get )
+        shift
+        contents="$(read_gbb)"
+        futility gbb -g "$@" "${contents}"
+        rm "${contents}"
+        ;;
+    set )
+        shift
+        contents="$(read_gbb)"
+        newfile="$(mktemp)"
+        futility gbb -s "$@" "${contents}" "${newfile}"
+        rm "${contents}"
+        write_gbb "${newfile}"
+        rm "${newfile}"
+        ;;
+    * )
+        echo 1>&2 "ERR: unrecognized operation"
+        exit 1
+        ;;
+esac
