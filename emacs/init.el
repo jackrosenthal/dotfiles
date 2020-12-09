@@ -179,6 +179,8 @@
   (setq ivy-use-virtual-buffers t
         ivy-count-format "(%d/%d) "))
 
+(use-package cmake-mode)
+
 (use-package counsel
   :config (counsel-mode 1))
 
