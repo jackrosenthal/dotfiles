@@ -7,6 +7,6 @@ secrets:
   # github mirror key
   - 63775cc6-6340-439b-8ef1-6ccac34768dd
 tasks:
-  sync-to-github: |
-    cd dotfiles
-    git push https://github.com/jackrosenthal/dotfiles
+  - sync-to-github: |
+      cd dotfiles
+      git push https://github.com/jackrosenthal/dotfiles
