@@ -9,4 +9,4 @@ secrets:
 tasks:
   - sync-to-github: |
       cd dotfiles
-      git push https://github.com/jackrosenthal/dotfiles
+      git push https://github.com/jackrosenthal/dotfiles HEAD:master
