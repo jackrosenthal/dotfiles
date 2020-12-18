@@ -7,7 +7,6 @@ for arg in "$@"; do
                 sudo apt-get install $(cat ~/dotfiles/debian-deps.txt)
             elif command -v pacman >/dev/null; then
                 sudo pacman -Sy $(cat ~/dotfiles/arch-deps.txt)
-                ( cd ~/dotfiles/pkgbuild/xsecurelock && makepkg -c && sudo pacman -U *.pkg.tar.xz )
             else
                 echo "WARNING: could not recognize system"
             fi

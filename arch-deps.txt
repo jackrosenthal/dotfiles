@@ -9,6 +9,7 @@ i3status
 dmenu
 rofi
 xscreensaver
+xsecurelock
 xss-lock
 xorg-xrdb
 xorg-xmodmap
