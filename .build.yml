@@ -7,7 +7,7 @@ secrets:
   # github mirror key
   - 63775cc6-6340-439b-8ef1-6ccac34768dd
 environment:
-  GIT_SSH_COMMAND: >
+  GIT_SSH_COMMAND: >-
     ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
 tasks:
   - sync-to-github: |
