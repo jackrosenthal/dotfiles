@@ -7,7 +7,7 @@ set -e
 
 do_flashrom() {
     local outfile="$(mktemp)"
-    if sudo flashrom -p "raiden_debug_spi:target=AP" "$@" 2>&1 >"${outfile}"
+    if ! sudo flashrom -p "raiden_debug_spi:target=AP" "$@" 2>&1 >"${outfile}"
     then
         echo >&2 "Flashrom failed!"
         cat >&2 "${outfile}"
