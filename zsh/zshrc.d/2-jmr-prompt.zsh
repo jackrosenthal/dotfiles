@@ -10,13 +10,23 @@ if [[ -n $SSH_CONNECTION ]]; then
     SSH_PROMPT='%{%B$fg[yellow]%}[SSH: %m]%{$reset_color%}%b '
 fi
 
-function __zprompt_return {
-    if [[ $? -eq 0 ]]; then
-        echo "%{$fg_no_bold[yellow]%}[%?]%{$reset_color%}"
-    else
-        echo "%{$fg_bold[red]%}[%?]%{$reset_color%}"
+if [[ -e /etc/cros_chroot_version ]]; then
+    SDK_PROMPT='%{%B$fg[green]%}(cros sdk)%{$reset_color%}%b '
+fi
+
+function __zhook_return_code {
+    local exit_status="$?"
+    if [[ "${exit_status}" -eq 0 ]]; then
+        RC_DISPLAYED=false
+    elif ! "${RC_DISPLAYED}"; then
+        echo -n "${fg[red]}"
+        echo ">>> Command exited with status ${exit_status}"
+        echo -n "${reset_color}"
+        RC_DISPLAYED=true
     fi
 }
+
+precmd_functions=(__zhook_return_code)
 
 function __zprompt_mode {
     case ${KEYMAP} in
@@ -35,8 +45,10 @@ function __zprompt_env {
 setopt prompt_subst # allow running functions in the prompt
 
 function set-prompt {
-    PROMPT=$SSH_PROMPT'$(__zprompt_env)%{$fg[blue]%}%n%{$fg[green]%} %~%{$reset_color%} $(git_super_status)$(__zprompt_mode) '
-    RPROMPT='$(__zprompt_return)'
+    PROMPT="${SSH_PROMPT}${SDK_PROMPT}"
+    PROMPT+='$(__zprompt_env)'
+    PROMPT+='%{$fg[blue]%}%n%{$fg[green]%} %~%{$reset_color%} '
+    PROMPT+='$(git_super_status)$(__zprompt_mode) '
 }
 
 if is-at-least 5.1; then
