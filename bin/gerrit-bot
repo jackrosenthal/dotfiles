@@ -174,6 +174,12 @@ zephyr_upstream_repos = [
      'https://github.com/zephyrproject-rtos/hal_stm32'),
 ]
 
+# TODO: change to -2 when this bot gets a track record
+REVIEW_STRICTLY_DO_NOT_SUBMIT = '-1'
+REVIEW_PREFER_NOT_SUBMITTED = '-1'
+REVIEW_NEEDS_HUMAN_APPROVAL = '+1'
+REVIEW_AUTOMATIC_APPROVAL = '+2'
+
 
 def zephyr_upstream_task():
   instance = instances['chromium']
@@ -279,9 +285,9 @@ def check_upstream_commit(cl, upstream_url, changes_expected=False):
     changed_files_list = ''.join('* {}\n'.format(fname) for fname in changes)
 
     message = ''
-    review = '-2'
+    review = REVIEW_STRICTLY_DO_NOT_SUBMIT
     if changes_expected and changes:
-      review = '+1'
+      review = REVIEW_NEEDS_HUMAN_APPROVAL
       message += ("This is a BACKPORT commit, and I've identified that there "
                   'were changes from the upstream commit in these files:\n\n')
       message += changed_files_list
@@ -297,7 +303,7 @@ def check_upstream_commit(cl, upstream_url, changes_expected=False):
       message += changed_files_list
       message += '\nPerhaps you meant to label as BACKPORT?\n\n'
     else:
-      review = '+2'
+      review = REVIEW_AUTOMATIC_APPROVAL
       message += ('No changes found to upstream commit!  Automatic approval '
                   'has been granted.\n\n')
 
@@ -315,31 +321,34 @@ def check_frompull_commit(cl, upstream_url):
   p = re.compile(re.escape('{}/pull/'.format(upstream_url)) + r'[0-9]+')
   m = p.search(cl.commit_message)
   if not m:
-    return -2, 'Please add a link to the pull request in the commit message.'
-  return '+1', ('Reviewers: please identify if this FROMPULL commit is '
-                'acceptable to merge to our Chromium OS branches.')
+    return (REVIEW_STRICTLY_DO_NOT_SUBMIT,
+            'Please add a link to the pull request in the commit message.')
+  return (REVIEW_NEEDS_HUMAN_APPROVAL,
+          'Reviewers: please identify if this FROMPULL commit is acceptable '
+          'to merge to our Chromium OS branches.')
 
 
 def check_chromium_commit(cl, upstream_url):
-  return '-1', ('The CHROMIUM tag is used for commits in this repository which '
-                'cannot be upstreamed.\n'
-                '\n'
-                'Generally speaking, almost all commits can either be '
-                'upstreamed, or instead landed in one of our local '
-                'repositories, such as platform/ec.\n'
-                '\n'
-                "* If it's possible to upstream this CL, please do so.  You "
-                'can reupload this CL with the FROMPULL tag instead after '
-                'uploading the pull request.\n'
-                '\n'
-                "* Otherwise, if it's possible to land this code in "
-                'platform/ec or another local repository instead, please do '
-                'that, and abandon this CL.\n'
-                '\n'
-                'If none of the above are possible, you may remove my CR-1 on '
-                'this CL and proceed with the review.\n'
-                '\n'
-                'Thanks for helping us keep upstream first!\n')
+  return (REVIEW_PREFER_NOT_SUBMITTED,
+          'The CHROMIUM tag is used for commits in this repository which '
+          'cannot be upstreamed.\n'
+          '\n'
+          'Generally speaking, almost all commits can either be '
+          'upstreamed, or instead landed in one of our local '
+          'repositories, such as platform/ec.\n'
+          '\n'
+          "* If it's possible to upstream this CL, please do so.  You "
+          'can reupload this CL with the FROMPULL tag instead after '
+          'uploading the pull request.\n'
+          '\n'
+          "* Otherwise, if it's possible to land this code in "
+          'platform/ec or another local repository instead, please do '
+          'that, and abandon this CL.\n'
+          '\n'
+          'If none of the above are possible, you may remove my CR-1 on '
+          'this CL and proceed with the review.\n'
+          '\n'
+          'Thanks for helping us keep upstream first!\n')
 
 
 zephyr_tags = [
@@ -380,7 +389,7 @@ of the following tags to help us track upstream changes:
   for tag, review_func, helpmsg in zephyr_tags:
     msg += '* {}: {}\n\n'.format(tag, helpmsg)
 
-  return -2, msg
+  return REVIEW_STRICTLY_DO_NOT_SUBMIT, msg
 
 
 def main():
