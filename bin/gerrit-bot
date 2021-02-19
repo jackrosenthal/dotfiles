@@ -305,7 +305,9 @@ def check_upstream_commit(cl, upstream_url, changes_expected=False):
     else:
       review = REVIEW_AUTOMATIC_APPROVAL
       message += ('No changes found to upstream commit!  Automatic approval '
-                  'has been granted.\n\n')
+                  'has been granted.\n\n'
+                  'If you are a Googler, feel free to give yourself a +2 '
+                  'and submit.\n\n')
 
     message += 'For your convenience, the upstream commit can be found here: '
     message += '{}/commit/{}'.format(upstream_url, commit_hash)
