@@ -187,7 +187,8 @@ def zephyr_upstream_task():
       ps_number = cl.patch_dict['currentPatchSet']['number']
       proc_hashtag = 'zephyr_upstream_bot_checked_ps{}'.format(ps_number)
 
-      proc_query = '{} -hashtag:{}'.format(cl.ToGerritQueryText(), proc_hashtag)
+      proc_query = '{} {} -hashtag:{}'.format(
+          search_query, cl.ToGerritQueryText(), proc_hashtag)
 
       for cl_needs_proc in instance.Query(proc_query):
         def setlabels(labels, msg=None):
