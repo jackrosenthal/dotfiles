@@ -1,0 +1,118 @@
+#!/bin/bash
+
+set -e
+
+CRITICAL_PERCENT=5
+LOW_PERCENT=15
+
+check_battery() {
+    on_ac=false
+    found_battery=false
+
+    for supply in /sys/class/power_supply/*; do
+        case "$(cat "${supply}/type")" in
+            Mains )
+                case "$(cat "${supply}"/online)" in
+                    1 )
+                        on_ac=true
+                        ;;
+                esac
+                ;;
+            Battery )
+                found_battery=true
+                case "$(cat "${supply}/status")" in
+                    Charging )
+                        on_ac=true
+                        ;;
+                esac
+        esac
+    done
+
+    if ! "${found_battery}" || "${on_ac}"; then
+        echo ac_online
+        return
+    fi
+
+    local total_full=0
+    local total_now=0
+
+    for supply in /sys/class/power_supply/*; do
+        case "$(cat "${supply}/type")" in
+            Battery )
+                total_full=$(($(cat "${supply}"/charge_full_design) + total_full))
+                total_now=$(($(cat "${supply}"/charge_now) + total_now))
+                ;;
+        esac
+    done
+
+    local percent=$(((${total_now} * 100) / ${total_full}))
+    echo "Current battery: ${percent}" >&2
+
+    if [ "${percent}" -le "${CRITICAL_PERCENT}" ]; then
+        echo battery_critical
+    elif [ "${percent}" -le "${LOW_PERCENT}" ]; then
+        echo battery_low
+    else
+        echo battery_plenty
+    fi
+}
+
+notify_low() {
+    i3-nagbar -m 'Low battery!  Consider charging.' &
+}
+
+beep() {
+    xcalib -alter -invert || true
+    play -q -n synth 0.1 sin 880 || true
+    xcalib -clear || true
+}
+
+max_volume() {
+    pactl set-sink-mute 0 0 || true
+    pactl set-sink-volume 0 '100%' || true
+}
+
+beep_critical() {
+    max_volume
+    beep
+    sleep 0.3
+    beep
+}
+
+main() {
+    local prev_state=init
+    local notified=false
+    local beeped=false
+    local state
+
+    while true; do
+        state="$(check_battery)"
+
+        echo "${prev_state} -> ${state}" >&2
+
+        if [ "${state}" != "${prev_state}" ]; then
+            case "${state}" in
+                ac_online|battery_plenty )
+                    notified=false
+                    beeped=false
+                    ;;
+                battery_low )
+                    "${notified}" || notify_low
+                    notified=true
+                    beeped=false
+                    ;;
+                battery_critical )
+                    "${notified}" || notify_low
+                    "${beeped}" || beep_critical
+                    notified=true
+                    beeped=true
+                    ;;
+            esac
+        fi
+
+        prev_state="${state}"
+        sleep 10
+    done
+}
+
+main

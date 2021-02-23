@@ -30,6 +30,7 @@ conditional_start nm-applet
 conditional_start unclutter
 conditional_start pasystray
 conditional_start blueman-applet
+conditional_start low_battery_monitor
 
 # hopefully, I am eventually able to remove this one day...
 if [[ -e ~/.dropbox ]]; then
