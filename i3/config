@@ -14,9 +14,14 @@ bindsym XF86MonBrightnessUp exec --no-startup-id light -A 10
 bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10
 
 # volume control
-bindsym XF86AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up
-bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down
-bindsym XF86AudioMute exec --no-startup-id pulseaudio-ctl mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/dotfiles/bin/volkey up
+bindsym $mod+F10 exec --no-startup-id ~/dotfiles/bin/volkey up
+
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/dotfiles/bin/volkey down
+bindsym $mod+F9 exec --no-startup-id ~/dotfiles/bin/volkey down
+
+bindsym XF86AudioMute exec --no-startup-id ~/dotfiles/bin/volkey mute
+bindsym $mod+F8 exec --no-startup-id ~/dotfiles/bin/volkey mute
 
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod

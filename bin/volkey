@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+
+beep() {
+    play -q -n synth 0.1 sin 880
+}
+
+key_mute() {
+    pactl set-sink-mute 0 toggle
+}
+
+key_up() {
+    pactl set-sink-mute 0 0
+    pactl set-sink-volume 0 '+10%'
+}
+
+key_down() {
+    pactl set-sink-mute 0 0
+    pactl set-sink-volume 0 '-10%'
+}
+
+"key_${1}"
+beep
