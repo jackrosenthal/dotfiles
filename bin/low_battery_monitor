@@ -94,7 +94,7 @@ main() {
             case "${state}" in
                 ac_online|battery_plenty )
                     for job in $(jobs -p); do
-                        kill "${job}"
+                        kill "${job}" || true
                     done
                     notified=false
                     beeped=false
