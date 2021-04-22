@@ -17,7 +17,7 @@ import time
 site.addsitedir(pathlib.Path(os.getenv('HOME')) / 'chromiumos')
 
 import chromite.lib.gob_util as gob_util
-from chromite.lib.patch import PatchQuery, GerritPatch
+from chromite.lib.patch import PatchQuery, GerritPatch, GetPaladinDeps
 from chromite.lib.gerrit import GerritHelper
 
 scheduler = sched.scheduler(time.time, time.sleep)
@@ -91,6 +91,7 @@ def mark_ready(patch):
     return
   print('Marking {} CQ+2...'.format(patch.url))
   patch.instance.SetReview(patch, labels={'Commit-Queue': '+2'}, notify='OWNER')
+  patch.instance.SetHashtags(patch, add=[], remove=['cq1'])
   ban_mark_ready(patch, 60 * 30)
 
 
@@ -111,7 +112,7 @@ def _needed_deps(patch, visited):
   yield patch
   for child in patch.GerritDependencies():
     yield from _needed_deps(child, visited)
-  for child in patch.PaladinDependencies(None):
+  for child in GetPaladinDeps(patch._commit_message):
     yield from _needed_deps(child, visited)
 
 
@@ -137,11 +138,18 @@ def query_and_mark_ready(instance, qs):
         mark_ready(dep)
 
 
-def sticky_cq_task():
+#def sticky_cq_task():
+#  for name, instance in instances.items():
+#    print("Querying {}...".format(name), end='')
+#    query_and_mark_ready(instance, 'hashtag:stickycq status:open')
+#  scheduler.enter(90, 10, sticky_cq_task)
+
+
+def cq1_task():
   for name, instance in instances.items():
-    print("Querying {}...".format(name), end='')
-    query_and_mark_ready(instance, 'hashtag:stickycq status:open')
-  scheduler.enter(90, 10, sticky_cq_task)
+    print("Querying CQ1 for {}...".format(name), end='')
+    query_and_mark_ready(instance, 'hashtag:cq1 status:open')
+  scheduler.enter(90, 10, cq1_task)
 
 
 auto_cc_searches = [
@@ -395,7 +403,7 @@ of the following tags to help us track upstream changes:
 
 
 def main():
-  scheduler.enter(0, 10, sticky_cq_task)
+  scheduler.enter(0, 10, cq1_task)
   scheduler.enter(5, 15, auto_cc_task)
   scheduler.enter(10, 20, zephyr_upstream_task)
   scheduler.run()
