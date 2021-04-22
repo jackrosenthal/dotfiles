@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: the
+# key: the
+# --
+The $1 IsA ${2:object}
+  $0
+End The $1.

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: verb
+# key: verb
+# --
+Verb $1
+  Does
+    $0
+End Verb $1.

@@ -414,6 +414,7 @@
 
 ;; Local Packages
 (push "~/.emacs.d/site-lisp" load-path)
+(require 'alan-mode)
 (require 'upstart-mode)
 (require 'monorail)
 (setq monorail-user "jrosenth@chromium.org")
