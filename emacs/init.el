@@ -179,6 +179,11 @@
   (setq ivy-use-virtual-buffers t
         ivy-count-format "(%d/%d) "))
 
+(use-package browse-at-remote
+  :after evil
+  :config
+  (evil-global-set-key 'normal (kbd "C-c C-r") #'browse-at-remote))
+
 (use-package cmake-mode)
 
 (use-package counsel
