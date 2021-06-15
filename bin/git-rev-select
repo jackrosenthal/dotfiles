@@ -1,0 +1,17 @@
+#!/bin/sh
+
+SED_FILTER='s/^[^0-9a-f]*([0-9a-f]+) .*$/\1/'
+PREVIEW_CMD='git show "$(sed -Ee "'"${SED_FILTER}"'" <<<{})"'
+
+HASHES=( $(git log --graph --format='%H (%aN) %s' | \
+               fzf --multi --layout=reverse --preview="${PREVIEW_CMD}" | \
+               sed -Ee "${SED_FILTER}") )
+
+if [ "${#HASHES[@]}" -eq 1 ]; then
+    echo "${HASHES[0]}"
+elif [ "${#HASHES[@]}" -eq 2 ]; then
+    echo "${HASHES[1]}..${HASHES[0]}"
+else
+    echo "Bad selection.  Expected 1 or 2 hashes, got ${#HASHES[@]}." >&2
+    exit 1
+fi
