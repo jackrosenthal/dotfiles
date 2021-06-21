@@ -313,6 +313,8 @@
 
 (use-package yaml-mode)
 
+(use-package python-black)
+
 (use-package kconfig-mode
   :config
   (add-hook 'kconfig-mode-hook
