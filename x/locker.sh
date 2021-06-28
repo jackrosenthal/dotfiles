@@ -8,9 +8,17 @@ export XSECURELOCK_PARANOID_PASSWORD=0
 # For newer versions of xsecurelock
 export XSECURELOCK_PASSWORD_PROMPT=asterisks
 
-if command -v /usr/lib/xscreensaver/flyingtoasters >/dev/null; then
-    export XSECURELOCK_SAVER=/usr/lib/xscreensaver/flyingtoasters
-fi
+screensavers=(
+    /usr/lib/xscreensaver/flyingtoasters
+    /usr/libexec/xscreensaver/flyingtoasters
+)
+
+for saver in "${screensavers[@]}"; do
+    if command -v "${saver}" >/dev/null; then
+        export XSECURELOCK_SAVER="${saver}"
+        break
+    fi
+done
 
 export XSECURELOCK_FONT="Iosevka-21"
 export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
