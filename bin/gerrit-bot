@@ -7,6 +7,7 @@ import io
 import os
 import pathlib
 import re
+import requests
 import sched
 import site
 import subprocess
@@ -402,11 +403,24 @@ of the following tags to help us track upstream changes:
   return REVIEW_STRICTLY_DO_NOT_SUBMIT, msg
 
 
+HEALTHCHECK_URL = "https://hc-ping.com/be605a09-bdec-463a-b359-40062a4d41dc"
+
+
+def healthcheck():
+  r = requests.get(HEALTHCHECK_URL)
+  scheduler.enter(10 * 60, 30, healthcheck)
+
+
 def main():
   scheduler.enter(0, 10, cq1_task)
   scheduler.enter(5, 15, auto_cc_task)
   scheduler.enter(10, 20, zephyr_upstream_task)
-  scheduler.run()
+  scheduler.enter(0, 30, healthcheck)
+  try:
+    scheduler.run()
+  except Exception as e:
+    r = requests.get(HEALTHCHECK_URL + "/fail", data=str(e))
+    raise e
 
 
 if __name__ == '__main__':
