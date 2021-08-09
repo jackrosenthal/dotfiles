@@ -2,27 +2,36 @@
 
 board=all
 
-while (( ${#@} > 1 )); do
+while true; do
     case "$1" in
         -b | --board )
             shift
             board="$1"
             ;;
-        * )
+        -* )
             echo "Unknown argument: $1" >&2
             exit 1
+            ;;
+        * )
+            break
             ;;
     esac
     shift
 done
 
-if (( ${#@} != 1 )); then
+if (( ${#@} < 1 )); then
     echo "Expected ebuild argument" >&2
     exit 1
 fi
 
 export EBUILD="$1"
 shift
+
+vars=()
+while (( ${#@} )); do
+    vars+=("$1")
+    shift
+done
 
 for trunk in "${CROS_WORKON_SRCROOT}" \
                  /mnt/host/source \
@@ -47,6 +56,11 @@ done < <("${trunk}/chromite/bin/cros_list_overlays" "${clo_args[@]}")
 
 export PORTAGE_ECLASS_LOCATIONS="${eclass_locations[*]}"
 export PORTAGE_BIN_PATH="${trunk}/src/third_party/portage_tool/bin"
+export EBUILD_PHASE=depend
+
+# Setup PORTAGE_PIPE_FD
+exec 3>/dev/null
+export PORTAGE_PIPE_FD=3
 
 source "${PORTAGE_BIN_PATH}/ebuild.sh"
-declare -p
+declare -p "${vars[@]}"
