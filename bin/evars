@@ -1,0 +1,52 @@
+#!/bin/bash
+
+board=all
+
+while (( ${#@} > 1 )); do
+    case "$1" in
+        -b | --board )
+            shift
+            board="$1"
+            ;;
+        * )
+            echo "Unknown argument: $1" >&2
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+if (( ${#@} != 1 )); then
+    echo "Expected ebuild argument" >&2
+    exit 1
+fi
+
+export EBUILD="$1"
+shift
+
+for trunk in "${CROS_WORKON_SRCROOT}" \
+                 /mnt/host/source \
+                 ~/trunk \
+                 ~/chromiumos; do
+    if [[ -d "${trunk}" ]]; then
+        break
+    fi
+done
+
+clo_args=( --all )
+if [[ "${board}" != "all" ]]; then
+    clo_args+=( --board="${board}" )
+fi
+
+eclass_locations=()
+while read -r overlay; do
+    if [[ -d "${overlay}/eclass" ]]; then
+        eclass_locations+=( "${overlay}" )
+    fi
+done < <("${trunk}/chromite/bin/cros_list_overlays" "${clo_args[@]}")
+
+export PORTAGE_ECLASS_LOCATIONS="${eclass_locations[*]}"
+export PORTAGE_BIN_PATH="${trunk}/src/third_party/portage_tool/bin"
+
+source "${PORTAGE_BIN_PATH}/ebuild.sh"
+declare -p
