@@ -23,6 +23,12 @@ from chromite.lib.gerrit import GerritHelper
 
 scheduler = sched.scheduler(time.time, time.sleep)
 
+BOT_DISCLAIMER_MESSAGE = (
+    'This is an automated message from a bot trying to be '
+    "helpful.  If I'm mis-behaving, or if this message seems "
+    'to be wrong, please feel free to reach out to my owner, '
+    'jrosenth@chromium.org.')
+
 
 class GerritInstance(GerritHelper):
   def Query(self, *args, **kwargs):
@@ -220,10 +226,8 @@ def zephyr_upstream_task():
 
         cr, message = zephyr_get_review(cl_needs_proc, upstream)
 
-        message += ('\n\nThis is an automated message from a bot trying to be '
-                    "helpful.  If I'm mis-behaving, or if this message seems "
-                    'to be wrong, please feel free to reach out to my owner, '
-                    'jrosenth@chromium.org.')
+        message += '\n\n'
+        message += BOT_DISCLAIMER_MESSAGE
 
         labels = {'Code-Review': str(cr)}
         setlabels(labels, msg=message)
@@ -401,6 +405,40 @@ of the following tags to help us track upstream changes:
     msg += '* {}: {}\n\n'.format(tag, helpmsg)
 
   return REVIEW_STRICTLY_DO_NOT_SUBMIT, msg
+
+
+GITLAB_PROJECT_ID = 23994572
+GITLAB_PROJECT_URL = "https://gitlab.com/zephyr-ec/ec"
+
+
+def gitlab_ci_spawner_task():
+  instance = instances['chromium']
+
+  search_query = 'project:chromiumos/platform/ec status:open'
+  cls = list(instance.Query(search_query))
+  print('gitlab_ci_spawner: {} CLs to possibly start CI'.format(len(cls)))
+  for cl in cls:
+    ps_number = cl.patch_dict['currentPatchSet']['number']
+    proc_hashtag = 'zephyr_gitlab_ci_ps{}'.format(ps_number)
+
+    proc_query = '{} {} -hashtag:{}'.format(
+        search_query, cl.ToGerritQueryText(), proc_hashtag)
+
+    for cl_needs_proc in instance.Query(proc_query):
+      try:
+        gitlab_ci_spawn(cl_needs_proc)
+      except Exception:
+        print("WRN: Unable to spawn external CI on {}".format(cl_needs_proc))
+        traceback.print_exc(file=sys.stderr)
+      cl_needs_proc.instance.SetHashtags(cl_needs_proc,
+                                         add=[proc_hashtag],
+                                         remove=[])
+
+  scheduler.enter(200, 20, gitlab_ci_spawner_task)
+
+
+def gitlab_ci_spawn(cl):
+  pass
 
 
 HEALTHCHECK_URL = "https://hc-ping.com/be605a09-bdec-463a-b359-40062a4d41dc"
