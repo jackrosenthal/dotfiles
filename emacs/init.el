@@ -283,7 +283,7 @@
   :after evil yasnippet
   :config
   (global-set-key (kbd "C-,") #'magit-status)
-  (define-key magit-mode-map (kbd "R") #'repo-main-menu)
+  (define-key magit-mode-map (kbd "C-r") #'repo-main-menu)
   (evil-set-initial-state 'git-commit-mode 'insert)
   (add-hook 'git-commit-mode
             (lambda ()
@@ -430,4 +430,5 @@
   (kbd "C-b") #'monorail-insert-recent-ivy)
 
 (push "~/chromiumos/platform/dev/contrib/emacs" load-path)
+(push "~/chromiumos/platform/dev/contrib/emacs/gerrit" load-path)
 (require 'repo-transient nil t)
