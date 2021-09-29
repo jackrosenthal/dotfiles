@@ -200,11 +200,11 @@ def zephyr_upstream_task():
   instance = instances['chromium']
 
   for project, upstream in zephyr_upstream_repos:
-    search_query = ' '.join(
+    search_query = ' '.join([
         'project:{}'.format(project),
         'status:open',
         '-owner:copybara-worker-blackhole@google.com',
-    )
+    ])
     cls = list(instance.Query(search_query))
     print('zephyr_upstream_task: {} CLs to filter from {}'.format(
         len(cls), project))
