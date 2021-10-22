@@ -55,7 +55,8 @@ if [[ -z "$SSH_AUTH_SOCK" ]]; then
     if [[ "$(hostname -f)" == *.corp.google.com ]]; then
         eval $(ssh-agent -s)
     elif command -v gnome-keyring-daemon >/dev/null; then
-        eval $(gnome-keyring-daemon --start)
+        eval "$(gnome-keyring-daemon --start)"
+        export GNOME_KEYRING_CONTROL
     else
         i3-nagbar -m "No ssh agent is running" &
     fi
