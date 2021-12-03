@@ -243,20 +243,6 @@ def zephyr_upstream_task():
   scheduler.enter(200, 20, zephyr_upstream_task)
 
 
-def check_backport_commit(cl, upstream_url):
-  if not cl.tracking_branch.endswith('chromeos-v2.7'):
-    return (
-        REVIEW_STRICTLY_DO_NOT_SUBMIT,
-        'The {} branch is not currently accepting BACKPORT commits.'.format(
-            cl.tracking_branch),
-    )
-  return (
-      REVIEW_NEEDS_HUMAN_APPROVAL,
-      'Reviewers: please identify if this BACKPORT commit is acceptable to '
-      'merge into the release branch.',
-  )
-
-
 def check_frompull_commit(cl, upstream_url):
   p = re.compile(re.escape('{}/pull/'.format(upstream_url)) + r'[0-9]+')
   m = p.search(cl.commit_message)
@@ -292,11 +278,6 @@ def check_chromium_commit(cl, upstream_url):
 
 
 zephyr_tags = [
-    ('BACKPORT', check_backport_commit,
-     'This tag should be used for commits which have already merged into '
-     'upstream Zephyr main branch, and you are cherry-picking to a '
-     'release branch.  Note that this tag is now used regardless if the '
-     'cherry-pick was clean or not.'),
     ('FROMPULL', check_frompull_commit,
      'This tag should be used for commits which have not yet been merged '
      'into upstream Zepyhr, but have a pending pull request open.  Please '
@@ -311,29 +292,42 @@ zephyr_tags = [
      'upstreamed in your commit message.'),
 ]
 
+COPYBOT_MSG = (
+    'Upstream commits are now automatically cherry-picked into our main branch '
+    'daily by CopyBot.  There is no need to manually cherry-pick into the main '
+    'branch.\n\n'
+    'If you need a commit expedited into the main branch, or otherwise believe '
+    'that your commit has not been copied, please contact the current '
+    'downstreamer.  Googlers can see the current downstreamer by visiting '
+    'https://rotations.corp.google.com/rotation/4735002850885632. '
+    'Non-googlers should reach out to their contacts at Google for further '
+    'assistance.'
+)
+
+zephyr_obsolete_tags = [
+    ('BACKPORT', COPYBOT_MSG),
+    ('UPSTREAM', COPYBOT_MSG),
+]
+
 
 def zephyr_get_review(cl, upstream_url):
+  if 'chromeos-v' in cl.tracking_branch:
+    return (
+        REVIEW_STRICTLY_DO_NOT_SUBMIT,
+        f'The {cl.tracking_branch} branch is now closed.  Please re-open your '
+        f'CL on the main branch.'
+    )
   for tag, review_func, helpmsg in zephyr_tags:
     if cl.commit_message.startswith('{}: '.format(tag)):
       return review_func(cl, upstream_url)
 
-  if cl.commit_message.startswith('UPSTREAM: '):
-    msg = """The UPSTREAM tag is obsolete and should no longer be used.
-
-If you are cherry-picking from upstream to a release branch, you should
-use the BACKPORT tag, regardless if the cherry-pick is clean or not.
-
-If you are cherry-picking from upstream to a main branch, or your PR was
-merged into a release branch upstream, then Copybara should copy your CL
-to the appropriate branch within 24 hours.
-
-Note, if you would like an automated approval on backports to a
-release branch, simply wait for Copybara to copy your CL to the main
-branch, and then use the "Cherry-Pick" button in the Gerrit UI to copy
-the CL to a release branch, adding the BACKPORT tag.  You can then add
-the Rubber Stamper bot as a reviewer on the CL and it will
-auto-approve."""
-    return REVIEW_STRICTLY_DO_NOT_SUBMIT, msg
+  for tag, helpmsg in zephyr_obsolete_tags:
+    if cl.commit_message.startswith(f'{tag}: '):
+      msg = (
+          f"The {tag} tag is obsolete and should no longer be used.\n\n"
+          f"{helpmsg}"
+      )
+      return REVIEW_STRICTLY_DO_NOT_SUBMIT, msg
 
   # No tag matched
   msg = """Your commit message subject line in this repository MUST include one
@@ -342,6 +336,8 @@ of the following tags to help us track upstream changes:
 """
   for tag, review_func, helpmsg in zephyr_tags:
     msg += '* {}: {}\n\n'.format(tag, helpmsg)
+
+  msg += COPYBOT_MSG
 
   return REVIEW_STRICTLY_DO_NOT_SUBMIT, msg
 
