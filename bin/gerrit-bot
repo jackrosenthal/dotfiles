@@ -168,7 +168,7 @@ auto_cc_searches = [
 def auto_cc_task():
   base_query = ('-status:abandoned -owner:jrosenth -author:jrosenth '
                 '-owner:chromeos-ci-prod -reviewer:jrosenth -cc:jrosenth '
-                '-star:ignore')
+                '-star:ignore -is:wip')
   for name, instance in instances.items():
     for search in auto_cc_searches:
       search_query = '{} {}'.format(search, base_query)
