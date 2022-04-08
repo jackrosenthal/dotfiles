@@ -341,7 +341,7 @@ of the following tags to help us track upstream changes:
   msg += COPYBOT_MSG
 
   msg += (
-      "Tip: Are you uploading a CL you don't intend to submit?  Upload it "
+      "\n\nTip: Are you uploading a CL you don't intend to submit?  Upload it "
       "with the `Verified-1` label and I'll ignore your CL.  You can do this "
       "using `repo upload` by adding `-l Verified-1` to your command."
   )
