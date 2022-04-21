@@ -150,6 +150,9 @@
 (use-package clang-format)
 
 (use-package undo-tree
+  :init
+  ;; Prevent littering everywhere.
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
   :config (global-undo-tree-mode))
 
 (use-package afternoon-theme
