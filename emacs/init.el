@@ -180,7 +180,8 @@
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t
-        ivy-count-format "(%d/%d) "))
+        ivy-count-format "(%d/%d) ")
+  (evil-global-set-key 'normal (kbd "C-s") #'swiper))
 
 (use-package browse-at-remote
   :after evil
