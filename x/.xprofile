@@ -70,4 +70,6 @@ if ! [[ -e ~/.nolock ]] && command -v xss-lock >/dev/null; then
              -l -- ~/dotfiles/x/locker.sh &
 fi
 
+~/dotfiles/bin/dockdet
+
 [[ -e ~/.xprofile.local ]] && source ~/.xprofile.local
