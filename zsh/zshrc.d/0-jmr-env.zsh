@@ -28,3 +28,5 @@ function pref-order () {
 : ${PDFVIEW:=$(pref-order zathura evince mupdf xpdf)}
 export EDITOR PAGER PDFVIEW
 export CLICOLOR=t
+
+umask 022
