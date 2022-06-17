@@ -1,0 +1,146 @@
+#!/usr/bin/env python3
+
+import dataclasses
+import os
+import pathlib
+import re
+import subprocess
+import typing
+import tempfile
+
+
+@dataclasses.dataclass
+class Output:
+    name: str
+    connected: bool
+    resolution: typing.Optional[typing.Tuple[int, int]] = None
+    physical_size: typing.Optional[typing.Tuple[int, int]] = None
+
+    @property
+    def internal(self):
+        return self.name.startswith("eDP")
+
+    @property
+    def physical_size_in(self):
+        if not self.physical_size:
+            return None
+        return (self.physical_size[0] / 25.4, self.physical_size[1] / 25.4)
+
+    @property
+    def dpi(self):
+        if self.resolution and self.resolution[1] <= 1080:
+            return 96
+        if self.resolution and self.physical_size:
+            x_res = self.resolution[0] / self.physical_size_in[0]
+            y_res = self.resolution[1] / self.physical_size_in[1]
+            return int((x_res + y_res) / 2)
+        return 96
+
+    def __hash__(self):
+        return hash(self.name)
+
+
+def get_x_display():
+    display = os.environ.get("DISPLAY")
+    if display:
+        return display
+    for socket in pathlib.Path("/tmp/.X11-unix").glob("X*"):
+        return socket.name[1:]
+    raise OSError("Cannot find X display")
+
+
+def run_xrandr(*args, **kwargs):
+    kwargs.setdefault("check", True)
+    kwargs.setdefault("stdin", subprocess.DEVNULL)
+    kwargs.setdefault("stdout", subprocess.PIPE)
+    kwargs.setdefault("encoding", "utf-8")
+    kwargs.setdefault("errors", "replace")
+
+    return subprocess.run(["xrandr", "-d", get_x_display(), *map(str, args)], **kwargs)
+
+
+def get_outputs():
+    outputs = []
+    xrandr_result = run_xrandr()
+    res_p = re.compile(r"(\d+)x(\d+)")
+    phys_p = re.compile(r"(\d+)mm x (\d+)mm")
+    for line in xrandr_result.stdout.splitlines():
+        parts = line.split()
+        if len(parts) >= 2:
+            if parts[1] == "connected":
+                connected = True
+            elif parts[1] == "disconnected":
+                connected = False
+            elif outputs and not outputs[-1].resolution:
+                m = res_p.fullmatch(parts[0])
+                if m:
+                    outputs[-1].resolution = (int(m.group(1)), int(m.group(2)))
+                continue
+            else:
+                continue
+            physical_size = None
+            m = phys_p.search(line)
+            if m:
+                physical_size = (int(m.group(1)), int(m.group(2)))
+            outputs.append(
+                Output(name=parts[0], connected=connected, physical_size=physical_size)
+            )
+    return outputs
+
+
+def xrdb_merge(settings):
+    with tempfile.NamedTemporaryFile(mode="w+") as f:
+        for k, v in settings.items():
+            f.write(f"{k}: {v}\n")
+        f.flush()
+        subprocess.run(
+            ["xrdb", "-display", get_x_display(), "-merge", f.name],
+            check=True,
+        )
+
+
+def main():
+    outputs = get_outputs()
+    internal_displays = {d for d in outputs if d.internal and d.connected}
+    external_displays = {d for d in outputs if not d.internal and d.connected}
+    disconnected_outputs = {d for d in outputs if not d.connected}
+
+    if external_displays:
+        enable_outputs = external_displays
+        disable_outputs = internal_displays
+    else:
+        enable_outputs = internal_displays
+        disable_outputs = external_displays
+
+    disable_outputs |= disconnected_outputs
+
+    max_dpi_output = max(enable_outputs, key=lambda output: output.dpi)
+    target_dpi = max_dpi_output.dpi
+    print(max_dpi_output)
+
+    xrandr_opts = []
+
+    for output in enable_outputs:
+        xrandr_opts.extend(["--output", output.name, "--auto"])
+
+    for output in disable_outputs:
+        xrandr_opts.extend(["--output", output.name, "--off"])
+
+    if xrandr_opts:
+        run_xrandr(*xrandr_opts)
+
+    run_xrandr("--dpi", target_dpi)
+
+    cursor_size = 24 if target_dpi < 120 else 48
+    xrdb_merge(
+        {
+            "Xft.dpi": target_dpi,
+            "Xcursor.size": cursor_size,
+        }
+    )
+
+    subprocess.run(["i3-msg", "restart"], check=True)
+
+
+if __name__ == "__main__":
+    main()
