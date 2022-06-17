@@ -1,6 +1,17 @@
 # Jack's preferred environment variables
 
-export PATH="$HOME/.local/bin:$HOME/dotfiles/bin:$PATH"
+prepend_path() {
+    export PATH="$1:${PATH}"
+}
+
+append_path() {
+    export PATH="${PATH}:$1"
+}
+
+prepend_path ~/dotfiles/bin
+prepend_path ~/.local/bin
+append_path ~/depot_tools
+append_path ~/chromiumos/chromite/bin
 
 function pref-order () {
     for c in $@; do
