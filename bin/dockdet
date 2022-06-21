@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 import dataclasses
+import enum
 import os
 import pathlib
 import re
 import subprocess
-import typing
 import tempfile
+import typing
 
 
 @dataclasses.dataclass
@@ -118,6 +119,31 @@ def xrdb_merge(settings):
         )
 
 
+class LidState(enum.Enum):
+    UNKNOWN = 0
+    CLOSED = 1
+    OPEN = 2
+
+
+def get_lid_state():
+    def get_possible_states():
+        for switch in pathlib.Path("/proc/acpi/button/lid").iterdir():
+            state_file = switch / "state"
+            if state_file.is_file():
+                contents = state_file.read_text()
+                if "open" in contents:
+                    yield LidState.OPEN
+                elif "closed" in contents:
+                    yield LidState.CLOSED
+
+    states = set(get_possible_states())
+    if not states:
+        return LidState.UNKNOWN
+    if len(states) == 1:
+        return states.pop()
+    raise RuntimeError(f"Lid is in multiple states: {states}")
+
+
 def show_outputs(outputs):
     for output in outputs:
         print(output.name)
@@ -140,10 +166,15 @@ def main():
     internal_displays = {d for d in outputs if d.internal and d.connected}
     external_displays = {d for d in outputs if not d.internal and d.connected}
     disconnected_outputs = {d for d in outputs if not d.connected}
+    lid_state = get_lid_state()
+    print(f"Lid State: {lid_state}")
 
-    if external_displays:
+    if lid_state == LidState.CLOSED and external_displays:
         enable_outputs = external_displays
         disable_outputs = internal_displays
+    elif external_displays:
+        enable_outputs = internal_displays | external_displays
+        disable_outputs = set()
     else:
         enable_outputs = internal_displays
         disable_outputs = external_displays
