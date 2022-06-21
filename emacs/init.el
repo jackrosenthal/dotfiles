@@ -46,6 +46,10 @@
 (require 'google-logo nil t)
 (setq google-use-coding-style nil)
 
+;; Fix an issue with the Google package.
+(when (and (boundp 'project-prefix-map) (not (boundp 'project-switch-commands)))
+  (setq project-switch-commands nil))
+
 (defvar cros-chroot-trunk "~/chromiumos")
 
 (defun chroot-file-path (relative-path)
