@@ -34,6 +34,26 @@ class Output:
             return (x_res + y_res) / 2
         return 96
 
+    @property
+    def scaling_factor(self):
+        if not self.physical_size_in:
+            return 1.0
+
+        phys_area = self.physical_size_in[0] * self.physical_size_in[1]
+        for cutoff, factor in (
+            (14 * 9, 0.75),
+            (21 * 12, 0.8),
+            (23.5 * 13.5, 0.85),
+            (29 * 17, 0.9),
+        ):
+            if phys_area <= cutoff:
+                return factor
+        return 1.0
+
+    @property
+    def adjusted_dpi(self):
+        return max(96, self.dpi * self.scaling_factor)
+
     def __hash__(self):
         return hash(self.name)
 
@@ -98,8 +118,25 @@ def xrdb_merge(settings):
         )
 
 
+def show_outputs(outputs):
+    for output in outputs:
+        print(output.name)
+        for prop in (
+            "connected",
+            "resolution",
+            "physical_size",
+            "physical_size_in",
+            "internal",
+            "dpi",
+            "scaling_factor",
+            "adjusted_dpi",
+        ):
+            print(f"    {prop} = {getattr(output, prop)}")
+
+
 def main():
     outputs = get_outputs()
+    show_outputs(outputs)
     internal_displays = {d for d in outputs if d.internal and d.connected}
     external_displays = {d for d in outputs if not d.internal and d.connected}
     disconnected_outputs = {d for d in outputs if not d.connected}
@@ -114,7 +151,7 @@ def main():
     disable_outputs |= disconnected_outputs
 
     max_dpi_output = max(enable_outputs, key=lambda output: output.dpi)
-    target_dpi = max(96, int(max_dpi_output.dpi * 0.75))
+    target_dpi = int(max_dpi_output.adjusted_dpi)
     print(f"target_dpi={target_dpi}")
 
     xrandr_opts = []
