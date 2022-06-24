@@ -127,7 +127,10 @@ class LidState(enum.Enum):
 
 def get_lid_state():
     def get_possible_states():
-        for switch in pathlib.Path("/proc/acpi/button/lid").iterdir():
+        switches_dir = pathlib.Path("/proc/acpi/button/lid")
+        if not switches_dir.is_dir():
+            return
+        for switch in switches_dir.iterdir():
             state_file = switch / "state"
             if state_file.is_file():
                 contents = state_file.read_text()
