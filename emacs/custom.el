@@ -12,6 +12,24 @@
  '(paren-face-modes
    '(lisp-mode emacs-lisp-mode lisp-interaction-mode ielm-mode scheme-mode inferior-scheme-mode clojure-mode cider-repl-mode nrepl-mode arc-mode inferior-arc-mode racket-mode))
  '(paren-face-regexp "[][()]")
+ '(safe-local-variable-values
+   '((eval if
+           (file-exists-p
+            (concat
+             (file-name-directory
+              (let
+                  ((d
+                    (dir-locals-find-file ".")))
+                (if
+                    (stringp d)
+                    d
+                  (car d))))
+             "/run_tests"))
+           (set
+            (make-local-variable 'compile-command)
+            (if buffer-file-name
+                (shell-quote-argument
+                 (file-name-sans-extension buffer-file-name)))))))
  '(whitespace-style
    '(face trailing tabs lines-tail empty space-before-tab tab-mark)))
 (custom-set-faces
