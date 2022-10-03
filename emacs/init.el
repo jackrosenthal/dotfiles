@@ -344,6 +344,15 @@
 
 (add-to-list 'auto-mode-alist '("\\.\\(ebuild\\|eclass\\)\\'" . ebuild-mode))
 
+(define-derived-mode kernel-abi-doc-mode rst-mode "KernelABI"
+  "Mode for linux/Documentation/ABI"
+  (setq indent-tabs-mode t)
+  (setq fill-column 79))
+
+(add-to-list
+ 'auto-mode-alist
+ '("Documentation/ABI/\\(obsolete\\|removed\\|stable\\|testing\\)" . kernel-abi-doc-mode))
+
 ;; Eshell Setup
 (require 'eshell)
 (require 'em-smart)
