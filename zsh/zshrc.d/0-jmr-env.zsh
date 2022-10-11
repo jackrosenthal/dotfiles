@@ -10,6 +10,7 @@ append_path() {
 
 prepend_path ~/dotfiles/bin
 prepend_path ~/.local/bin
+prepend_path ~/.cargo/bin
 append_path ~/depot_tools
 append_path ~/chromiumos/chromite/bin
 
