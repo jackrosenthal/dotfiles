@@ -307,7 +307,7 @@
                   (unless (re-search-forward "Signed-off-by: " nil t)
                     (apply #'git-commit-signoff (git-commit-self-ident))))))))
 
-(use-package ag)
+(use-package rg)
 
 (use-package diff-hl
   :after magit
