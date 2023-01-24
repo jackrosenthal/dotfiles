@@ -21,7 +21,7 @@ xorg-xrandr
 libnotify
 arandr
 xsel
-rxvt-unicode
+kitty
 feh
 unclutter
 emacs

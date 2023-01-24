@@ -14,11 +14,13 @@ for arg in "$@"; do
     esac
 done
 
+mkdir -p ~/.config
 ln -Tsf ~/dotfiles/zsh/.zshenv ~/.zshenv
 ln -Tsf ~/dotfiles/x/.xprofile ~/.xprofile
 ln -Tsf ~/dotfiles/x/.xprofile ~/.xsessionrc
 ln -Tsf ~/dotfiles/emacs ~/.emacs.d
 ln -Tsf ~/dotfiles/i3 ~/.i3
+ln -Tsf ~/dotfiles/kitty ~/.config/kitty
 ln -Tsf ~/dotfiles/.vimrc ~/.vimrc
 
 mkdir -p ~/.local/vim{swap,undo}

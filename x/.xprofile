@@ -17,7 +17,7 @@ function pref_order () {
 # sane defaults, probably to be overwritten by .xprofile.local
 : ${BROWSER:=$(pref_order google-chrome google-chrome-stable firefox epiphany palemoon uzbl-browser netsurf)}
 export BROWSER
-: ${XTERM:=$(pref_order urxvt rxvt xterm gnome-terminal konsole)}
+: ${XTERM:=$(pref_order kitty urxvt rxvt xterm gnome-terminal konsole)}
 export XTERM
 
 conditional_start () {

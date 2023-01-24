@@ -14,7 +14,7 @@ x11-xserver-utils
 xinput
 arandr
 libnotify-bin
-rxvt-unicode
+kitty
 feh
 xsel
 x11-xkb-utils
