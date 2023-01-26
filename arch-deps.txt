@@ -6,7 +6,6 @@ zsh
 zsh-syntax-highlighting
 i3-wm
 i3status
-dmenu
 fzf
 rofi
 xscreensaver

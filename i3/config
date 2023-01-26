@@ -34,8 +34,8 @@ bindsym $mod+Tab exec $XTERM
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
-bindsym $mod+Return exec --no-startup-id dmenu_run -fn "Iosevka Term-12" -nb "#1c1c1c" -nf "#f6f3e8" -sb "#cae682" -sf "#1c1c1c"
+# start rofi program launcher
+bindsym $mod+Return exec --no-startup-id rofi -show drun -show-icons
 
 # dut keystrokes
 bindsym $mod+F2 exec --no-startup-id ssh dut reboot

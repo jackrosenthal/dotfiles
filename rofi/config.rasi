@@ -1,0 +1,5 @@
+@theme "squared-material-red"
+
+configuration {
+  font: "Iosevka 14";
+}

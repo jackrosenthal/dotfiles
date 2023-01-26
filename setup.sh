@@ -21,6 +21,7 @@ ln -Tsf ~/dotfiles/x/.xprofile ~/.xsessionrc
 ln -Tsf ~/dotfiles/emacs ~/.emacs.d
 ln -Tsf ~/dotfiles/i3 ~/.i3
 ln -Tsf ~/dotfiles/kitty ~/.config/kitty
+ln -Tsf ~/dotfiles/rofi ~/.config/rofi
 ln -Tsf ~/dotfiles/.vimrc ~/.vimrc
 
 mkdir -p ~/.local/vim{swap,undo}
