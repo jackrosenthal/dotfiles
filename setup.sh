@@ -43,4 +43,4 @@ else
     echo "WARNING: emacs service not enabled automatically"
 fi
 
-poetry -C ~/dotfiles/3rdparty/rofimoji install
+( cd ~/dotfiles/3rdparty/rofimoji && poetry install )
