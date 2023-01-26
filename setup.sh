@@ -1,16 +1,22 @@
 #!/bin/bash
 
+source /etc/lsb-release
+
 for arg in "$@"; do
     case "$arg" in
         --deps )
-            if command -v apt-get >/dev/null; then
-                sudo apt-get install $(cat ~/dotfiles/debian-deps.txt)
-            elif command -v pacman >/dev/null; then
-                sudo pacman -Sy --needed $(cat ~/dotfiles/arch-deps.txt)
-            else
-                echo "WARNING: could not recognize system"
-            fi
-            ;;
+            case "${DISTRIB_ID}" in
+                Debian )
+                    sudo apt-get install $(cat ~/dotfiles/debian-deps.txt)
+                    ;;
+                Arch )
+                    sudo pacman -Sy --needed $(cat ~/dotfiles/arch-deps.txt)
+                    ;;
+                * )
+                    echo "WARNING: could not recognize system"
+                    ;;
+            esac
+        ;;
     esac
 done
 
