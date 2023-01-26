@@ -1,6 +1,6 @@
 workspace_layout tabbed
 hide_edge_borders both
-font pango:Iosevka Term 10
+font pango:Iosevka 10
 set $mod Mod1
 
 # arrow keys for movement
