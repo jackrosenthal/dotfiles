@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.envrc
+.direnv
+.idea
+emoji-picker.iml
+.dist
+rofimoji.egg-info
+dist
+build
+src/picker/data/copyme.py

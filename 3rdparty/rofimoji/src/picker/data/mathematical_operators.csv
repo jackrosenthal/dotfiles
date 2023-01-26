@@ -1,0 +1,256 @@
+∀ For All
+∁ Complement
+∂ Partial Differential
+∃ There Exists
+∄ There Does Not Exist
+∅ Empty Set
+∆ Increment
+∇ Nabla
+∈ Element Of
+∉ Not An Element Of
+∊ Small Element Of
+∋ Contains As Member
+∌ Does Not Contain As Member
+∍ Small Contains As Member
+∎ End Of Proof
+∏ N-Ary Product
+∐ N-Ary Coproduct
+∑ N-Ary Summation
+− Minus Sign
+∓ Minus-Or-Plus Sign
+∔ Dot Plus
+∕ Division Slash
+∖ Set Minus
+∗ Asterisk Operator
+∘ Ring Operator
+∙ Bullet Operator
+√ Square Root
+∛ Cube Root
+∜ Fourth Root
+∝ Proportional To
+∞ Infinity
+∟ Right Angle
+∠ Angle
+∡ Measured Angle
+∢ Spherical Angle
+∣ Divides
+∤ Does Not Divide
+∥ Parallel To
+∦ Not Parallel To
+∧ Logical And
+∨ Logical Or
+∩ Intersection
+∪ Union
+∫ Integral
+∬ Double Integral
+∭ Triple Integral
+∮ Contour Integral
+∯ Surface Integral
+∰ Volume Integral
+∱ Clockwise Integral
+∲ Clockwise Contour Integral
+∳ Anticlockwise Contour Integral
+∴ Therefore
+∵ Because
+∶ Ratio
+∷ Proportion
+∸ Dot Minus
+∹ Excess
+∺ Geometric Proportion
+∻ Homothetic
+∼ Tilde Operator
+∽ Reversed Tilde
+∾ Inverted Lazy S
+∿ Sine Wave
+≀ Wreath Product
+≁ Not Tilde
+≂ Minus Tilde
+≃ Asymptotically Equal To
+≄ Not Asymptotically Equal To
+≅ Approximately Equal To
+≆ Approximately But Not Actually Equal To
+≇ Neither Approximately Nor Actually Equal To
+≈ Almost Equal To
+≉ Not Almost Equal To
+≊ Almost Equal Or Equal To
+≋ Triple Tilde
+≌ All Equal To
+≍ Equivalent To
+≎ Geometrically Equivalent To
+≏ Difference Between
+≐ Approaches The Limit
+≑ Geometrically Equal To
+≒ Approximately Equal To Or The Image Of
+≓ Image Of Or Approximately Equal To
+≔ Colon Equals
+≕ Equals Colon
+≖ Ring In Equal To
+≗ Ring Equal To
+≘ Corresponds To
+≙ Estimates
+≚ Equiangular To
+≛ Star Equals
+≜ Delta Equal To
+≝ Equal To By Definition
+≞ Measured By
+≟ Questioned Equal To
+≠ Not Equal To
+≡ Identical To
+≢ Not Identical To
+≣ Strictly Equivalent To
+≤ Less-Than Or Equal To
+≥ Greater-Than Or Equal To
+≦ Less-Than Over Equal To
+≧ Greater-Than Over Equal To
+≨ Less-Than But Not Equal To
+≩ Greater-Than But Not Equal To
+≪ Much Less-Than
+≫ Much Greater-Than
+≬ Between
+≭ Not Equivalent To
+≮ Not Less-Than
+≯ Not Greater-Than
+≰ Neither Less-Than Nor Equal To
+≱ Neither Greater-Than Nor Equal To
+≲ Less-Than Or Equivalent To
+≳ Greater-Than Or Equivalent To
+≴ Neither Less-Than Nor Equivalent To
+≵ Neither Greater-Than Nor Equivalent To
+≶ Less-Than Or Greater-Than
+≷ Greater-Than Or Less-Than
+≸ Neither Less-Than Nor Greater-Than
+≹ Neither Greater-Than Nor Less-Than
+≺ Precedes
+≻ Succeeds
+≼ Precedes Or Equal To
+≽ Succeeds Or Equal To
+≾ Precedes Or Equivalent To
+≿ Succeeds Or Equivalent To
+⊀ Does Not Precede
+⊁ Does Not Succeed
+⊂ Subset Of
+⊃ Superset Of
+⊄ Not A Subset Of
+⊅ Not A Superset Of
+⊆ Subset Of Or Equal To
+⊇ Superset Of Or Equal To
+⊈ Neither A Subset Of Nor Equal To
+⊉ Neither A Superset Of Nor Equal To
+⊊ Subset Of With Not Equal To
+⊋ Superset Of With Not Equal To
+⊌ Multiset
+⊍ Multiset Multiplication
+⊎ Multiset Union
+⊏ Square Image Of
+⊐ Square Original Of
+⊑ Square Image Of Or Equal To
+⊒ Square Original Of Or Equal To
+⊓ Square Cap
+⊔ Square Cup
+⊕ Circled Plus
+⊖ Circled Minus
+⊗ Circled Times
+⊘ Circled Division Slash
+⊙ Circled Dot Operator
+⊚ Circled Ring Operator
+⊛ Circled Asterisk Operator
+⊜ Circled Equals
+⊝ Circled Dash
+⊞ Squared Plus
+⊟ Squared Minus
+⊠ Squared Times
+⊡ Squared Dot Operator
+⊢ Right Tack
+⊣ Left Tack
+⊤ Down Tack
+⊥ Up Tack
+⊦ Assertion
+⊧ Models
+⊨ True
+⊩ Forces
+⊪ Triple Vertical Bar Right Turnstile
+⊫ Double Vertical Bar Double Right Turnstile
+⊬ Does Not Prove
+⊭ Not True
+⊮ Does Not Force
+⊯ Negated Double Vertical Bar Double Right Turnstile
+⊰ Precedes Under Relation
+⊱ Succeeds Under Relation
+⊲ Normal Subgroup Of
+⊳ Contains As Normal Subgroup
+⊴ Normal Subgroup Of Or Equal To
+⊵ Contains As Normal Subgroup Or Equal To
+⊶ Original Of
+⊷ Image Of
+⊸ Multimap
+⊹ Hermitian Conjugate Matrix
+⊺ Intercalate
+⊻ Xor
+⊼ Nand
+⊽ Nor
+⊾ Right Angle With Arc
+⊿ Right Triangle
+⋀ N-Ary Logical And
+⋁ N-Ary Logical Or
+⋂ N-Ary Intersection
+⋃ N-Ary Union
+⋄ Diamond Operator
+⋅ Dot Operator
+⋆ Star Operator
+⋇ Division Times
+⋈ Bowtie
+⋉ Left Normal Factor Semidirect Product
+⋊ Right Normal Factor Semidirect Product
+⋋ Left Semidirect Product
+⋌ Right Semidirect Product
+⋍ Reversed Tilde Equals
+⋎ Curly Logical Or
+⋏ Curly Logical And
+⋐ Double Subset
+⋑ Double Superset
+⋒ Double Intersection
+⋓ Double Union
+⋔ Pitchfork
+⋕ Equal And Parallel To
+⋖ Less-Than With Dot
+⋗ Greater-Than With Dot
+⋘ Very Much Less-Than
+⋙ Very Much Greater-Than
+⋚ Less-Than Equal To Or Greater-Than
+⋛ Greater-Than Equal To Or Less-Than
+⋜ Equal To Or Less-Than
+⋝ Equal To Or Greater-Than
+⋞ Equal To Or Precedes
+⋟ Equal To Or Succeeds
+⋠ Does Not Precede Or Equal
+⋡ Does Not Succeed Or Equal
+⋢ Not Square Image Of Or Equal To
+⋣ Not Square Original Of Or Equal To
+⋤ Square Image Of Or Not Equal To
+⋥ Square Original Of Or Not Equal To
+⋦ Less-Than But Not Equivalent To
+⋧ Greater-Than But Not Equivalent To
+⋨ Precedes But Not Equivalent To
+⋩ Succeeds But Not Equivalent To
+⋪ Not Normal Subgroup Of
+⋫ Does Not Contain As Normal Subgroup
+⋬ Not Normal Subgroup Of Or Equal To
+⋭ Does Not Contain As Normal Subgroup Or Equal
+⋮ Vertical Ellipsis
+⋯ Midline Horizontal Ellipsis
+⋰ Up Right Diagonal Ellipsis
+⋱ Down Right Diagonal Ellipsis
+⋲ Element Of With Long Horizontal Stroke
+⋳ Element Of With Vertical Bar At End Of Horizontal Stroke
+⋴ Small Element Of With Vertical Bar At End Of Horizontal Stroke
+⋵ Element Of With Dot Above
+⋶ Element Of With Overbar
+⋷ Small Element Of With Overbar
+⋸ Element Of With Underbar
+⋹ Element Of With Two Horizontal Strokes
+⋺ Contains With Long Horizontal Stroke
+⋻ Contains With Vertical Bar At End Of Horizontal Stroke
+⋼ Small Contains With Vertical Bar At End Of Horizontal Stroke
+⋽ Contains With Overbar
+⋾ Small Contains With Overbar
+⋿ Z Notation Bag Membership

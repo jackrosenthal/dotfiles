@@ -1,0 +1,256 @@
+⨀ N-Ary Circled Dot Operator
+⨁ N-Ary Circled Plus Operator
+⨂ N-Ary Circled Times Operator
+⨃ N-Ary Union Operator With Dot
+⨄ N-Ary Union Operator With Plus
+⨅ N-Ary Square Intersection Operator
+⨆ N-Ary Square Union Operator
+⨇ Two Logical And Operator
+⨈ Two Logical Or Operator
+⨉ N-Ary Times Operator
+⨊ Modulo Two Sum
+⨋ Summation With Integral
+⨌ Quadruple Integral Operator
+⨍ Finite Part Integral
+⨎ Integral With Double Stroke
+⨏ Integral Average With Slash
+⨐ Circulation Function
+⨑ Anticlockwise Integration
+⨒ Line Integration With Rectangular Path Around Pole
+⨓ Line Integration With Semicircular Path Around Pole
+⨔ Line Integration Not Including The Pole
+⨕ Integral Around A Point Operator
+⨖ Quaternion Integral Operator
+⨗ Integral With Leftwards Arrow With Hook
+⨘ Integral With Times Sign
+⨙ Integral With Intersection
+⨚ Integral With Union
+⨛ Integral With Overbar
+⨜ Integral With Underbar
+⨝ Join
+⨞ Large Left Triangle Operator
+⨟ Z Notation Schema Composition
+⨠ Z Notation Schema Piping
+⨡ Z Notation Schema Projection
+⨢ Plus Sign With Small Circle Above
+⨣ Plus Sign With Circumflex Accent Above
+⨤ Plus Sign With Tilde Above
+⨥ Plus Sign With Dot Below
+⨦ Plus Sign With Tilde Below
+⨧ Plus Sign With Subscript Two
+⨨ Plus Sign With Black Triangle
+⨩ Minus Sign With Comma Above
+⨪ Minus Sign With Dot Below
+⨫ Minus Sign With Falling Dots
+⨬ Minus Sign With Rising Dots
+⨭ Plus Sign In Left Half Circle
+⨮ Plus Sign In Right Half Circle
+⨯ Vector Or Cross Product
+⨰ Multiplication Sign With Dot Above
+⨱ Multiplication Sign With Underbar
+⨲ Semidirect Product With Bottom Closed
+⨳ Smash Product
+⨴ Multiplication Sign In Left Half Circle
+⨵ Multiplication Sign In Right Half Circle
+⨶ Circled Multiplication Sign With Circumflex Accent
+⨷ Multiplication Sign In Double Circle
+⨸ Circled Division Sign
+⨹ Plus Sign In Triangle
+⨺ Minus Sign In Triangle
+⨻ Multiplication Sign In Triangle
+⨼ Interior Product
+⨽ Righthand Interior Product
+⨾ Z Notation Relational Composition
+⨿ Amalgamation Or Coproduct
+⩀ Intersection With Dot
+⩁ Union With Minus Sign
+⩂ Union With Overbar
+⩃ Intersection With Overbar
+⩄ Intersection With Logical And
+⩅ Union With Logical Or
+⩆ Union Above Intersection
+⩇ Intersection Above Union
+⩈ Union Above Bar Above Intersection
+⩉ Intersection Above Bar Above Union
+⩊ Union Beside And Joined With Union
+⩋ Intersection Beside And Joined With Intersection
+⩌ Closed Union With Serifs
+⩍ Closed Intersection With Serifs
+⩎ Double Square Intersection
+⩏ Double Square Union
+⩐ Closed Union With Serifs And Smash Product
+⩑ Logical And With Dot Above
+⩒ Logical Or With Dot Above
+⩓ Double Logical And
+⩔ Double Logical Or
+⩕ Two Intersecting Logical And
+⩖ Two Intersecting Logical Or
+⩗ Sloping Large Or
+⩘ Sloping Large And
+⩙ Logical Or Overlapping Logical And
+⩚ Logical And With Middle Stem
+⩛ Logical Or With Middle Stem
+⩜ Logical And With Horizontal Dash
+⩝ Logical Or With Horizontal Dash
+⩞ Logical And With Double Overbar
+⩟ Logical And With Underbar
+⩠ Logical And With Double Underbar
+⩡ Small Vee With Underbar
+⩢ Logical Or With Double Overbar
+⩣ Logical Or With Double Underbar
+⩤ Z Notation Domain Antirestriction
+⩥ Z Notation Range Antirestriction
+⩦ Equals Sign With Dot Below
+⩧ Identical With Dot Above
+⩨ Triple Horizontal Bar With Double Vertical Stroke
+⩩ Triple Horizontal Bar With Triple Vertical Stroke
+⩪ Tilde Operator With Dot Above
+⩫ Tilde Operator With Rising Dots
+⩬ Similar Minus Similar
+⩭ Congruent With Dot Above
+⩮ Equals With Asterisk
+⩯ Almost Equal To With Circumflex Accent
+⩰ Approximately Equal Or Equal To
+⩱ Equals Sign Above Plus Sign
+⩲ Plus Sign Above Equals Sign
+⩳ Equals Sign Above Tilde Operator
+⩴ Double Colon Equal
+⩵ Two Consecutive Equals Signs
+⩶ Three Consecutive Equals Signs
+⩷ Equals Sign With Two Dots Above And Two Dots Below
+⩸ Equivalent With Four Dots Above
+⩹ Less-Than With Circle Inside
+⩺ Greater-Than With Circle Inside
+⩻ Less-Than With Question Mark Above
+⩼ Greater-Than With Question Mark Above
+⩽ Less-Than Or Slanted Equal To
+⩾ Greater-Than Or Slanted Equal To
+⩿ Less-Than Or Slanted Equal To With Dot Inside
+⪀ Greater-Than Or Slanted Equal To With Dot Inside
+⪁ Less-Than Or Slanted Equal To With Dot Above
+⪂ Greater-Than Or Slanted Equal To With Dot Above
+⪃ Less-Than Or Slanted Equal To With Dot Above Right
+⪄ Greater-Than Or Slanted Equal To With Dot Above Left
+⪅ Less-Than Or Approximate
+⪆ Greater-Than Or Approximate
+⪇ Less-Than And Single-Line Not Equal To
+⪈ Greater-Than And Single-Line Not Equal To
+⪉ Less-Than And Not Approximate
+⪊ Greater-Than And Not Approximate
+⪋ Less-Than Above Double-Line Equal Above Greater-Than
+⪌ Greater-Than Above Double-Line Equal Above Less-Than
+⪍ Less-Than Above Similar Or Equal
+⪎ Greater-Than Above Similar Or Equal
+⪏ Less-Than Above Similar Above Greater-Than
+⪐ Greater-Than Above Similar Above Less-Than
+⪑ Less-Than Above Greater-Than Above Double-Line Equal
+⪒ Greater-Than Above Less-Than Above Double-Line Equal
+⪓ Less-Than Above Slanted Equal Above Greater-Than Above Slanted Equal
+⪔ Greater-Than Above Slanted Equal Above Less-Than Above Slanted Equal
+⪕ Slanted Equal To Or Less-Than
+⪖ Slanted Equal To Or Greater-Than
+⪗ Slanted Equal To Or Less-Than With Dot Inside
+⪘ Slanted Equal To Or Greater-Than With Dot Inside
+⪙ Double-Line Equal To Or Less-Than
+⪚ Double-Line Equal To Or Greater-Than
+⪛ Double-Line Slanted Equal To Or Less-Than
+⪜ Double-Line Slanted Equal To Or Greater-Than
+⪝ Similar Or Less-Than
+⪞ Similar Or Greater-Than
+⪟ Similar Above Less-Than Above Equals Sign
+⪠ Similar Above Greater-Than Above Equals Sign
+⪡ Double Nested Less-Than
+⪢ Double Nested Greater-Than
+⪣ Double Nested Less-Than With Underbar
+⪤ Greater-Than Overlapping Less-Than
+⪥ Greater-Than Beside Less-Than
+⪦ Less-Than Closed By Curve
+⪧ Greater-Than Closed By Curve
+⪨ Less-Than Closed By Curve Above Slanted Equal
+⪩ Greater-Than Closed By Curve Above Slanted Equal
+⪪ Smaller Than
+⪫ Larger Than
+⪬ Smaller Than Or Equal To
+⪭ Larger Than Or Equal To
+⪮ Equals Sign With Bumpy Above
+⪯ Precedes Above Single-Line Equals Sign
+⪰ Succeeds Above Single-Line Equals Sign
+⪱ Precedes Above Single-Line Not Equal To
+⪲ Succeeds Above Single-Line Not Equal To
+⪳ Precedes Above Equals Sign
+⪴ Succeeds Above Equals Sign
+⪵ Precedes Above Not Equal To
+⪶ Succeeds Above Not Equal To
+⪷ Precedes Above Almost Equal To
+⪸ Succeeds Above Almost Equal To
+⪹ Precedes Above Not Almost Equal To
+⪺ Succeeds Above Not Almost Equal To
+⪻ Double Precedes
+⪼ Double Succeeds
+⪽ Subset With Dot
+⪾ Superset With Dot
+⪿ Subset With Plus Sign Below
+⫀ Superset With Plus Sign Below
+⫁ Subset With Multiplication Sign Below
+⫂ Superset With Multiplication Sign Below
+⫃ Subset Of Or Equal To With Dot Above
+⫄ Superset Of Or Equal To With Dot Above
+⫅ Subset Of Above Equals Sign
+⫆ Superset Of Above Equals Sign
+⫇ Subset Of Above Tilde Operator
+⫈ Superset Of Above Tilde Operator
+⫉ Subset Of Above Almost Equal To
+⫊ Superset Of Above Almost Equal To
+⫋ Subset Of Above Not Equal To
+⫌ Superset Of Above Not Equal To
+⫍ Square Left Open Box Operator
+⫎ Square Right Open Box Operator
+⫏ Closed Subset
+⫐ Closed Superset
+⫑ Closed Subset Or Equal To
+⫒ Closed Superset Or Equal To
+⫓ Subset Above Superset
+⫔ Superset Above Subset
+⫕ Subset Above Subset
+⫖ Superset Above Superset
+⫗ Superset Beside Subset
+⫘ Superset Beside And Joined By Dash With Subset
+⫙ Element Of Opening Downwards
+⫚ Pitchfork With Tee Top
+⫛ Transversal Intersection
+⫝̸ Forking
+⫝ Nonforking
+⫞ Short Left Tack
+⫟ Short Down Tack
+⫠ Short Up Tack
+⫡ Perpendicular With S
+⫢ Vertical Bar Triple Right Turnstile
+⫣ Double Vertical Bar Left Turnstile
+⫤ Vertical Bar Double Left Turnstile
+⫥ Double Vertical Bar Double Left Turnstile
+⫦ Long Dash From Left Member Of Double Vertical
+⫧ Short Down Tack With Overbar
+⫨ Short Up Tack With Underbar
+⫩ Short Up Tack Above Short Down Tack
+⫪ Double Down Tack
+⫫ Double Up Tack
+⫬ Double Stroke Not Sign
+⫭ Reversed Double Stroke Not Sign
+⫮ Does Not Divide With Reversed Negation Slash
+⫯ Vertical Line With Circle Above
+⫰ Vertical Line With Circle Below
+⫱ Down Tack With Circle Below
+⫲ Parallel With Horizontal Stroke
+⫳ Parallel With Tilde Operator
+⫴ Triple Vertical Bar Binary Relation
+⫵ Triple Vertical Bar With Horizontal Stroke
+⫶ Triple Colon Operator
+⫷ Triple Nested Less-Than
+⫸ Triple Nested Greater-Than
+⫹ Double-Line Slanted Less-Than Or Equal To
+⫺ Double-Line Slanted Greater-Than Or Equal To
+⫻ Triple Solidus Binary Relation
+⫼ Large Triple Vertical Bar Operator
+⫽ Double Solidus Operator
+⫾ White Vertical Bar
+⫿ N-Ary White Vertical Bar
