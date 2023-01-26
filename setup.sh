@@ -36,3 +36,5 @@ if command -v systemctl >/dev/null && systemctl status --user emacs >/dev/null; 
 else
     echo "WARNING: emacs service not enabled automatically"
 fi
+
+poetry -C ~/dotfiles/3rdparty/rofimoji install

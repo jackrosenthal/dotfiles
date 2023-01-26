@@ -7,6 +7,7 @@ zsh-syntax-highlighting
 i3-wm
 i3status
 fzf
+noto-fonts-emoji
 rofi
 xscreensaver
 xsecurelock
@@ -29,5 +30,6 @@ pulseaudio-bluetooth
 pavucontrol
 paprefs
 pasystray
+python-poetry
 blueman
 aspell-en
