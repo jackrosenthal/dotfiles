@@ -39,7 +39,7 @@ if [[ -e ~/.dropbox ]]; then
 fi
 
 if command -v feh >/dev/null; then
-    feh --bg-tile ~/dotfiles/x/g/os8-candy-bar-azul.png
+    feh --bg-fill ~/dotfiles/x/g/conan.jpeg
 else
     i3-nagbar -m "Install feh!" &
 fi
