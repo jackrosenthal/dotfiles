@@ -454,6 +454,6 @@
 (evil-define-key nil evil-insert-state-map
   (kbd "C-b") #'monorail-insert-recent-ivy)
 
-(push (expand-file-name "~/chromiumos/platform/dev/contrib/emacs") load-path)
-(push (expand-file-name "~/chromiumos/platform/dev/contrib/emacs/gerrit") load-path)
+(push (expand-file-name "~/chromiumos/src/platform/dev/contrib/emacs") load-path)
+(push (expand-file-name "~/chromiumos/src/platform/dev/contrib/emacs/gerrit") load-path)
 (require 'repo-transient nil t)
