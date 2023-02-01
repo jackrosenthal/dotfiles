@@ -445,7 +445,7 @@
 (add-hook 'eshell-named-command-hook #'cros-sdk-eshell-hook)
 
 ;; Local Packages
-(push "~/.emacs.d/site-lisp" load-path)
+(push (expand-file-name "~/.emacs.d/site-lisp") load-path)
 (require 'alan-mode)
 (require 'upstart-mode)
 (require 'monorail)
@@ -454,6 +454,6 @@
 (evil-define-key nil evil-insert-state-map
   (kbd "C-b") #'monorail-insert-recent-ivy)
 
-(push "~/chromiumos/platform/dev/contrib/emacs" load-path)
-(push "~/chromiumos/platform/dev/contrib/emacs/gerrit" load-path)
+(push (expand-file-name "~/chromiumos/platform/dev/contrib/emacs") load-path)
+(push (expand-file-name "~/chromiumos/platform/dev/contrib/emacs/gerrit") load-path)
 (require 'repo-transient nil t)
