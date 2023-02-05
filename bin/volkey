@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 SCRIPT_PATH="$(realpath "$(dirname "${BASH_SOURCE}")")"
 SOUND_FILE="${SCRIPT_PATH}/../assets/whit.wav"
 
