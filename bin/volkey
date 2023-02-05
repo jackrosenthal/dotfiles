@@ -2,8 +2,13 @@
 
 set -e
 
-beep() {
-    play -q -n synth 0.1 sin 880
+SCRIPT_PATH="$(realpath "$(dirname "${BASH_SOURCE}")")"
+SOUND_FILE="${SCRIPT_PATH}/../assets/whit.wav"
+
+play_sound() {
+    command -v play && play "${SOUND_FILE}" && return
+    command -v aplay && aplay "${SOUND_FILE}" && return
+    command -v mpv && mpv "${SOUND_FILE}" && return
 }
 
 key_mute() {
@@ -21,4 +26,4 @@ key_down() {
 }
 
 "key_${1}"
-beep
+play_sound
