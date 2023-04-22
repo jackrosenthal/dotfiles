@@ -26,4 +26,16 @@ if [[ -d "${CROS_CHECKOUT}" ]]; then
         TERM=xterm-256color "${CROS_CHECKOUT}/chromite/bin/cros_sdk" \
                             "${enter_args[@]}" -- "$@"
     }
+
+    iuse() {
+        flag="$1"
+        shift
+        cros query ebuilds -f "'${flag}' in iuse" "$@"
+    }
+
+    brduse() {
+        flag="$1"
+        shift
+        cros query boards -f "'${flag}' in use_flags" "$@"
+    }
 fi
