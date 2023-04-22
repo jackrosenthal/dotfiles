@@ -13,6 +13,8 @@ if [[ -d "${CROS_CHECKOUT}" ]]; then
     hash -d infraconf="${CROS_CHECKOUT}/infra/config"
     hash -d zmk="${CROS_CHECKOUT}/src/platform/ec/zephyr/zmake"
     hash -d mosys="${CROS_CHECKOUT}/src/platform/mosys"
+    hash -d 3p="${CROS_CHECKOUT}/src/third_party"
+    hash -d flashrom="${CROS_CHECKOUT}/src/third_party/flashrom"
 
     sdk() {
         local enter_args=()
