@@ -6,6 +6,7 @@
  '(clang-format-executable "/usr/bin/clang-format")
  '(column-number-mode t)
  '(debug-on-error nil)
+ '(helm-minibuffer-history-key "M-p")
  '(hl-paren-background-colors '("gainsboro"))
  '(hl-paren-colors '("dark cyan"))
  '(magit-bury-buffer-function 'magit-mode-quit-window)
@@ -30,6 +31,8 @@
             (if buffer-file-name
                 (shell-quote-argument
                  (file-name-sans-extension buffer-file-name)))))))
+ '(warning-suppress-log-types '((comp) (comp)))
+ '(warning-suppress-types '((comp)))
  '(whitespace-style
    '(face trailing tabs lines-tail empty space-before-tab tab-mark)))
 (custom-set-faces

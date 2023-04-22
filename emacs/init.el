@@ -338,6 +338,17 @@
 
 (use-package shelldon)
 
+(use-package reformatter)
+
+(reformatter-define cros-format
+  :program "cros"
+  :args `("format" "--stdout" ,input-file)
+  :stdin nil
+  :input-file (if buffer-file-name
+                  (concat "reformatter-" (file-name-nondirectory buffer-file-name))
+                "reformatter-tmp")
+  :lighter "cros format")
+
 (define-derived-mode ebuild-mode shell-script-mode "Ebuild"
   "Simple extension on top of `shell-script-mode'."
   (sh-set-shell "bash")
