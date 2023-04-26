@@ -7,7 +7,7 @@ if [[ -d "${CROS_CHECKOUT}" ]]; then
     hash -d boardo="${CROS_CHECKOUT}/src/overlays"
     hash -d privateo="${CROS_CHECKOUT}/src/private-overlays"
     hash -d croso="${CROS_CHECKOUT}/src/third_party/chromiumos-overlay"
-    hash -d prortageo="${CROS_CHECKOUT}/src/third_party/portage-stable"
+    hash -d portageo="${CROS_CHECKOUT}/src/third_party/portage-stable"
     hash -d p2="${CROS_CHECKOUT}/src/platform2"
     hash -d vboot="${CROS_CHECKOUT}/src/platform/vboot_reference"
     hash -d infraconf="${CROS_CHECKOUT}/infra/config"
