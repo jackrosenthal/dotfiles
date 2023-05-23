@@ -120,12 +120,6 @@
 (add-hook 'c-mode-hook (lambda ()
                          (setq tab-width 8)
                          (setq indent-tabs-mode t)))
-(defconst protobuf-style
-  '((c-basic-offset . 2)
-    (indent-tabs-mode . nil)))
-
-(add-hook 'protobuf-mode-hook
-          (lambda () (c-add-style "protobuf-style" protobuf-style t)))
 
 (when (fboundp #'google-set-c-style)
   (add-hook 'c++-mode-hook #'google-set-c-style))
@@ -158,6 +152,15 @@
 
 ;; My package choices
 (use-package clang-format)
+
+(use-package protobuf-mode)
+
+(defconst protobuf-style
+  '((c-basic-offset . 2)
+    (indent-tabs-mode . nil)))
+
+(add-hook 'protobuf-mode-hook
+          (lambda () (c-add-style "protobuf-style" protobuf-style t)))
 
 (use-package undo-tree
   :init
