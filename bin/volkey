@@ -2,6 +2,7 @@
 
 SCRIPT_PATH="$(realpath "$(dirname "${BASH_SOURCE}")")"
 SOUND_FILE="${SCRIPT_PATH}/../assets/whit.wav"
+SINK="$(pactl get-default-sink)"
 
 play_sound() {
     command -v play && play "${SOUND_FILE}" && return
@@ -10,17 +11,17 @@ play_sound() {
 }
 
 key_mute() {
-    pactl set-sink-mute 0 toggle
+    pactl set-sink-mute "${SINK}" toggle
 }
 
 key_up() {
-    pactl set-sink-mute 0 0
-    pactl set-sink-volume 0 '+10%'
+    pactl set-sink-mute "${SINK}" 0
+    pactl set-sink-volume "${SINK}" '+10%'
 }
 
 key_down() {
-    pactl set-sink-mute 0 0
-    pactl set-sink-volume 0 '-10%'
+    pactl set-sink-mute "${SINK}" 0
+    pactl set-sink-volume "${SINK}" '-10%'
 }
 
 "key_${1}"
