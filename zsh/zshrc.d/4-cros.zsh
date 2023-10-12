@@ -38,4 +38,8 @@ if [[ -d "${CROS_CHECKOUT}" ]]; then
         shift
         cros query boards -f "'${flag}' in use_flags" "$@"
     }
+
+    overlay() {
+        cd "$(cros query overlays -f "name == '$1'")"
+    }
 fi
