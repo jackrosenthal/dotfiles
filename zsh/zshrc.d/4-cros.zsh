@@ -42,4 +42,8 @@ if [[ -d "${CROS_CHECKOUT}" ]]; then
     overlay() {
         cd "$(cros query overlays -f "name == '$1'")"
     }
+
+    cros_sync() {
+        repo sync -n -j20 && repo rebase && repo --no-pager prune && repo sync -l -j$(nproc)
+    }
 fi
