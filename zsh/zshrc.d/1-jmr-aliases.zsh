@@ -21,6 +21,8 @@ command -v pip3 >/dev/null && alias pip=pip3
 command -v pigz >/dev/null && alias gzip=pigz
 command -v unpigz >/dev/null && alias gunzip=unpigz
 command -v zathura >/dev/null && alias zathura='zathura --fork'
+command -v bat >/dev/null && alias cat='bat'
+command -v batcat >/dev/null && alias bat='batcat' && alias cat='batcat'
 
 # make a directory (-p) and cd to it
 function take () {
