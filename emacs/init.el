@@ -341,6 +341,28 @@
 
 (use-package shelldon)
 
+(use-package projectile
+  :config (projectile-mode +1))
+
+(use-package treemacs
+  :config
+  (treemacs-follow-mode t)
+  (treemacs-git-mode 'deferred)
+  (treemacs-git-commit-diff-mode t)
+  (treemacs-filewatch-mode t))
+
+(use-package treemacs-evil
+  :after (treemacs evil))
+
+(use-package treemacs-icons-dired
+  :after (treemacs))
+
+(use-package treemacs-magit
+  :after (treemacs magit))
+
+(use-package treemacs-projectile
+  :after (treemacs projectile))
+
 (use-package reformatter)
 
 (reformatter-define cros-format
