@@ -285,6 +285,8 @@
 
 (use-package rust-mode)
 
+(use-package markdown-mode)
+
 (use-package yasnippet
   :config (yas-global-mode 1))
 
