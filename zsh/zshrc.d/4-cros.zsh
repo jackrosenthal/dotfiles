@@ -15,6 +15,7 @@ if [[ -d "${CROS_CHECKOUT}" ]]; then
     hash -d p2="${CROS_CHECKOUT}/src/platform2"
     hash -d portageo="${CROS_CHECKOUT}/src/third_party/portage-stable"
     hash -d privateo="${CROS_CHECKOUT}/src/private-overlays"
+    hash -d recipes="${CROS_CHECKOUT}/infra/recipes"
     hash -d vboot="${CROS_CHECKOUT}/src/platform/vboot_reference"
     hash -d zmk="${CROS_CHECKOUT}/src/platform/ec/zephyr/zmake"
 
