@@ -83,7 +83,7 @@ def find_best_gwsq() -> GWSQ:
                 current = candidate_gwsqs.get(name, 0)
                 if len(pattern) > current:
                     candidate_gwsqs[name] = len(pattern)
-    return max(candidate_gwsqs, key=lambda k: candidate_gwsqs[k])
+    return GWSQS[max(candidate_gwsqs, key=lambda k: candidate_gwsqs[k])]
 
 
 def get_project():
