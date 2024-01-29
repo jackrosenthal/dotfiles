@@ -47,6 +47,6 @@ if [[ -d "${CROS_CHECKOUT}" ]]; then
     }
 
     cros_sync() {
-        repo sync -n -j20 && repo rebase && repo --no-pager prune && repo sync -l -j$(nproc)
+        repo sync -n -j20 --optimized-fetch && repo rebase --onto-manifest && repo --no-pager prune && repo sync -l -j$(nproc)
     }
 fi
