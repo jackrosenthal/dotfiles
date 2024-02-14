@@ -22,6 +22,7 @@ NO_VERIFIED_REPOS = {
     "infra/proto",
     "infra/recipes",
     "src/config",
+    "website",
 }
 
 
