@@ -8,10 +8,10 @@ append_path() {
     export PATH="${PATH}:$1"
 }
 
+prepend_path ~/depot_tools
 prepend_path ~/dotfiles/bin
 prepend_path ~/.local/bin
 prepend_path ~/.cargo/bin
-append_path ~/depot_tools
 append_path ~/chromiumos/chromite/bin
 
 function pref-order () {
