@@ -489,16 +489,6 @@
       (in-sdk (substring command 1)))))
 (add-hook 'eshell-named-command-hook #'cros-sdk-eshell-hook)
 
-;; Local Packages
-(push (expand-file-name "~/.emacs.d/site-lisp") load-path)
-(require 'alan-mode)
-(require 'upstart-mode)
-(require 'monorail)
-(setq monorail-user "jrosenth@chromium.org")
-
-(evil-define-key nil evil-insert-state-map
-  (kbd "C-b") #'monorail-insert-recent-ivy)
-
 (push (expand-file-name "~/chromiumos/src/platform/dev/contrib/emacs") load-path)
 (push (expand-file-name "~/chromiumos/src/platform/dev/contrib/emacs/gerrit") load-path)
 (require 'repo-transient nil t)
