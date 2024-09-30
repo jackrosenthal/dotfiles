@@ -176,5 +176,5 @@ client.urgent           #e5786d #e5786d #f6f3e8 #444444
 
 bindsym $mod+l exec --no-startup-id xset s activate
 bindsym $mod+Shift+l exec --no-startup-id ~/dotfiles/x/toggle-autolock.sh
-bindsym $mod+d exec --no-startup-id ~/dotfiles/bin/rofimoji
+bindsym $mod+d exec --no-startup-id ~/.local/bin/rofimoji
 bindsym $mod+m exec --no-startup-id ~/dotfiles/bin/dockdet
