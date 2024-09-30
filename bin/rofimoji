@@ -1,4 +1,0 @@
-#!/bin/bash
-SCRIPT_PATH="$(realpath "$(dirname "${BASH_SOURCE}")")"
-cd "${SCRIPT_PATH}/../3rdparty/rofimoji"
-poetry run rofimoji "$@"
