@@ -1,0 +1,11 @@
+#!/bin/bash
+set -euo pipefail
+for remote_branch in main master; do
+  if remote="$(git config --get branch."${remote_branch}".remote)"; then
+    break
+  fi
+done
+
+git fetch "${remote}" "${remote_branch}"
+git switch -C "$1" FETCH_HEAD
+git branch --set-upstream-to "${remote}/${remote_branch}"
