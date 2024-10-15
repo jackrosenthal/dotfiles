@@ -1,6 +1,0 @@
-#!/bin/sh
-cl_number="$1"
-depfile="$(mktemp)"
-gerrit --raw deps "${cl_number}" >"${depfile}"
-gerrit label-cr --ne $(cat "${depfile}") 2
-gerrit label-cq --ne $(cat "${depfile}") 2

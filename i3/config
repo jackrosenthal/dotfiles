@@ -37,9 +37,6 @@ bindsym $mod+Shift+q kill
 # start rofi program launcher
 bindsym $mod+Return exec --no-startup-id rofi -show drun -show-icons
 
-# dut keystrokes
-bindsym $mod+F2 exec --no-startup-id ssh dut reboot
-
 # change focus
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down

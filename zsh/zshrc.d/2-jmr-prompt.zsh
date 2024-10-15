@@ -10,10 +10,6 @@ if [[ -n $SSH_CONNECTION ]]; then
     SSH_PROMPT='%{%B$fg[yellow]%}[SSH: %m]%{$reset_color%}%b '
 fi
 
-if [[ -e /etc/cros_chroot_version ]]; then
-    SDK_PROMPT='%{%B$fg[green]%}(cros sdk)%{$reset_color%}%b '
-fi
-
 function __zhook_return_code {
     local exit_status="$?"
     if [[ "${exit_status}" -eq 0 ]]; then
@@ -45,7 +41,7 @@ function __zprompt_env {
 setopt prompt_subst # allow running functions in the prompt
 
 function set-prompt {
-    PROMPT="${SSH_PROMPT}${SDK_PROMPT}"
+    PROMPT="${SSH_PROMPT}"
     PROMPT+='$(__zprompt_env)'
     PROMPT+='%{$fg[blue]%}%n%{$fg[green]%} %~%{$reset_color%} '
     PROMPT+='$(git_super_status)$(__zprompt_mode) '

@@ -36,44 +36,8 @@
 
 (add-to-path "~/dotfiles/bin")
 (add-to-path "~/.local/bin")
-(add-to-path "~/depot_tools")
-(add-to-path "~/chromiumos/chromite/bin")
 
 (setenv "PAGER" "cat")
-
-;; Use the Google package, if available
-(require 'google nil t)
-(require 'google-logo nil t)
-(setq google-use-coding-style nil)
-
-;; Fix an issue with the Google package.
-(when (and (boundp 'project-prefix-map) (not (boundp 'project-switch-commands)))
-  (setq project-switch-commands nil))
-
-(defvar cros-chroot-trunk "~/chromiumos")
-
-(defun chroot-file-path (relative-path)
-  (expand-file-name
-   (concat (file-name-as-directory (expand-file-name cros-chroot-trunk))
-           relative-path)))
-
-(defun chroot-file-p (path)
-  (string-prefix-p (chroot-file-path ".")
-                   (expand-file-name path)))
-
-;; EC hook information
-(defun ec-hooktypes (enum-name)
-  (with-temp-buffer
-    (insert-file-contents (chroot-file-path "src/platform/ec/include/hooks.h"))
-    (search-forward (format "enum %s {" enum-name) nil nil)
-    (delete-region (point-min) (point))
-    (search-forward "};" nil nil)
-    (delete-region (point) (point-max))
-    (goto-char (point-min))
-    (cl-loop while (re-search-forward "HOOK_[A-Z_]+" nil t)
-             unless (cl-member (match-string 0) result :test #'string=)
-             collect (match-string 0) into result
-             finally (return result))))
 
 ;; Display line numbers
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
@@ -120,9 +84,6 @@
 (add-hook 'c-mode-hook (lambda ()
                          (setq tab-width 8)
                          (setq indent-tabs-mode t)))
-
-(when (fboundp #'google-set-c-style)
-  (add-hook 'c++-mode-hook #'google-set-c-style))
 
 ;; Default Python configuration
 (setq-default python-shell-interpreter "python3")
@@ -308,14 +269,7 @@
   :config
   (global-set-key (kbd "C-,") #'magit-status)
   (define-key magit-mode-map (kbd "C-r") #'repo-main-menu)
-  (evil-set-initial-state 'git-commit-mode 'insert)
-  (add-hook 'git-commit-mode
-            (lambda ()
-              (yas-activate-extra-mode 'git-commit-mode)
-              (when (chroot-file-p default-directory)
-                (save-excursion
-                  (unless (re-search-forward "Signed-off-by: " nil t)
-                    (apply #'git-commit-signoff (git-commit-self-ident))))))))
+  (evil-set-initial-state 'git-commit-mode 'insert))
 
 (use-package rg)
 
@@ -373,23 +327,6 @@
 (use-package zig-mode)
 
 (use-package reformatter)
-
-(reformatter-define cros-format
-  :program "cros"
-  :args `("format" "--stdout" ,input-file)
-  :stdin nil
-  :input-file (if buffer-file-name
-                  (concat "reformatter-" (file-name-nondirectory buffer-file-name))
-                "reformatter-tmp")
-  :lighter "cros format")
-
-(define-derived-mode ebuild-mode shell-script-mode "Ebuild"
-  "Simple extension on top of `shell-script-mode'."
-  (sh-set-shell "bash")
-  (setq tab-width 4)
-  (setq indent-tabs-mode t))
-
-(add-to-list 'auto-mode-alist '("\\.\\(ebuild\\|eclass\\)\\'" . ebuild-mode))
 
 (define-derived-mode kernel-abi-doc-mode rst-mode "KernelABI"
   "Mode for linux/Documentation/ABI"
@@ -477,18 +414,3 @@
   (let ((dir (expand-file-name directory)))
     (make-directory dir t)
     (setq default-directory dir)))
-
-(defun cros-sdk-eshell-hook (command args)
-  (cl-labels
-      ((in-sdk (command)
-               (throw 'eshell-replace-command
-                      (eshell-parse-command
-                       "cros_sdk"
-                       `("--no-ns-pid" "--working-dir" "." "--" ,command ,@args)))))
-    (when (string-prefix-p "@" command)
-      (in-sdk (substring command 1)))))
-(add-hook 'eshell-named-command-hook #'cros-sdk-eshell-hook)
-
-(push (expand-file-name "~/chromiumos/src/platform/dev/contrib/emacs") load-path)
-(push (expand-file-name "~/chromiumos/src/platform/dev/contrib/emacs/gerrit") load-path)
-(require 'repo-transient nil t)
