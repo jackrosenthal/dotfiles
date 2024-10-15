@@ -25,6 +25,5 @@ pavucontrol
 paprefs
 pasystray
 python3-cachecontrol
-python3-poetry
 blueman
 aspell-en

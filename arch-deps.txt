@@ -30,6 +30,5 @@ pulseaudio-bluetooth
 pavucontrol
 paprefs
 pasystray
-python-poetry
 blueman
 aspell-en
