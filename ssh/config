@@ -1,0 +1,8 @@
+Include config.d/*
+
+Host *
+    AddKeysToAgent yes
+    ForwardAgent yes
+    ControlMaster auto
+    ControlPath /run/user/%i/ssh-master-%C.sock
+    ControlPersist 15s

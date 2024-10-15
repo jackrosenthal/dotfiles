@@ -32,6 +32,13 @@ ln -Tsf ~/dotfiles/.vimrc ~/.vimrc
 
 mkdir -p ~/.local/vim{swap,undo}
 
+mkdir -p ~/.ssh/config.d
+chmod 700 ~/.ssh{,/config.d}
+if [[ ( ! -h ~/.ssh/config ) && -f ~/.ssh/config ]]; then
+    mv ~/.ssh/config ~/.ssh/config.d/config.old
+fi
+ln -Tsf ~/dotfiles/ssh/config ~/.ssh/config
+
 if [[ -e ~/.emacs ]]; then
     mv ~/.emacs ~/.emacs.old
     echo "WARNING: renamed ~/.emacs -> ~/.emacs.old"
