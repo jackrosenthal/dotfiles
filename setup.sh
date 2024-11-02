@@ -39,6 +39,8 @@ if [[ ( ! -h ~/.ssh/config ) && -f ~/.ssh/config ]]; then
 fi
 ln -Tsf ~/dotfiles/ssh/config ~/.ssh/config
 
+git config --global include.path '~/dotfiles/git/gitconfig'
+
 if [[ -e ~/.emacs ]]; then
     mv ~/.emacs ~/.emacs.old
     echo "WARNING: renamed ~/.emacs -> ~/.emacs.old"
