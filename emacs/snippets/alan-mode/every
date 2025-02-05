@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: every
-# key: every
-# --
-Every $1 IsA ${2:object}
-  $0
-End Every $1.

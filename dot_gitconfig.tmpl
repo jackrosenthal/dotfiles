@@ -1,0 +1,11 @@
+[advice]
+	detachedHead = false
+[alias]
+	amend = commit --amend --no-edit
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[user]
+	email = {{ .email | quote }}
+	name = {{ .name | quote }}

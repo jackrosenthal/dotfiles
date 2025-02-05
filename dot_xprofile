@@ -1,0 +1,69 @@
+#!/bin/bash
+if command -v xrdb >/dev/null; then
+    xrdb -merge ~/.Xresources
+    [[ -e ~/.Xresources.local ]] && xrdb -merge ~/.Xresources.local
+fi
+
+function pref_order () {
+    for c in $@; do
+        if command -v "$c" >/dev/null; then
+            echo "$c"
+            return
+        fi
+    done
+    return 1
+}
+
+# sane defaults, probably to be overwritten by .xprofile.local
+: ${BROWSER:=$(pref_order google-chrome google-chrome-stable firefox epiphany palemoon uzbl-browser netsurf)}
+export BROWSER
+: ${XTERM:=$(pref_order kitty urxvt rxvt xterm gnome-terminal konsole)}
+export XTERM
+
+conditional_start () {
+    if command -v "$1" >/dev/null; then
+        pgrep -u $EUID -x "$1" >/dev/null || $@ &
+    fi
+}
+
+conditional_start nm-applet
+conditional_start unclutter
+conditional_start pasystray
+conditional_start blueman-applet
+conditional_start ~/.local/bin/low_battery_monitor
+conditional_start ~/.local/bin/acpid_client.py
+
+# hopefully, I am eventually able to remove this one day...
+if [[ -e ~/.dropbox ]]; then
+    conditional_start dropbox
+fi
+
+if command -v feh >/dev/null; then
+    feh --bg-fill ~/.local/assets/NovoBlaze2Blur.jpg
+else
+    i3-nagbar -m "Install feh!" &
+fi
+
+if [[ -e ~/.xmodmap ]]; then
+    if command -v xmodmap >/dev/null; then
+        xmodmap ~/.xmodmap
+    else
+        i3-nagbar -m ".xmodmap exists, but xmodmap is not installed!" &
+    fi
+fi
+
+if [[ -z "${SSH_AUTH_SOCK}" ]]; then
+    eval $(ssh-agent -s -a /run/user/"$(id -u)"/ssh-agent.sock)
+fi
+export SSH_AUTH_SOCK
+
+if ! [[ -e ~/.nolock ]] && command -v xss-lock >/dev/null; then
+    #      timeout      dim time after that
+    xset s 300          5
+    xss-lock -n $(pref_order /usr/lib/xsecurelock/dimmer /usr/lib/x86_64-linux-gnu/xsecurelock/dimmer) \
+             -l -- ~/.local/bin/locker.sh &
+fi
+
+~/.local/bin/dockdet
+
+[[ -e ~/.xprofile.local ]] && source ~/.xprofile.local

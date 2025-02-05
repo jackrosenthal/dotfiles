@@ -1,0 +1,10 @@
+{{- $email := promptStringOnce . "email" "Email address" "jack@rosenth.al" -}}
+{{- $name := promptStringOnce . "email" "Name" "Jack Rosenthal" -}}
+
+{{- $choices := list "desktop" "laptop" "lite" -}}
+{{- $profile := promptChoiceOnce . "profile" "Select profile" $choices "lite" -}}
+
+[data]
+    email = {{ $email | quote }}
+    name = {{ $name | quote }}
+    profile = {{ $profile | quote }}

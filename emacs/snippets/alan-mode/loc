@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: loc
-# key: loc
-# --
-The $1 IsA location
-  $0
-End The $1.

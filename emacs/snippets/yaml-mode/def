@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: def
-# key: def
-# --
-$1: &${1:$(replace-regexp-in-string "-" "_" yas-text)}
-  $0
