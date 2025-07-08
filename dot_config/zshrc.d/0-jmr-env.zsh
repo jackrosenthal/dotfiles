@@ -27,4 +27,7 @@ function pref-order () {
 export EDITOR PAGER PDFVIEW
 export CLICOLOR=t
 
+# npm
+export npm_config_prefix="${HOME}/.local"
+
 umask 022
