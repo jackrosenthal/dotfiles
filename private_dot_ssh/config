@@ -6,3 +6,6 @@ Host *
     ControlMaster auto
     ControlPath /run/user/%i/ssh-master-%C.sock
     ControlPersist 15s
+
+Host metapod.a924.casa
+    ProxyCommand cloudflared access ssh --hostname %h
