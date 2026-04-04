@@ -1,0 +1,190 @@
+// niri config
+// $mod = Alt, movement keys: r=left, n=down, t=up, s=right (3l layout)
+
+input {
+    keyboard {
+        xkb {
+            layout "us"
+            variant "3l"
+        }
+        repeat-delay 300
+        repeat-rate 50
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+        dwt  // disable while typing
+    }
+
+    mouse {
+        natural-scroll false
+    }
+}
+
+// --------------------------------------------------------------------------
+// Layout & Appearance
+// --------------------------------------------------------------------------
+
+layout {
+    gaps 8
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+
+    default-column-width { proportion 0.5; }
+
+    focus-ring {
+        width 2
+        active-color "#dd00ff"
+        inactive-color "#4a2060"
+    }
+
+    border {
+        off
+    }
+
+    shadow {
+        on
+        softness 30
+        spread 5
+        offset x=0 y=6
+        color "#00000066"
+    }
+
+    inactive-window-opacity 0.92
+}
+
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+// --------------------------------------------------------------------------
+// Startup
+// --------------------------------------------------------------------------
+
+spawn-at-startup "waybar"
+spawn-at-startup "mako"
+spawn-at-startup "nm-applet"
+spawn-at-startup "blueman-applet"
+// Polkit authentication agent — needed for GUI privilege prompts (drives, VPNs, etc.)
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+// Clipboard history daemon
+spawn-at-startup "sh" "-c" "wl-paste --watch cliphist store"
+// Auto-lock: idle 5min → lock, 10min → monitors off; responds to loginctl lock-session
+spawn-at-startup "swayidle" "-w"
+    "timeout" "300" "swaylock -f -c 1f1626"
+    "timeout" "600" "niri msg action power-off-monitors"
+    "before-sleep" "swaylock -f -c 1f1626"
+    "lock" "swaylock -f -c 1f1626"
+
+// --------------------------------------------------------------------------
+// Window rules
+// --------------------------------------------------------------------------
+
+window-rule {
+    geometry-corner-radius 8
+    clip-to-geometry true
+}
+
+// --------------------------------------------------------------------------
+// Key bindings
+// --------------------------------------------------------------------------
+
+binds {
+    // --- Applications ---
+    Alt+Tab    { spawn "ghostty"; }
+    Alt+Return { spawn "fuzzel"; }
+    Alt+o      { spawn "sh" "-c" "${BROWSER}"; }
+    Alt+d      { spawn "bemoji"; }
+    Alt+c      { spawn "sh" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
+
+    // --- Window management ---
+    Alt+Shift+q { close-window; }
+    Alt+f       { fullscreen-window; }
+    Alt+i       { toggle-window-floating; }
+
+    // --- Focus (3l: r=left, n=down, t=up, s=right) ---
+    Alt+r { focus-column-left; }
+    Alt+s { focus-column-right; }
+    Alt+t { focus-window-up; }
+    Alt+n { focus-window-down; }
+
+    Alt+Left  { focus-column-left; }
+    Alt+Right { focus-column-right; }
+    Alt+Up    { focus-window-up; }
+    Alt+Down  { focus-window-down; }
+
+    // --- Move windows ---
+    Alt+Shift+r { move-column-left; }
+    Alt+Shift+s { move-column-right; }
+    Alt+Shift+t { move-window-up; }
+    Alt+Shift+n { move-window-down; }
+
+    Alt+Shift+Left  { move-column-left; }
+    Alt+Shift+Right { move-column-right; }
+    Alt+Shift+Up    { move-window-up; }
+    Alt+Shift+Down  { move-window-down; }
+
+    // --- Move column to adjacent monitor ---
+    Alt+Ctrl+Shift+Right { move-column-to-monitor-right; }
+    Alt+Ctrl+Shift+Left  { move-column-to-monitor-left; }
+
+    // --- Resize: cycle preset widths, or fine-tune ---
+    Alt+j       { switch-preset-column-width; }
+    Alt+Shift+j { reset-window-height; }
+    Alt+Ctrl+r  { set-column-width "-5%"; }
+    Alt+Ctrl+s  { set-column-width "+5%"; }
+    Alt+Ctrl+t  { set-window-height "-5%"; }
+    Alt+Ctrl+n  { set-window-height "+5%"; }
+
+    // --- Workspaces ---
+    Alt+1 { focus-workspace 1; }
+    Alt+2 { focus-workspace 2; }
+    Alt+3 { focus-workspace 3; }
+    Alt+4 { focus-workspace 4; }
+    Alt+5 { focus-workspace 5; }
+    Alt+6 { focus-workspace 6; }
+    Alt+7 { focus-workspace 7; }
+    Alt+8 { focus-workspace 8; }
+    Alt+9 { focus-workspace 9; }
+    Alt+0 { focus-workspace 10; }
+
+    Alt+Shift+1 { move-window-to-workspace 1; }
+    Alt+Shift+2 { move-window-to-workspace 2; }
+    Alt+Shift+3 { move-window-to-workspace 3; }
+    Alt+Shift+4 { move-window-to-workspace 4; }
+    Alt+Shift+5 { move-window-to-workspace 5; }
+    Alt+Shift+6 { move-window-to-workspace 6; }
+    Alt+Shift+7 { move-window-to-workspace 7; }
+    Alt+Shift+8 { move-window-to-workspace 8; }
+    Alt+Shift+9 { move-window-to-workspace 9; }
+    Alt+Shift+0 { move-window-to-workspace 10; }
+
+    // --- Session ---
+    Alt+l            { spawn "loginctl" "lock-session"; }
+    Alt+Shift+l      { spawn "/home/jrosenth/.local/bin/toggle-autolock.sh"; }
+    Alt+Shift+Comma  { reload-config; }
+    Alt+Shift+Period { quit; }
+
+    // --- Screenshots ---
+    Print      { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print  { screenshot-window; }
+
+    // --- Brightness ---
+    XF86MonBrightnessUp   { spawn "brightnessctl" "set" "10%+"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "set" "10%-"; }
+
+    // --- Volume ---
+    XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+    XF86AudioLowerVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+    XF86AudioMute        { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    Alt+F10 { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+    Alt+F9  { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+    Alt+F8  { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+}

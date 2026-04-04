@@ -1,0 +1,38 @@
+font-family = JetBrains Mono Nerd Font
+font-size = 12
+audio-bell = false
+scrollback-limit = 10000000
+window-padding-x = 0
+window-padding-y = 0
+
+# Splits
+keybind = ctrl+-=new_split:down
+keybind = ctrl+|=new_split:right
+keybind = ctrl+up=goto_split:top
+keybind = ctrl+down=goto_split:bottom
+keybind = ctrl+left=goto_split:left
+keybind = ctrl+right=goto_split:right
+
+# WildCherry color scheme
+background = #1f1626
+foreground = #d9faff
+cursor-color = #dd00ff
+selection-background = #002731
+selection-foreground = #1f1626
+
+palette = 0=#000506
+palette = 1=#d94085
+palette = 2=#2ab250
+palette = 3=#ffd06e
+palette = 4=#873bdb
+palette = 5=#ececec
+palette = 6=#c1b8b6
+palette = 7=#fff8dd
+palette = 8=#009cc9
+palette = 9=#da6bab
+palette = 10=#f4dba5
+palette = 11=#eac066
+palette = 12=#2f8bb9
+palette = 13=#ae636b
+palette = 14=#ff919d
+palette = 15=#e4838d
