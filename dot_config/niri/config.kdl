@@ -17,9 +17,7 @@ input {
         dwt  // disable while typing
     }
 
-    mouse {
-        natural-scroll false
-    }
+
 }
 
 // --------------------------------------------------------------------------
@@ -56,7 +54,7 @@ layout {
         color "#00000066"
     }
 
-    inactive-window-opacity 0.92
+
 }
 
 prefer-no-csd
@@ -76,11 +74,7 @@ spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 // Clipboard history daemon
 spawn-at-startup "sh" "-c" "wl-paste --watch cliphist store"
 // Auto-lock: idle 5min → lock, 10min → monitors off; responds to loginctl lock-session
-spawn-at-startup "swayidle" "-w"
-    "timeout" "300" "swaylock -f -c 1f1626"
-    "timeout" "600" "niri msg action power-off-monitors"
-    "before-sleep" "swaylock -f -c 1f1626"
-    "lock" "swaylock -f -c 1f1626"
+spawn-at-startup "sh" "-c" "swayidle -w timeout 300 'swaylock -f -c 1f1626' timeout 600 'niri msg action power-off-monitors' before-sleep 'swaylock -f -c 1f1626' lock 'swaylock -f -c 1f1626'"
 
 // --------------------------------------------------------------------------
 // Window rules
@@ -168,8 +162,8 @@ binds {
     // --- Session ---
     Alt+l            { spawn "loginctl" "lock-session"; }
     Alt+Shift+l      { spawn "/home/jrosenth/.local/bin/toggle-autolock.sh"; }
-    Alt+Shift+Comma  { reload-config; }
-    Alt+Shift+Period { quit; }
+
+    Alt+Shift+period { quit; }
 
     // --- Screenshots ---
     Print      { screenshot; }
