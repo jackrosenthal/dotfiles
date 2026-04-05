@@ -1,6 +1,10 @@
 // niri config
 // $mod = Alt, movement keys: r=left, n=down, t=up, s=right (3l layout)
 
+environment {
+    BROWSER "google-chrome-stable"
+}
+
 input {
     keyboard {
         xkb {
