@@ -1,0 +1,18 @@
+{{- $sourceDir := .chezmoi.sourceDir -}}
+{{- $gobinDir := joinPath $sourceDir "gobin" -}}
+{{- $rawMainFiles := output "find" $gobinDir "-mindepth" "2" "-maxdepth" "2" "-type" "f" "-name" "main.go" | trim -}}
+#!/bin/bash
+set -euo pipefail
+
+if ! command -v go >/dev/null 2>&1; then
+  echo "go not found; skipping local Go binary builds" >&2
+  exit 0
+fi
+
+{{- if $rawMainFiles }}
+{{- range $main := splitList "\n" $rawMainFiles }}
+{{- $name := base (dir $main) }}
+# {{ $name }}: {{ include (printf "gobin/%s/main.go" $name) | sha256sum }}
+go build -o "$HOME/.local/bin/{{ $name }}" "{{ joinPath $sourceDir "gobin" $name }}"/*.go
+{{- end }}
+{{- end }}

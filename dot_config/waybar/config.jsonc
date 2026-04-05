@@ -1,0 +1,66 @@
+{
+    "layer": "top",
+    "position": "bottom",
+    "height": 32,
+    "spacing": 4,
+
+    "modules-left": ["niri/workspaces", "niri/window"],
+    "modules-center": ["clock"],
+    "modules-right": ["pulseaudio", "backlight", "battery", "tray"],
+
+    "niri/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "ws1": "1",
+            "ws2": "2",
+            "ws3": "3",
+            "ws4": "4",
+            "ws5": "5",
+            "ws6": "6",
+            "ws7": "7",
+            "ws8": "8",
+            "ws9": "9",
+            "ws10": "10",
+            "default": ""
+        }
+    },
+
+    "niri/window": {
+        "format": "{}",
+        "max-length": 60
+    },
+
+    "clock": {
+        "format": "{:%a %b %d  %H:%M}",
+        "tooltip-format": "<tt>{calendar}</tt>"
+    },
+
+    "pulseaudio": {
+        "format": "󰕾 {volume}%",
+        "format-muted": "󰖁 mute",
+        "tooltip": false,
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+    },
+
+    "backlight": {
+        "device": "amdgpu_bl1",
+        "format": "󰃠 {percent}%"
+    },
+
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "states": {
+            "warning": 30,
+            "critical": 15
+        }
+    },
+
+    "tray": {
+        "spacing": 8
+    }
+}

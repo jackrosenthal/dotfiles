@@ -1,0 +1,32 @@
+#!/bin/bash
+set -euo pipefail
+
+WRAPPER="/home/jrosenth/.local/bin/xwayland-root-wrapper"
+TOASTERS="/usr/lib/xscreensaver/flyingtoasters"
+
+exec swaylock-plugin -f \
+  --font "JetBrains Mono Nerd Font" \
+  --font-size 12 \
+  --indicator-idle-visible \
+  --indicator-radius 96 \
+  --indicator-thickness 6 \
+  --inside-color 000000b8 \
+  --inside-clear-color 000000b8 \
+  --inside-ver-color 000000d0 \
+  --inside-wrong-color 000000d0 \
+  --line-color 00000000 \
+  --line-clear-color 00000000 \
+  --line-ver-color 00000000 \
+  --line-wrong-color 00000000 \
+  --ring-color ffffffcc \
+  --ring-clear-color ffffffcc \
+  --ring-ver-color e0e0e0ff \
+  --ring-wrong-color ffffffff \
+  --key-hl-color ffffffff \
+  --bs-hl-color c0c0c0ff \
+  --separator-color 00000000 \
+  --text-color ffffffff \
+  --text-clear-color ffffffff \
+  --text-ver-color e0e0e0ff \
+  --text-wrong-color ffffffff \
+  --command-each "windowtolayer ${WRAPPER} ${TOASTERS} -root"
