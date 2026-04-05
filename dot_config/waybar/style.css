@@ -17,6 +17,10 @@ window#waybar {
     padding: 0 8px;
 }
 
+.modules-right > widget > * {
+    margin: 0 2px;
+}
+
 #workspaces button {
     padding: 0 8px;
     color: #d9faff;
@@ -50,27 +54,75 @@ window#waybar {
     padding: 0 8px;
 }
 
-#clock {
-    color: #d9faff;
+#clock,
+#custom-calendar-popup {
+    color: #f7f7f7;
+    background: #4a4253;
     font-weight: bold;
+    padding: 0 10px;
 }
 
+#cpu,
+#memory,
+#disk,
+#network,
 #pulseaudio,
 #backlight,
 #battery,
 #tray {
-    color: #d9faff;
-    padding: 0 8px;
+    color: #f7f7f7;
+    padding: 0 10px;
+}
+
+#cpu {
+    background: #6b2d5c;
+}
+
+#memory {
+    background: #2d4d66;
+}
+
+#disk {
+    background: #355c3a;
+}
+
+#network {
+    background: #5c4a2d;
+}
+
+#pulseaudio {
+    background: #5b355c;
+}
+
+#backlight {
+    background: #66552d;
+}
+
+#battery {
+    color: #111111;
+    background: #5aa35a;
+}
+
+#tray {
+    background: #3b3b3b;
+}
+
+#battery.medium {
+    color: #111111;
+    background: #d8b24a;
 }
 
 #battery.warning {
-    color: #ffd06e;
+    color: #111111;
+    background: #d8b24a;
 }
 
 #battery.critical {
-    color: #d94085;
+    color: #f7f7f7;
+    background: #b23a3a;
 }
 
 #battery.charging {
-    color: #2ab250;
+    color: #111111;
+    background: #5aa35a;
 }

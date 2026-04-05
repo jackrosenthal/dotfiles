@@ -96,6 +96,7 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
+spawn-at-startup "swaybg" "-i" "/home/jrosenth/.local/assets/NovoBlaze2Blur.jpg" "-m" "fill"
 spawn-at-startup "flameshot"
 spawn-at-startup "nm-applet"
 spawn-at-startup "blueman-applet"

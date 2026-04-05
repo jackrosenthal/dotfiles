@@ -5,8 +5,8 @@
     "spacing": 4,
 
     "modules-left": ["niri/workspaces", "niri/window"],
-    "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "backlight", "battery", "tray"],
+    "modules-center": [],
+    "modules-right": ["cpu", "memory", "disk#root", "network", "pulseaudio", "backlight", "battery", "custom/calendar-popup", "tray"],
 
     "niri/workspaces": {
         "format": "{icon}",
@@ -30,9 +30,38 @@
         "max-length": 60
     },
 
-    "clock": {
-        "format": "{:%a %b %d  %H:%M}",
-        "tooltip-format": "<tt>{calendar}</tt>"
+    "custom/calendar-popup": {
+        "exec": "/home/jrosenth/.local/bin/waybar-calendar-popup",
+        "return-type": "json",
+        "interval": 1,
+        "format": "{}",
+        "tooltip": false,
+        "on-click": "/home/jrosenth/.local/bin/waybar-calendar-popup popup"
+    },
+
+    "cpu": {
+        "format": " {usage}%",
+        "tooltip": false
+    },
+
+    "memory": {
+        "format": "󰍛 {used:0.1f}G/{total:0.1f}G",
+        "tooltip": false
+    },
+
+    "disk#root": {
+        "path": "/",
+        "unit": "GiB",
+        "format": "󰋊 {specific_used:0.0f}G/{specific_total:0.0f}G",
+        "tooltip": false
+    },
+
+    "network": {
+        "format-wifi": "{ipaddr}",
+        "format-ethernet": "{ipaddr}",
+        "format-linked": "{ifname}",
+        "format-disconnected": "no net",
+        "tooltip": false
     },
 
     "pulseaudio": {
@@ -55,7 +84,8 @@
         "format-charging": "󰂄 {capacity}%",
         "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
         "states": {
-            "warning": 30,
+            "medium": 50,
+            "warning": 20,
             "critical": 15
         }
     },

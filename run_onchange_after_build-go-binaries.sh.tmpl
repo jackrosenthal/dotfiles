@@ -9,10 +9,15 @@ if ! command -v go >/dev/null 2>&1; then
   exit 0
 fi
 
+export CGO_ENABLED=0
+
 {{- if $rawMainFiles }}
 {{- range $main := splitList "\n" $rawMainFiles }}
 {{- $name := base (dir $main) }}
 # {{ $name }}: {{ include (printf "gobin/%s/main.go" $name) | sha256sum }}
-go build -o "$HOME/.local/bin/{{ $name }}" "{{ joinPath $sourceDir "gobin" $name }}"/*.go
+(
+  cd "{{ joinPath $sourceDir "gobin" $name }}"
+  go build -o "$HOME/.local/bin/{{ $name }}"
+)
 {{- end }}
 {{- end }}
