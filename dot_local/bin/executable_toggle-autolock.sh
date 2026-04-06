@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOCKER="/home/jrosenth/.local/bin/swaylock-toasters"
+LOCKER="${HOME}/.local/bin/swaylock-toasters"
 
 if pgrep -x swayidle > /dev/null; then
     pkill -x swayidle

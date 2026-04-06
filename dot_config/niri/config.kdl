@@ -100,7 +100,7 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
-spawn-at-startup "swaybg" "-i" "/home/jrosenth/.local/assets/NovoBlaze2Blur.jpg" "-m" "fill"
+spawn-at-startup "swaybg" "-i" "${HOME}/.local/assets/NovoBlaze2Blur.jpg" "-m" "fill"
 spawn-at-startup "flameshot"
 spawn-at-startup "nm-applet"
 spawn-at-startup "blueman-applet"
@@ -111,7 +111,7 @@ spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 // Clipboard history daemon
 spawn-at-startup "sh" "-c" "wl-paste --watch cliphist store"
 // Auto-lock: idle 5min → lock, 10min → monitors off
-spawn-at-startup "sh" "-c" "swayidle -w timeout 300 '/home/jrosenth/.local/bin/swaylock-toasters' timeout 600 'niri msg action power-off-monitors' before-sleep '/home/jrosenth/.local/bin/swaylock-toasters' lock '/home/jrosenth/.local/bin/swaylock-toasters'"
+spawn-at-startup "sh" "-c" "swayidle -w timeout 300 '${HOME}/.local/bin/swaylock-toasters' timeout 600 'niri msg action power-off-monitors' before-sleep '${HOME}/.local/bin/swaylock-toasters' lock '${HOME}/.local/bin/swaylock-toasters'"
 
 // --------------------------------------------------------------------------
 // Window rules
@@ -217,8 +217,8 @@ binds {
     Alt+Shift+0 { move-window-to-workspace "ws10"; }
 
     // --- Session ---
-    Alt+l            { spawn "/home/jrosenth/.local/bin/swaylock-toasters"; }
-    Alt+Shift+l      { spawn "/home/jrosenth/.local/bin/toggle-autolock.sh"; }
+    Alt+l            { spawn "${HOME}/.local/bin/swaylock-toasters"; }
+    Alt+Shift+l      { spawn "${HOME}/.local/bin/toggle-autolock.sh"; }
 
     Alt+Shift+period { quit; }
 

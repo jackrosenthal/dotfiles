@@ -31,12 +31,12 @@
     },
 
     "custom/calendar-popup": {
-        "exec": "/home/jrosenth/.local/bin/waybar-calendar-popup",
+        "exec": "${HOME}/.local/bin/waybar-calendar-popup",
         "return-type": "json",
         "interval": 1,
         "format": "{}",
         "tooltip": false,
-        "on-click": "/home/jrosenth/.local/bin/waybar-calendar-popup popup"
+        "on-click": "${HOME}/.local/bin/waybar-calendar-popup popup"
     },
 
     "cpu": {
