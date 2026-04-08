@@ -3,6 +3,7 @@
 
 environment {
     BROWSER "google-chrome-stable"
+    DISPLAY ":0"
 }
 
 input {
