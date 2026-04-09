@@ -1,0 +1,13 @@
+[Unit]
+Description=Dynamic output configuration for Wayland compositors
+Documentation=man:kanshi(1)
+BindsTo=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kanshi
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=sway-session.target

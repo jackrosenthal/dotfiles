@@ -8,6 +8,8 @@ set $mod Mod1
 set $BROWSER google-chrome-stable
 
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway DISPLAY
+exec_always systemctl --user start sway-session.target
+exec_always systemctl --user reload kanshi.service
 
 # ─── Input ────────────────────────────────────────────────────────────────────
 
@@ -47,9 +49,7 @@ mouse_warping container
 
 # ─── Output / Wallpaper ───────────────────────────────────────────────────────
 
-exec swaybg -i ${HOME}/.local/assets/NovoBlaze2Blur.jpg -m fill
-output "{{ .outputs.internal.name }}" scale {{ .outputs.internal.scale }}
-output "{{ .outputs.dell.name }}" scale {{ .outputs.dell.scale }}
+output * bg ${HOME}/.local/assets/NovoBlaze2Blur.jpg fill
 
 # ─── Layout ───────────────────────────────────────────────────────────────────
 
@@ -57,7 +57,6 @@ workspace_layout tabbed
 
 # ─── Startup ──────────────────────────────────────────────────────────────────
 
-exec kanshi
 exec waybar
 exec mako
 exec nm-applet
