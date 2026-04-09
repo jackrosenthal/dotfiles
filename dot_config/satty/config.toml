@@ -1,0 +1,7 @@
+[general]
+fullscreen = "current-screen"
+early-exit = true
+copy-command = "wl-copy"
+output-filename = "~/Pictures/Screenshots/satty-%Y%m%d-%H%M%S.png"
+initial-tool = "crop"
+annotation-size-factor = 0.5

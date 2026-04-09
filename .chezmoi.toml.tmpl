@@ -4,7 +4,28 @@
 {{- $choices := list "desktop" "laptop" "lite" -}}
 {{- $profile := promptChoiceOnce . "profile" "Select profile" $choices "lite" -}}
 
+{{- $machine := output "cat" "/sys/class/dmi/id/product_family" | trim -}}
+
 [data]
     email = {{ $email | quote }}
     name = {{ $name | quote }}
     profile = {{ $profile | quote }}
+
+[data.outputs.dell]
+    name = "Dell Inc. DELL P3223QE FGS34P3"
+    modeW = 3840
+    modeH = 2160
+    scale = 1.25
+
+[data.outputs.internal]
+{{- if eq $machine "ThinkPad P14s Gen 5 AMD" }}
+    name = "Lenovo Group Limited 0x414B Unknown"
+    modeW = 2880
+    modeH = 1800
+    scale = 1.75
+{{- else if eq $machine "ThinkPad X1 Carbon Gen 12" }}
+    name = "Unknown Unknown Unknown"
+    modeW = 1920
+    modeH = 1200
+    scale = 1.25
+{{- end }}

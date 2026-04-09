@@ -47,7 +47,9 @@ mouse_warping container
 
 # ─── Output / Wallpaper ───────────────────────────────────────────────────────
 
-output * bg ${HOME}/.local/assets/NovoBlaze2Blur.jpg fill
+exec swaybg -i ${HOME}/.local/assets/NovoBlaze2Blur.jpg -m fill
+output "{{ .outputs.internal.name }}" scale {{ .outputs.internal.scale }}
+output "{{ .outputs.dell.name }}" scale {{ .outputs.dell.scale }}
 
 # ─── Layout ───────────────────────────────────────────────────────────────────
 
@@ -55,10 +57,9 @@ workspace_layout tabbed
 
 # ─── Startup ──────────────────────────────────────────────────────────────────
 
-exec_always kanshi
+exec kanshi
 exec waybar
 exec mako
-exec flameshot
 exec nm-applet
 exec blueman-applet
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -74,6 +75,7 @@ exec swayidle -w \
 # ─── Window Rules ─────────────────────────────────────────────────────────────
 
 for_window [app_id="com.mitchellh.ghostty" tiling] border none
+for_window [app_id="com.gabm.satty"]        floating enable
 for_window [floating]                       move position center
 
 # ─── Key Bindings ─────────────────────────────────────────────────────────────
@@ -84,7 +86,7 @@ bindsym $mod+Return     exec fuzzel
 bindsym $mod+o          exec $BROWSER
 bindsym $mod+d          exec bemoji
 bindsym $mod+c          exec sh -c 'cliphist list | fuzzel --dmenu | cliphist decode | wl-copy'
-bindsym $mod+p          exec flameshot gui
+bindsym $mod+p          exec ${HOME}/.local/bin/screenshot
 
 # --- Window management ---
 bindsym $mod+Shift+q    kill
@@ -180,11 +182,6 @@ bindsym $mod+Shift+l        exec ${HOME}/.local/bin/toggle-autolock.sh
 bindsym $mod+Shift+comma    reload
 bindsym $mod+Shift+m        restart
 bindsym $mod+Shift+period   exec swaymsg exit
-
-# --- Screenshots ---
-bindsym Print           exec flameshot gui
-bindsym Ctrl+Print      exec grimshot copy screen
-bindsym $mod+Print      exec grimshot copy window
 
 # --- Brightness ---
 bindsym XF86MonBrightnessUp   exec brightnessctl set 10%+
