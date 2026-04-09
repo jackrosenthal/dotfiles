@@ -1,8 +1,0 @@
-# kanshi output profiles
-# Add a profile block per monitor setup you use.
-# Outputs are matched by "Make Model Serial" — use * to wildcard a field.
-
-# Laptop display (2880x1800, ~242 DPI → scale 1.75)
-profile {
-    output "Lenovo Group Limited 0x414B Unknown" scale 1.75
-}

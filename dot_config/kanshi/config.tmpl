@@ -1,0 +1,43 @@
+{{- $machine := output "cat" "/sys/class/dmi/id/product_family" | trim -}}
+
+{{- /* Output aliases */ -}}
+{{- $DELL := "Dell Inc. DELL P3223QE FGS34P3" -}}
+{{- $dellModeW := 3840 -}}
+{{- $dellModeH := 2160 -}}
+{{- $dellScale := 1.25 -}}
+{{- $dellLogicalW := divf (float64 $dellModeW) $dellScale | int -}}
+{{- $dellLogicalH := divf (float64 $dellModeH) $dellScale | int -}}
+
+{{- $INTERNAL := "" -}}
+{{- $internalModeW := 0 -}}
+{{- $internalModeH := 0 -}}
+{{- $internalScale := 1.0 -}}
+
+{{- if eq $machine "ThinkPad P14s Gen 5 AMD" -}}
+{{-   $INTERNAL = "Lenovo Group Limited 0x414B Unknown" -}}
+{{-   $internalModeW = 2880 -}}
+{{-   $internalModeH = 1800 -}}
+{{-   $internalScale = 1.75 -}}
+{{- else if eq $machine "ThinkPad X1 Carbon Gen 12" -}}
+{{-   $INTERNAL = "Unknown Unknown Unknown" -}}
+{{-   $internalModeW = 1920 -}}
+{{-   $internalModeH = 1200 -}}
+{{-   $internalScale = 1.25 -}}
+{{- end -}}
+
+{{- $internalLogicalW := divf (float64 $internalModeW) $internalScale | int -}}
+{{- $dualX := sub $dellLogicalW $internalLogicalW -}}
+{{- $dualY := $dellLogicalH }}
+
+# kanshi output profiles — {{ $machine }}
+
+# Laptop display only
+profile {
+    output "{{ $INTERNAL }}" mode {{ $internalModeW }}x{{ $internalModeH }} scale {{ $internalScale }}
+}
+
+# Laptop + DELL P3223QE (main center, laptop bottom-right)
+profile {
+    output "{{ $DELL }}" mode {{ $dellModeW }}x{{ $dellModeH }} position 0,0 scale {{ $dellScale }}
+    output "{{ $INTERNAL }}" mode {{ $internalModeW }}x{{ $internalModeH }} position {{ $dualX }},{{ $dualY }} scale {{ $internalScale }}
+}
