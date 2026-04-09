@@ -1,0 +1,104 @@
+[env]
+TERM = "alacritty"
+
+[window]
+padding.x = 0
+padding.y = 0
+decorations = "None"
+dynamic_title = true
+
+[font]
+normal = { family = "JetBrains Mono Nerd Font", style = "Regular" }
+bold = { family = "JetBrains Mono Nerd Font", style = "Bold" }
+italic = { family = "JetBrains Mono Nerd Font", style = "Italic" }
+bold_italic = { family = "JetBrains Mono Nerd Font", style = "Bold Italic" }
+size = 12
+
+[scrolling]
+history = 100000
+multiplier = 3
+
+[selection]
+save_to_clipboard = true
+
+[cursor]
+style = { shape = "Block", blinking = "On" }
+blink_interval = 500
+unfocused_hollow = true
+
+[mouse]
+hide_when_typing = true
+
+[bell]
+duration = 0
+command = { program = "swaymsg", args = ["urgent", "enable"] }
+
+[terminal]
+osc52 = "CopyPaste"
+
+[[hints.enabled]]
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+hyperlinks = true
+post_processing = true
+command = { program = "xdg-open" }
+mouse = { enabled = true, mods = "Control" }
+
+[colors.primary]
+background = "#1f1626"
+foreground = "#d9faff"
+
+[colors.cursor]
+cursor = "#dd00ff"
+text = "#1f1626"
+
+[colors.vi_mode_cursor]
+cursor = "#dd00ff"
+text = "#1f1626"
+
+[colors.selection]
+background = "#002731"
+text = "#1f1626"
+
+[colors.search.matches]
+background = "#ffd06e"
+foreground = "#1f1626"
+
+[colors.search.focused_match]
+background = "#dd00ff"
+foreground = "#1f1626"
+
+# WildCherry palette
+[colors.normal]
+black = "#000506"
+red = "#d94085"
+green = "#2ab250"
+yellow = "#ffd06e"
+blue = "#873bdb"
+magenta = "#ececec"
+cyan = "#c1b8b6"
+white = "#fff8dd"
+
+[colors.bright]
+black = "#009cc9"
+red = "#da6bab"
+green = "#f4dba5"
+yellow = "#eac066"
+blue = "#2f8bb9"
+magenta = "#ae636b"
+cyan = "#ff919d"
+white = "#e4838d"
+
+[[keyboard.bindings]]
+key = "Plus"
+mods = "Control"
+action = "IncreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Minus"
+mods = "Control"
+action = "DecreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Key0"
+mods = "Control"
+action = "ResetFontSize"

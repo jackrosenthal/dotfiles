@@ -73,14 +73,14 @@ exec swayidle -w \
 
 # ─── Window Rules ─────────────────────────────────────────────────────────────
 
-for_window [app_id="com.mitchellh.ghostty" tiling] border none
+for_window [app_id="Alacritty" tiling] border none
 for_window [app_id="com.gabm.satty"]        floating enable
 for_window [floating]                       move position center
 
 # ─── Key Bindings ─────────────────────────────────────────────────────────────
 
 # --- Applications ---
-bindsym $mod+Tab        exec ghostty
+bindsym $mod+Tab        exec alacritty
 bindsym $mod+Return     exec fuzzel
 bindsym $mod+o          exec $BROWSER
 bindsym $mod+d          exec bemoji
