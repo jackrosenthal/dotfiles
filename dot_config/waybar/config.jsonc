@@ -4,28 +4,15 @@
     "height": 32,
     "spacing": 4,
 
-    "modules-left": ["niri/workspaces", "niri/window"],
+    "modules-left": ["sway/workspaces", "sway/window"],
     "modules-center": [],
     "modules-right": ["cpu", "memory", "disk#root", "network", "pulseaudio", "backlight", "battery", "custom/calendar-popup", "tray"],
 
-    "niri/workspaces": {
-        "format": "{icon}",
-        "format-icons": {
-            "ws1": "1",
-            "ws2": "2",
-            "ws3": "3",
-            "ws4": "4",
-            "ws5": "5",
-            "ws6": "6",
-            "ws7": "7",
-            "ws8": "8",
-            "ws9": "9",
-            "ws10": "10",
-            "default": ""
-        }
+    "sway/workspaces": {
+        "format": "{name}"
     },
 
-    "niri/window": {
+    "sway/window": {
         "format": "{}",
         "max-length": 60
     },

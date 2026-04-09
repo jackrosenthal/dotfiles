@@ -42,12 +42,6 @@ window#waybar {
     background: #4a2060;
 }
 
-#workspaces button:not(#niri-workspace-ws1):not(#niri-workspace-ws2):not(#niri-workspace-ws3):not(#niri-workspace-ws4):not(#niri-workspace-ws5):not(#niri-workspace-ws6):not(#niri-workspace-ws7):not(#niri-workspace-ws8):not(#niri-workspace-ws9):not(#niri-workspace-ws10) {
-    padding: 0;
-    margin: 0;
-    min-width: 0;
-    opacity: 0;
-}
 
 #window {
     color: #da6bab;

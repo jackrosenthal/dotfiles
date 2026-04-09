@@ -8,7 +8,8 @@ if pgrep -x swayidle > /dev/null; then
 else
     swayidle -w \
         timeout 300 "${LOCKER}" \
-        timeout 600 'niri msg action power-off-monitors' \
+        timeout 600 'swaymsg "output * dpms off"' \
+        resume 'swaymsg "output * dpms on"' \
         before-sleep "${LOCKER}" \
         lock "${LOCKER}" &
     notify-send -t 2000 'Auto lock' 'ENABLED'
