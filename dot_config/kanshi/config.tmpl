@@ -25,9 +25,9 @@
 {{-   $internalScale = 1.25 -}}
 {{- end -}}
 
-{{- $internalLogicalW := divf (float64 $internalModeW) $internalScale | int -}}
-{{- $dualX := sub $dellLogicalW $internalLogicalW -}}
-{{- $dualY := $dellLogicalH }}
+{{- $internalLogicalH := divf (float64 $internalModeH) $internalScale | int -}}
+{{- $dualX := $dellLogicalW -}}
+{{- $dualY := sub $dellLogicalH $internalLogicalH }}
 
 # kanshi output profiles — {{ $machine }}
 
