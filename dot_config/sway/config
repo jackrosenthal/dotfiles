@@ -7,9 +7,8 @@ set $mod Mod1
 
 set $BROWSER google-chrome-stable
 
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway DISPLAY
-exec_always systemctl --user start sway-session.target
-exec_always systemctl --user reload kanshi.service
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway DISPLAY && systemctl --user start sway-session.target
+exec_always sh -c 'sleep 0.1 && systemctl --user reload kanshi.service'
 
 # ─── Input ────────────────────────────────────────────────────────────────────
 
