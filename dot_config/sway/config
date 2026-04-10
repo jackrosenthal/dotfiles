@@ -73,8 +73,9 @@ exec swayidle -w \
 # ─── Window Rules ─────────────────────────────────────────────────────────────
 
 for_window [app_id="Alacritty" tiling] border none
-for_window [app_id="com.gabm.satty"]        floating enable
-for_window [floating]                       move position center
+for_window [app_id="com.gabm.satty"]        floating enable, move position center
+for_window [app_id="google-chrome" title="^.*Zoom Meeting$"] floating enable
+exec sway-pip-position
 
 # ─── Key Bindings ─────────────────────────────────────────────────────────────
 
