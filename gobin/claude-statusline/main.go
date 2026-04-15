@@ -20,6 +20,7 @@ const (
 	iconCtx     = "\uf080" // nf-fa-bar_chart
 	icon5h      = "\uf017" // nf-fa-clock_o
 	icon7d      = "\uf073" // nf-fa-calendar
+	iconCaveman = "\uf490" // nf-mdi-fire
 )
 
 type statusInput struct {
@@ -146,6 +147,19 @@ func main() {
 	}
 
 	sl.seg(23, fmt.Sprintf("%s %s", iconModel, model))
+
+	if flagFile := os.Getenv("HOME") + "/.claude/.caveman-active"; func() bool {
+		_, err := os.Stat(flagFile)
+		return err == nil
+	}() {
+		mode, _ := os.ReadFile(flagFile)
+		modeStr := strings.TrimSpace(string(mode))
+		label := fmt.Sprintf("%s %s", iconCaveman, modeStr)
+		if modeStr == "" {
+			label = iconCaveman
+		}
+		sl.seg(172, label)
+	}
 
 	if in.SessionName != "" {
 		sl.seg(58, fmt.Sprintf("%s %s", iconSession, in.SessionName))
