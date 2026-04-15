@@ -6,6 +6,15 @@
   },
   "enabledPlugins": {
     "chrome-devtools-mcp@chrome-devtools-plugins": true,
-    "clangd-lsp@claude-plugins-official": true
+    "clangd-lsp@claude-plugins-official": true,
+    "caveman@caveman": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
   }
 }
