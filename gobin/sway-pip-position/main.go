@@ -55,7 +55,7 @@ func position(ctx context.Context, pip *sway.Node) error {
 	y := ws.Rect.Y + ws.Rect.Height - pipHeight - padding
 
 	_, err = client.RunCommand(ctx, fmt.Sprintf(
-		`[con_id=%d] resize set %d %d, move absolute position %d %d`,
+		`[con_id=%d] floating enable, resize set %d %d, move absolute position %d %d`,
 		pip.ID, pipWidth, pipHeight, x, y,
 	))
 	return err

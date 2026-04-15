@@ -74,7 +74,7 @@ exec swayidle -w \
 
 for_window [app_id="Alacritty" tiling] border none
 for_window [app_id="com.gabm.satty"]        floating enable, move position center
-for_window [app_id="google-chrome" title="^.*Zoom Meeting$"] floating enable
+for_window [app_id="google-chrome" title="^(?!.*- Google Chrome$)"] floating enable
 exec sway-pip-position
 
 # ─── Key Bindings ─────────────────────────────────────────────────────────────
