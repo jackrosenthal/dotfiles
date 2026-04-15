@@ -1,6 +1,6 @@
 module github.com/jackrosenthal/dotfiles/gobin/screenshot
 
-go 1.26.2
+go 1.25.0
 
 require github.com/joshuarubin/go-sway v1.2.0
 

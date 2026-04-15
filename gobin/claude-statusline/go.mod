@@ -1,6 +1,6 @@
 module github.com/jackrosenthal/dotfiles/gobin/claude-statusline
 
-go 1.26.1
+go 1.25.0
 
 require (
 	dario.cat/mergo v1.0.0 // indirect
