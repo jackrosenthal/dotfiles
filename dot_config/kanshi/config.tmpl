@@ -8,6 +8,14 @@
 {{- $dellLogicalW := divf (float64 $dellModeW) $dellScale | int -}}
 {{- $dellLogicalH := divf (float64 $dellModeH) $dellScale | int -}}
 
+{{- $LENOVO_L := "Lenovo Group Limited P32p-30 V30F61YW" -}}
+{{- $LENOVO_R := "Lenovo Group Limited P32p-30 V30F61Y7" -}}
+{{- $lenovoModeW := 3840 -}}
+{{- $lenovoModeH := 2160 -}}
+{{- $lenovoScale := 1.25 -}}
+{{- $lenovoLogicalW := divf (float64 $lenovoModeW) $lenovoScale | int -}}
+{{- $lenovoLogicalH := divf (float64 $lenovoModeH) $lenovoScale | int -}}
+
 {{- $INTERNAL := "" -}}
 {{- $internalModeW := 0 -}}
 {{- $internalModeH := 0 -}}
@@ -40,4 +48,11 @@ profile {
 profile {
     output "{{ $DELL }}" mode {{ $dellModeW }}x{{ $dellModeH }} position 0,0 scale {{ $dellScale }}
     output "{{ $INTERNAL }}" mode {{ $internalModeW }}x{{ $internalModeH }} position {{ $dualX }},{{ $dualY }} scale {{ $internalScale }}
+}
+
+# Office: dual Lenovo P32p-30 + laptop (left primary, right beside, laptop below-left)
+profile {
+    output "{{ $LENOVO_L }}" mode {{ $lenovoModeW }}x{{ $lenovoModeH }} position 0,0 scale {{ $lenovoScale }}
+    output "{{ $LENOVO_R }}" mode {{ $lenovoModeW }}x{{ $lenovoModeH }} position {{ $lenovoLogicalW }},0 scale {{ $lenovoScale }}
+    output "{{ $INTERNAL }}" mode {{ $internalModeW }}x{{ $internalModeH }} position 0,{{ $lenovoLogicalH }} scale {{ $internalScale }}
 }
