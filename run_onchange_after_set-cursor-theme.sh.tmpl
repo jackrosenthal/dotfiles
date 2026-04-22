@@ -1,0 +1,6 @@
+#!/bin/sh
+# Set cursor theme in gsettings (dconf) for GTK/GNOME apps
+if command -v gsettings >/dev/null 2>&1; then
+    gsettings set org.gnome.desktop.interface cursor-theme 'Hackneyed'
+    gsettings set org.gnome.desktop.interface cursor-size {{ .cursor_size | default 32 }}
+fi

@@ -4,7 +4,10 @@
 {{- $choices := list "desktop" "laptop" "lite" -}}
 {{- $profile := promptChoiceOnce . "profile" "Select profile" $choices "lite" -}}
 
+{{- $cursorSize := promptIntOnce . "cursor_size" "Cursor size (24, 32, 36, 48)" 32 -}}
+
 [data]
     email = {{ $email | quote }}
     name = {{ $name | quote }}
     profile = {{ $profile | quote }}
+    cursor_size = {{ $cursorSize }}
