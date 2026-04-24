@@ -1,0 +1,16 @@
+[Unit]
+Description=OpenSSH ssh-agent
+Documentation=man:ssh-agent(1)
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+Environment=SSH_AUTH_SOCK=%t/ssh-agent.sock
+ExecStartPre=-/bin/rm -f %t/ssh-agent.sock
+ExecStart=/usr/bin/ssh-agent -D -a %t/ssh-agent.sock
+ExecStartPost=/usr/bin/systemctl --user set-environment SSH_AUTH_SOCK=%t/ssh-agent.sock
+ExecStopPost=/usr/bin/systemctl --user unset-environment SSH_AUTH_SOCK
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
