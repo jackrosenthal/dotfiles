@@ -36,6 +36,10 @@ command = { program = "swaymsg", args = ["urgent", "enable"] }
 [terminal]
 osc52 = "CopyPaste"
 
+[shell]
+program = "/usr/bin/zsh"
+args = ["-l"]
+
 [[hints.enabled]]
 regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
 hyperlinks = true
