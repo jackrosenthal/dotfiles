@@ -49,6 +49,13 @@ and install these tools, `chezmoi apply` takes care of it.
 - Use `gofumpt` for formatting
 - Use `golangci-lint` for linting
 
+### Shell style
+
+- Only use shell scripts for small wrappers
+- No math or json parsing in shell scripts (this is an indicator to use Go)
+- Always use braces on parameter expansion
+- Always quote parameter expansion and command substitution
+
 ## Commit style
 
 Start with a verb ("Add", "Fix", "Use"). Sentence case. No conventional commits prefix. No trailing period.
