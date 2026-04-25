@@ -2,3 +2,4 @@ LICENSE
 gobin
 CLAUDE.md
 AGENTS.md
+.config/alacritty/alacritty.toml

@@ -1,0 +1,12 @@
+#!/bin/bash
+set -euo pipefail
+
+# alacritty.toml: {{ include "dot_config/alacritty/alacritty.toml" | sha256sum }}
+{{ if ne .profile "lite" -}}
+src="{{ .chezmoi.sourceDir }}/dot_config/alacritty/alacritty.toml"
+dest="${HOME}/.config/alacritty/alacritty.toml"
+
+mkdir -p "$(dirname "${dest}")"
+cp "${src}" "${dest}"
+alacritty migrate --config-file "${dest}"
+{{- end }}
