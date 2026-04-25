@@ -57,3 +57,9 @@ Examples:
 - `Add caveman mode badge to claude-statusline`
 - `Fix kanshi race on fresh login`
 - `Use terminfo tsl/fsl for terminal title setting`
+
+Always include a commit body. The body must:
+- Describe what changed and why, not just restate the subject line
+- Use complete sentences with explicit subjects (never start a sentence with a bare verb)
+- Use consistent tense throughout (present tense is preferred for describing what the code does; past tense is acceptable for describing the previous state before explaining the new behavior)
+- Wrap at 72 characters
