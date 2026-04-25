@@ -17,6 +17,7 @@ export CGO_ENABLED=0
 # {{ $name }}: {{ include (printf "gobin/%s/main.go" $name) | sha256sum }}
 (
   cd "{{ joinPath $sourceDir "gobin" $name }}"
+  rm -f "$HOME/.local/bin/{{ $name }}"
   go build -o "$HOME/.local/bin/{{ $name }}"
 )
 {{- end }}
