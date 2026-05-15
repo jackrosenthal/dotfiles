@@ -6,6 +6,8 @@ Host *
     ControlMaster auto
     ControlPath /run/user/%i/ssh-master-%C.sock
     ControlPersist 15s
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
 
 Host butterfree.a924.casa
     ProxyCommand cloudflared access ssh --hostname %h
