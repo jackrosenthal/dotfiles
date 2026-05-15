@@ -8,5 +8,11 @@ dest="${HOME}/.config/alacritty/alacritty.toml"
 
 mkdir -p "$(dirname "${dest}")"
 cp "${src}" "${dest}"
-alacritty migrate --config-file "${dest}"
+
+# alacritty < 0.14 only knows how to migrate YAML and errors out on TOML
+# input; tolerate that message so older installs still get the copy.
+if ! out=$(alacritty migrate --config-file "${dest}" 2>&1); then
+  printf '%s\n' "${out}" >&2
+  printf '%s' "${out}" | grep -q "already in TOML format" || exit 1
+fi
 {{- end }}
