@@ -28,3 +28,7 @@ export EDITOR PAGER PDFVIEW
 export CLICOLOR=t
 
 umask 022
+
+if [[ -z "${SSH_AUTH_SOCK}" && -S "${XDG_RUNTIME_DIR}/ssh-agent.sock" ]]; then
+    export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.sock"
+fi
