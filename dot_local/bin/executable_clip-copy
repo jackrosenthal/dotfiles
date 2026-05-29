@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Emit OSC 52 with the "pc" selector so the payload lands in both the system
+# CLIPBOARD (Ctrl+Shift+V) and PRIMARY (middle-click). Works locally and
+# through ssh; the escape sequence rides the same pty path as normal output.
+# Requires tmux's set-clipboard to be "external" so tmux passes the sequence
+# through to the outer terminal instead of rewriting it.
+
+set -eu
+
+data="$(cat)"
+encoded="$(printf '%s' "${data}" | base64 | tr -d '\n')"
+printf '\033]52;pc;%s\a' "${encoded}" > /dev/tty
