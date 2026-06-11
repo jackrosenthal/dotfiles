@@ -1,16 +1,10 @@
 // prbuttons prints a 2×3 sheet of 3-3/8" buttons on letter paper.
-// It lightens the blue stripe by 25% in HSL lightness before printing.
 package main
 
 import (
 	"fmt"
-	"image"
-	"image/color"
-	_ "image/jpeg"
-	"image/png"
 	"io"
 	"log/slog"
-	"math"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -40,13 +34,6 @@ func run() error {
 	}
 	defer pngCleanup()
 
-	slog.Info("lightening blue stripe")
-	litPath, err := lightenBlue(pngPath, 0.25)
-	if err != nil {
-		return fmt.Errorf("lightenBlue: %w", err)
-	}
-	defer os.Remove(litPath)
-
 	pdf, err := os.CreateTemp("", "prbuttons*.pdf")
 	if err != nil {
 		return fmt.Errorf("temp file: %w", err)
@@ -55,7 +42,7 @@ func run() error {
 	defer os.Remove(pdf.Name())
 
 	slog.Info("generating print sheet")
-	if err := printSheet(litPath, pdf.Name()); err != nil {
+	if err := printSheet(pngPath, pdf.Name()); err != nil {
 		return fmt.Errorf("printSheet: %w", err)
 	}
 
@@ -89,113 +76,6 @@ func toPNG(src string) (path string, cleanup func(), err error) {
 	default:
 		return "", nil, fmt.Errorf("unsupported file type %q", filepath.Ext(src))
 	}
-}
-
-// lightenBlue boosts HSL lightness of blue-range pixels by boost (0–1).
-// Targets hue 170°–230° with saturation > 0.5 and lightness > 0.25,
-// which isolates the blue stripe without affecting dark navy text.
-func lightenBlue(src string, boost float64) (string, error) {
-	f, err := os.Open(src)
-	if err != nil {
-		return "", err
-	}
-	defer f.Close()
-
-	img, _, err := image.Decode(f)
-	if err != nil {
-		return "", err
-	}
-
-	bounds := img.Bounds()
-	out := image.NewNRGBA(bounds)
-
-	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-		for x := bounds.Min.X; x < bounds.Max.X; x++ {
-			r, g, b, a := img.At(x, y).RGBA()
-			if a == 0 {
-				continue
-			}
-			rf := float64(r) / 65535
-			gf := float64(g) / 65535
-			bf := float64(b) / 65535
-
-			h, s, l := rgbToHSL(rf, gf, bf)
-			if h >= 170 && h <= 230 && s > 0.5 && l > 0.25 {
-				l = math.Min(1, l+boost)
-			}
-			rf, gf, bf = hslToRGB(h, s, l)
-
-			out.SetNRGBA(x, y, color.NRGBA{
-				R: uint8(math.Round(rf * 255)),
-				G: uint8(math.Round(gf * 255)),
-				B: uint8(math.Round(bf * 255)),
-				A: uint8(a >> 8),
-			})
-		}
-	}
-
-	tmp, err := os.CreateTemp("", "prbuttons*.png")
-	if err != nil {
-		return "", err
-	}
-	if err := png.Encode(tmp, out); err != nil {
-		tmp.Close()
-		os.Remove(tmp.Name())
-		return "", err
-	}
-	tmp.Close()
-	return tmp.Name(), nil
-}
-
-func rgbToHSL(r, g, b float64) (h, s, l float64) {
-	cmax := math.Max(math.Max(r, g), b)
-	cmin := math.Min(math.Min(r, g), b)
-	delta := cmax - cmin
-	l = (cmax + cmin) / 2
-	if delta == 0 {
-		return 0, 0, l
-	}
-	if l < 0.5 {
-		s = delta / (cmax + cmin)
-	} else {
-		s = delta / (2 - cmax - cmin)
-	}
-	switch cmax {
-	case r:
-		h = 60 * math.Mod((g-b)/delta, 6)
-	case g:
-		h = 60 * ((b-r)/delta + 2)
-	case b:
-		h = 60 * ((r-g)/delta + 4)
-	}
-	if h < 0 {
-		h += 360
-	}
-	return
-}
-
-func hslToRGB(h, s, l float64) (r, g, b float64) {
-	c := (1 - math.Abs(2*l-1)) * s
-	x := c * (1 - math.Abs(math.Mod(h/60, 2)-1))
-	m := l - c/2
-	switch {
-	case h < 60:
-		r, g, b = c, x, 0
-	case h < 120:
-		r, g, b = x, c, 0
-	case h < 180:
-		r, g, b = 0, c, x
-	case h < 240:
-		r, g, b = 0, x, c
-	case h < 300:
-		r, g, b = x, 0, c
-	default:
-		r, g, b = c, 0, x
-	}
-	r += m
-	g += m
-	b += m
-	return
 }
 
 // printSheet compiles a 2×3 button print sheet PDF via xelatex.
