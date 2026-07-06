@@ -1,4 +1,7 @@
 {
+  "permissions": {
+    "defaultMode": "default"
+  },
   "statusLine": {
     "type": "command",
     "command": "claude-statusline"
@@ -7,5 +10,6 @@
     "chrome-devtools-mcp@chrome-devtools-plugins": true,
     "clangd-lsp@claude-plugins-official": true
   },
+  "tui": "fullscreen",
   "autoMemoryEnabled": false
 }
