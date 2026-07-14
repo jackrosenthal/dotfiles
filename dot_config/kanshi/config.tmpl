@@ -16,6 +16,14 @@
 {{- $lenovoLogicalW := divf (float64 $lenovoModeW) $lenovoScale | int -}}
 {{- $lenovoLogicalH := divf (float64 $lenovoModeH) $lenovoScale | int -}}
 
+{{- /* LON: dual Lenovo P27u-20 (HDMI left, USB-C center) + laptop right */ -}}
+{{- $LON_HDMI := "Lenovo Group Limited P27u-20 V909K2NE" -}}
+{{- $LON_USBC := "Lenovo Group Limited P27u-20 V909K2NR" -}}
+{{- $lonModeW := 3840 -}}
+{{- $lonModeH := 2160 -}}
+{{- $lonScale := 1.4 -}}
+{{- $lonLogicalW := divf (float64 $lonModeW) $lonScale | int -}}
+
 {{- $INTERNAL := "" -}}
 {{- $internalModeW := 0 -}}
 {{- $internalModeH := 0 -}}
@@ -55,4 +63,11 @@ profile {
     output "{{ $LENOVO_L }}" mode {{ $lenovoModeW }}x{{ $lenovoModeH }} position 0,0 scale {{ $lenovoScale }}
     output "{{ $LENOVO_R }}" mode {{ $lenovoModeW }}x{{ $lenovoModeH }} position {{ $lenovoLogicalW }},0 scale {{ $lenovoScale }}
     output "{{ $INTERNAL }}" mode {{ $internalModeW }}x{{ $internalModeH }} position 0,{{ $lenovoLogicalH }} scale {{ $internalScale }}
+}
+
+# LON: dual Lenovo P27u-20 + laptop (HDMI left, USB-C center, internal right)
+profile {
+    output "{{ $LON_HDMI }}" mode {{ $lonModeW }}x{{ $lonModeH }} position 0,0 scale {{ $lonScale }}
+    output "{{ $LON_USBC }}" mode {{ $lonModeW }}x{{ $lonModeH }} position {{ $lonLogicalW }},0 scale {{ $lonScale }}
+    output "{{ $INTERNAL }}" mode {{ $internalModeW }}x{{ $internalModeH }} position {{ mul $lonLogicalW 2 }},0 scale {{ $internalScale }}
 }
