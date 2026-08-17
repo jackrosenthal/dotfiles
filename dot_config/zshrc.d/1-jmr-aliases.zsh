@@ -5,8 +5,6 @@ alias g=git
 alias xra='xrandr --auto'
 alias gnutar='command tar'
 alias view='vim -R'
-alias ec='emacsclient -n -c -a vim'
-alias et='emacsclient -nw -a vim'
 
 if ls --help 2>&1 | grep coreutils >/dev/null; then
     alias ls='ls --color=auto'

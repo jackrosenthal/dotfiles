@@ -21,7 +21,7 @@ function pref-order () {
     return 1
 }
 
-: ${EDITOR:=$(pref-order emacsclient vim)}
+: ${EDITOR:=$(pref-order vim vi)}
 : ${PAGER:=$(pref-order less more)}
 : ${PDFVIEW:=$(pref-order zathura evince mupdf xpdf)}
 export EDITOR PAGER PDFVIEW
