@@ -62,6 +62,7 @@ window#waybar {
 #network,
 #pulseaudio,
 #backlight,
+#power-profiles-daemon,
 #battery,
 #tray {
     color: #f7f7f7;
@@ -90,6 +91,18 @@ window#waybar {
 
 #backlight {
     background: #66552d;
+}
+
+#power-profiles-daemon {
+    background: #3a4a66;
+}
+
+#power-profiles-daemon.performance {
+    background: #c2672f;
+}
+
+#power-profiles-daemon.power-saver {
+    background: #3a664f;
 }
 
 #battery {
