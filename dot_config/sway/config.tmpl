@@ -147,6 +147,12 @@ mode "resize" {
 }
 bindsym $mod+j          mode "resize"
 
+# --- Passthrough mode (send all other keybindings to the focused client) ---
+mode "passthrough" {
+    bindsym $mod+Escape mode "default"
+}
+bindsym $mod+Escape     mode "passthrough"
+
 # --- Fine resize (outside resize mode) ---
 bindsym $mod+Ctrl+r     resize shrink width  5 ppt
 bindsym $mod+Ctrl+s     resize grow   width  5 ppt
