@@ -41,7 +41,8 @@ and install these tools, `chezmoi apply` takes care of it.
 
 ### Go style
 
-- Code for Go 1.25 or newer
+- Code must build with Go 1.26.10, so keep `go` directives (including those
+  of dependencies) at or below 1.26.10
 - Prefer `fmt.Sprintf` over string concatenation
 - If you need a CLI parser, use Kong
 - If you need logging, use `slog`
