@@ -34,6 +34,14 @@
 - Avoid usage of the "it" pronoun
 - Avoid "own" in possession.  For example, say "The phone's network code",
   instead of "The phone's own network code".
+- Avoid "nothing" or "none" in place of a specific claim; say what happens to
+  what.  For example:
+  - Say "Make only the changes the user asks for", instead of "Change nothing
+    the user did not ask for".
+  - Say "CI pushes butterfree, but its files are unchanged", instead of "CI
+    has nothing to deploy".
+  - Say "No more reminders are scheduled", instead of "So none will fire
+    again".
 - Avoid long-winded headers and descriptions.  For example, instead of saying
   "What a developer needs on their machine" say "Prerequisites".
 - When introducing a concept, follow the Define -> Explain -> Example pattern.
